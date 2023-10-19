@@ -8,6 +8,12 @@ import (
 
 func InitRoutes(
 	r *gin.RouterGroup,
-	userController controller.FundosControllerInterface) {
+	fundosController controller.FundosControllerInterface) {
+
+	v1 := r.Group("/api/v1/fundos")
+	{
+		v1.GET("sincronizar", fundosController.SincronizarFundos)
+
+	}
 
 }

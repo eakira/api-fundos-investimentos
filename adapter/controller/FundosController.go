@@ -1,6 +1,10 @@
 package controller
 
-import "api-fundos-investimentos/application/port/input"
+import (
+	"api-fundos-investimentos/application/port/input"
+
+	"github.com/gin-gonic/gin"
+)
 
 func NewFundosControllerInterface(
 	serviceInterface input.FundosDomainService,
@@ -11,6 +15,7 @@ func NewFundosControllerInterface(
 }
 
 type FundosControllerInterface interface {
+	SincronizarFundos(c *gin.Context)
 }
 
 type fundosControllerInterface struct {
