@@ -1,7 +1,7 @@
 package validation
 
 import (
-	"api-fundos-investimentos/configuration/rest_errors"
+	"api-fundos-investimentos/configuration/resterrors"
 	"encoding/json"
 	"errors"
 
@@ -29,17 +29,17 @@ func init() {
 	}
 }
 
-func ValidateUserError(validation_err error) *rest_errors.RestErr {
+func ValidateUserError(validation_err error) *resterrors.RestErr {
 	var jsonErr *json.UnmarshalTypeError
 	var jsonValidationError validator.ValidationErrors
 
 	if errors.As(validation_err, &jsonErr) {
-		return rest_errors.NewBadRequestError("Tipo de campo invalido")
+		return resterrors.NewBadRequestError("Tipo de campo invalido")
 	} else if errors.As(validation_err, &jsonValidationError) {
-		errorCauses := []rest_errors.Causes{}
+		errorCauses := []resterrors.Causes{}
 
 		for _, e := range validation_err.(validator.ValidationErrors) {
-			cause := rest_errors.Causes{
+			cause := resterrors.Causes{
 				Message: e.Translate(transl),
 				Field:   e.Field(),
 			}
@@ -47,8 +47,8 @@ func ValidateUserError(validation_err error) *rest_errors.RestErr {
 			errorCauses = append(errorCauses, cause)
 		}
 
-		return rest_errors.NewBadRequestValidationError("Alguns campos são invalído", errorCauses)
+		return resterrors.NewBadRequestValidationError("Alguns campos são invalído", errorCauses)
 	} else {
-		return rest_errors.NewBadRequestError("Erro ao tentar converter os campos")
+		return resterrors.NewBadRequestError("Erro ao tentar converter os campos")
 	}
 }
