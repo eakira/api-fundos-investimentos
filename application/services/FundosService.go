@@ -5,7 +5,7 @@ import (
 	"api-fundos-investimentos/application/port/output"
 )
 
-func NewUserDomainService(
+func NewFundosDomainService(
 	fundosRepository output.FundosPort) input.FundosDomainService {
 	return &fundosDomainService{
 		fundosRepository,
