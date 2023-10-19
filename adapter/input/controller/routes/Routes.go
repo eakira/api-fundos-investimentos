@@ -1,7 +1,7 @@
 package routes
 
 import (
-	"api-fundos-investimentos/adapter/controller"
+	"api-fundos-investimentos/adapter/input/controller"
 
 	"github.com/gin-gonic/gin"
 )
