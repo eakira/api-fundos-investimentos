@@ -1,8 +1,9 @@
 package main
 
 import (
-	"api-fundos-investimentos/adapter/controller"
-	"api-fundos-investimentos/adapter/controller/routes"
+	"api-fundos-investimentos/adapter/input/controller"
+	"api-fundos-investimentos/adapter/input/controller/routes"
+	"api-fundos-investimentos/adapter/output/fundoshttp"
 	"api-fundos-investimentos/adapter/output/repository"
 	"api-fundos-investimentos/application/services"
 	"api-fundos-investimentos/configuration/database/mongodb"
@@ -46,7 +47,8 @@ func main() {
 func initDependencies(
 	database *mongo.Database,
 ) controller.FundosControllerInterface {
+	fundosHttp := fundoshttp.NewFundosClient()
 	fundosRepo := repository.NewFundosRepository(database)
-	userService := services.NewUserDomainService(fundosRepo)
+	userService := services.NewFundosDomainService(fundosRepo, fundosHttp)
 	return controller.NewFundosControllerInterface(userService)
 }
