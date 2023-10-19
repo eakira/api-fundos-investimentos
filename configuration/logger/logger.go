@@ -33,7 +33,9 @@ func init() {
 	log, _ = logConfig.Build()
 }
 
-func Info(message string, tags ...zap.Field) {
+func Info(message string, journey string, tags ...zap.Field) {
+	tags = append(tags, zap.String("journey", journey))
+
 	log.Info(message, tags...)
 	errSync := log.Sync()
 	if errSync != nil {
@@ -41,7 +43,8 @@ func Info(message string, tags ...zap.Field) {
 	}
 }
 
-func Error(message string, err error, tags ...zap.Field) {
+func Error(message string, err error, journey string, tags ...zap.Field) {
+	tags = append(tags, zap.String("journey", journey))
 	tags = append(tags, zap.NamedError("error", err))
 	log.Info(message, tags...)
 	errSync := log.Sync()
