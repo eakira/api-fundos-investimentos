@@ -6,6 +6,6 @@ func GetKafkaHost() string {
 	return os.Getenv("KAFKA_HOST")
 }
 
-func GetKafkaTopicSincronizar() string {
+func GetTopicSincronizar() string {
 	return "sincronizar"
 }
