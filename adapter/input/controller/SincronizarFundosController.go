@@ -10,6 +10,6 @@ import (
 func (fc *fundosControllerInterface) SincronizarFundos(c *gin.Context) {
 	logger.Info("Init SincronizarFundos", "sincronizarFundos")
 
-	fc.service.QueueFundosExternoService(env.GetTopicSincronizar(), "update-all")
+	fc.service.QueueFundosSincronizarService(env.GetTopicSincronizar(), "update-all")
 	logger.Info("Finish SincronizarFundos", "sincronizarFundos")
 }
