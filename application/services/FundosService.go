@@ -6,14 +6,19 @@ import (
 )
 
 func NewFundosDomainService(
-	fundosRepository output.FundosPort, fundosHttp output.FundosExternoPort) input.FundosDomainService {
+	fundosRepository output.FundosPort,
+	queue output.FundosQueuePort,
+	externo output.FundosExternoPort,
+) input.FundosDomainService {
 	return &fundosDomainService{
 		fundosRepository,
-		fundosHttp,
+		queue,
+		externo,
 	}
 }
 
 type fundosDomainService struct {
 	repository output.FundosPort
-	http       output.FundosExternoPort
+	queue      output.FundosQueuePort
+	externo    output.FundosExternoPort
 }
