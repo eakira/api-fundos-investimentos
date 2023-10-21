@@ -1,6 +1,8 @@
 package input
 
+import "api-fundos-investimentos/core/dto"
+
 type FundosDomainService interface {
-	QueueFundosSincronizarService(string, string)
+	QueueFundosSincronizarService(dto.FundosQueueDto)
 	GetFundosExternoService()
 }
