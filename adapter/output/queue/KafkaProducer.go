@@ -5,6 +5,7 @@ import (
 	"api-fundos-investimentos/configuration/logger"
 	"api-fundos-investimentos/configuration/resterrors"
 	"api-fundos-investimentos/core/dto"
+	"encoding/json"
 	"fmt"
 
 	"github.com/IBM/sarama"
@@ -23,7 +24,8 @@ func (nc *queueProduce) Produce(dto dto.FundosQueueDto) *resterrors.RestErr {
 	producer, _ := initProduce()
 	defer producer.Close()
 
-	msg := &sarama.ProducerMessage{Topic: dto.Topic, Key: nil, Value: sarama.StringEncoder(dto.Queue)}
+	dtoJson, _ := json.Marshal(dto)
+	msg := &sarama.ProducerMessage{Topic: dto.Topic, Key: nil, Value: sarama.StringEncoder(dtoJson)}
 	partition, offset, err := producer.SendMessage(msg)
 	if err != nil {
 		logger.Error("SendMessage err:", err, "kafkaProduce")
