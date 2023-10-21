@@ -36,12 +36,12 @@ func main() {
 		return
 	}
 
+	fundosController := initDependenciesController(database)
+
 	x := os.Args
 	if len(x) > 1 {
-		listener.Consume(x[1])
+		listener.Consume(x[1], fundosController)
 	}
-
-	fundosController := initDependencies(database)
 
 	router := gin.Default()
 	routes.InitRoutes(&router.RouterGroup, fundosController)
@@ -52,7 +52,7 @@ func main() {
 
 }
 
-func initDependencies(
+func initDependenciesController(
 	database *mongo.Database,
 ) controller.FundosControllerInterface {
 	fundosHttp := externo.NewFundosClient()
