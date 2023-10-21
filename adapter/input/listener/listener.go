@@ -1,6 +1,7 @@
 package listener
 
 import (
+	"api-fundos-investimentos/adapter/input/controller"
 	"api-fundos-investimentos/configuration/env"
 	"api-fundos-investimentos/configuration/logger"
 	"api-fundos-investimentos/configuration/resterrors"
@@ -23,7 +24,7 @@ func initConsume() (sarama.Consumer, *resterrors.RestErr) {
 	return consumer, nil
 }
 
-func Consume(topic string) {
+func Consume(topic string, fundosController controller.FundosControllerInterface) {
 	logger.Info(fmt.Sprintf("Init Listener: %s", topic), "listener")
 	consumer, _ := initConsume()
 	defer consumer.Close()
