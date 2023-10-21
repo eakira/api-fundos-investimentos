@@ -36,10 +36,30 @@ func Consume(topic string) {
 	defer partitionConsumer.Close()
 
 	for message := range partitionConsumer.Messages() {
+		err := switchCaseTopic(topic, string(message.Value))
+		if err != nil {
+			logger.Error("error trying switchCaseTopic", err, "listener")
+		}
+
 		logger.Info(
 			fmt.Sprintf("[Consumer] partitionid: %d; offset:%d, value: %s\n",
 				message.Partition, message.Offset, string(message.Value)),
 			"sincronizarFundos")
+
 	}
 	logger.Info("Finish SincronizarFundos", "sincronizarFundos")
+}
+
+func switchCaseTopic(topic string, message string) *resterrors.RestErr {
+
+	switch topic {
+	case env.GetTopicSincronizar():
+		return FundosSincroniszarListener(message)
+	default:
+		return resterrors.NewNotFoundError(
+			fmt.Sprintf("Queue not found: %s", topic),
+		)
+
+	}
+
 }
