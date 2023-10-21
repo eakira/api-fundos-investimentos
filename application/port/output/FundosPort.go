@@ -1,6 +1,9 @@
 package output
 
-import "api-fundos-investimentos/configuration/resterrors"
+import (
+	"api-fundos-investimentos/configuration/resterrors"
+	"api-fundos-investimentos/core/dto"
+)
 
 type FundosPort interface {
 }
@@ -9,5 +12,5 @@ type FundosExternoPort interface {
 }
 
 type FundosQueuePort interface {
-	Produce(string, string) *resterrors.RestErr
+	Produce(dto.FundosQueueDto) *resterrors.RestErr
 }
