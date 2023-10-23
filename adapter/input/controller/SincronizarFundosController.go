@@ -10,12 +10,21 @@ import (
 
 func (fc *fundosControllerInterface) SincronizarFundosController(c *gin.Context) {
 	logger.Info("Init SincronizarFundos", "sincronizarFundos")
-	dto := request.FundosQueueRequest{
-		Topic: env.GetTopicSincronizar(),
-		Queue: "update-all",
-		Data:  nil,
+
+	folders := []string{
+		"FI",
+		"FIDC",
+		"FIE",
+		"FII",
+		"FIP",
 	}
 
-	fc.service.QueueFundosSincronizarService(dto)
+	request := request.FundosQueueRequest{
+		Topic: env.GetTopicSincronizar(),
+		Queue: "update-all",
+		Data:  folders,
+	}
+
+	fc.service.QueueFundosSincronizarService(request)
 	logger.Info("Finish SincronizarFundos", "sincronizarFundos")
 }
