@@ -19,12 +19,15 @@ func (fc *fundosControllerInterface) SincronizarFundosController(c *gin.Context)
 		"FIP",
 	}
 
-	request := request.FundosQueueRequest{
-		Topic: env.GetTopicSincronizar(),
-		Queue: "update-all",
-		Data:  folders,
+	for _, value := range folders {
+		request := request.FundosQueueRequest{
+			Topic: env.GetTopicSincronizar(),
+			Queue: "update-all",
+			Data:  []string{value},
+		}
+
+		fc.service.QueueFundosSincronizarService(request)
 	}
 
-	fc.service.QueueFundosSincronizarService(request)
 	logger.Info("Finish SincronizarFundos", "sincronizarFundos")
 }
