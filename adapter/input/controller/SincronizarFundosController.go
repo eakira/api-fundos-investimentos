@@ -8,7 +8,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func (fc *fundosControllerInterface) SincronizarFundos(c *gin.Context) {
+func (fc *fundosControllerInterface) SincronizarFundosController(c *gin.Context) {
 	logger.Info("Init SincronizarFundos", "sincronizarFundos")
 	dto := dto.FundosQueueDto{
 		Topic: env.GetTopicSincronizar(),
