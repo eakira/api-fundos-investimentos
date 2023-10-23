@@ -15,8 +15,8 @@ func NewFundosControllerInterface(
 }
 
 type FundosControllerInterface interface {
-	SincronizarFundos(c *gin.Context)
-	DownloadArquivosCvm()
+	SincronizarFundosController(c *gin.Context)
+	DownloadArquivosCVMController()
 }
 
 type fundosControllerInterface struct {
