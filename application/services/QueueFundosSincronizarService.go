@@ -1,13 +1,13 @@
 package services
 
 import (
+	"api-fundos-investimentos/adapter/output/model/request"
 	"api-fundos-investimentos/configuration/logger"
-	"api-fundos-investimentos/core/dto"
 )
 
-func (fs *fundosDomainService) QueueFundosSincronizarService(dto dto.FundosQueueDto) {
+func (fs *fundosDomainService) QueueFundosSincronizarService(request request.FundosQueueRequest) {
 	logger.Info("Init QueueFundosExternoService", "sincronizarFundos")
 
-	fs.queue.Produce(dto)
+	fs.queue.Produce(request)
 	logger.Info("Finish QueueFundosExternoService", "sincronizarFundos")
 }

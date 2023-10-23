@@ -1,9 +1,9 @@
 package input
 
-import "api-fundos-investimentos/core/dto"
+import "api-fundos-investimentos/adapter/output/model/request"
 
 type FundosDomainService interface {
-	QueueFundosSincronizarService(dto.FundosQueueDto)
+	QueueFundosSincronizarService(request.FundosQueueRequest)
 	GetFundosExternoService()
 	DownloadArquivosCVMService()
 }
