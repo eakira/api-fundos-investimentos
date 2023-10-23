@@ -1,7 +1,7 @@
 package output
 
 import (
-	"api-fundos-investimentos/adapter/output/model/request"
+	"api-fundos-investimentos/adapter/output/model/response"
 	"api-fundos-investimentos/configuration/resterrors"
 )
 
@@ -9,9 +9,9 @@ type FundosPort interface {
 }
 
 type FundosExternoPort interface {
-	DownloadArquivosCVMPort() *resterrors.RestErr
+	DownloadArquivosCVMPort(string) *resterrors.RestErr
 }
 
 type FundosQueuePort interface {
-	Produce(request.FundosQueueRequest) *resterrors.RestErr
+	Produce(response.FundosQueueResponse) *resterrors.RestErr
 }

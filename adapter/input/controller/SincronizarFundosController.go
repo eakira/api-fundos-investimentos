@@ -1,7 +1,7 @@
 package controller
 
 import (
-	"api-fundos-investimentos/adapter/output/model/request"
+	"api-fundos-investimentos/adapter/output/model/response"
 	"api-fundos-investimentos/configuration/env"
 	"api-fundos-investimentos/configuration/logger"
 
@@ -20,13 +20,13 @@ func (fc *fundosControllerInterface) SincronizarFundosController(c *gin.Context)
 	}
 
 	for _, value := range folders {
-		request := request.FundosQueueRequest{
+		response := response.FundosQueueResponse{
 			Topic: env.GetTopicSincronizar(),
 			Queue: "update-all",
 			Data:  []string{value},
 		}
 
-		fc.service.QueueFundosSincronizarService(request)
+		fc.service.QueueFundosSincronizarService(response)
 	}
 
 	logger.Info("Finish SincronizarFundos", "sincronizarFundos")
