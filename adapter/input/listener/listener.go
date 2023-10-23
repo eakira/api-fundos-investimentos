@@ -37,7 +37,8 @@ func Consume(topic string, fundosController controller.FundosControllerInterface
 	defer partitionConsumer.Close()
 
 	for message := range partitionConsumer.Messages() {
-		err := switchCaseTopic(topic, string(message.Value))
+
+		err := switchCaseTopic(topic, message.Value, fundosController)
 		if err != nil {
 			logger.Error("error trying switchCaseTopic", err, "listener")
 		}
@@ -51,11 +52,15 @@ func Consume(topic string, fundosController controller.FundosControllerInterface
 	logger.Info("Finish SincronizarFundos", "sincronizarFundos")
 }
 
-func switchCaseTopic(topic string, message string) *resterrors.RestErr {
+func switchCaseTopic(
+	topic string,
+	message []byte,
+	fundosController controller.FundosControllerInterface,
+) *resterrors.RestErr {
 
 	switch topic {
 	case env.GetTopicSincronizar():
-		return FundosSincroniszarListener(message)
+		return FundosSincroniszarListener(message, fundosController)
 	default:
 		return resterrors.NewNotFoundError(
 			fmt.Sprintf("Queue not found: %s", topic),
