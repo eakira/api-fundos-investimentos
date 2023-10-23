@@ -9,6 +9,7 @@ type FundosPort interface {
 }
 
 type FundosExternoPort interface {
+	DownloadArquivosCVMPort() *resterrors.RestErr
 }
 
 type FundosQueuePort interface {
