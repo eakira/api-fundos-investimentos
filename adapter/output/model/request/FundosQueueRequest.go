@@ -1,7 +1,6 @@
 package request
 
-type FundosQueueRequest struct {
-	Topic string   `json:"-"`
+type FundosQueueSincronizarRequest struct {
 	Queue string   `json:"queue"`
 	Data  []string `json:"data"`
 }
