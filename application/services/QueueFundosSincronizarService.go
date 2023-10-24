@@ -1,6 +1,7 @@
 package services
 
 import (
+	"api-fundos-investimentos/configuration/env"
 	"api-fundos-investimentos/configuration/logger"
 	"fmt"
 	"strings"
@@ -14,21 +15,37 @@ func (fs *fundosDomainService) QueueFundosSincronizarService(tipo string) {
 
 	switch tipo {
 	case "cadastros":
-		files = getArquivosCadastros()
+		files = env.GetConfigCvmArquivosCadastros()
+
 	case "balancete":
-		files = getArquivosBalancete()
+		files = getFilesName(env.GetConfigCvmBalancete())
+		histfiles := getFilesName(env.GetConfigCvmBalanceteHist())
+		files = append(files, histfiles...)
+
 	case "cda":
-		files = getArquivosCda()
+		files = getFilesName(env.GetConfigCvmCda())
+		histfiles := getFilesName(env.GetConfigCvmCdaHist())
+		files = append(files, histfiles...)
+
 	case "informacoes-complementares":
-		files = getArquivosInformacoesComplementares()
+		files = getFilesName(env.GetConfigCvmInformacoesComplementares())
+
 	case "extrato":
-		files = getArquivosExtrato()
+		files = getFilesName(env.GetConfigCvmExtrato())
+
 	case "informacao-diaria":
-		files = getArquivosInformacaoDiaria()
+		files = getFilesName(env.GetConfigInformacaoDiaria())
+		histfiles := getFilesName(env.GetConfigInformacaoDiariaHist())
+		files = append(files, histfiles...)
+
 	case "lamina":
-		files = getArquivosLamina()
+		files = getFilesName(env.GetConfigCvmArquivosLaminas())
+		histfiles := getFilesName(env.GetConfigCvmArquivosLaminasHist())
+		files = append(files, histfiles...)
+
 	case "perfil-mensal":
-		files = getArquivosPerfilMensal()
+		files = getFilesName(env.GetConfigCvmArquivosPerfilMensal())
+
 	}
 
 	logger.Info(
@@ -48,192 +65,16 @@ func (fs *fundosDomainService) QueueFundosSincronizarService(tipo string) {
 	logger.Info("Finish QueueFundosExternoService", "sincronizarFundos")
 }
 
-func getArquivosCadastros() []string {
-	return []string{
-		"FI/CAD/DADOS/cad_fi.csv",
-		"FI/CAD/DADOS/cad_fi_hist.zip",
-	}
-}
-
-func getArquivosPerfilMensal() []string {
-	logger.Info("Init getArquivosLamina", "sincronizarFundos")
-
-	files := getFilesName(
-		"FI/DOC/PERFIL_MENSAL/DADOS/perfil_mensal_fi_",
-		".zip",
-		"2019-01-01",
-		time.Now().AddDate(0, -2, 0).Format("2006-01-02"),
-		"200601",
-		0,
-		1,
-		0,
-	)
-
-	logger.Info("Finish getArquivosLamina", "sincronizarFundos")
-	return files
-}
-
-func getArquivosLamina() []string {
-	logger.Info("Init getArquivosLamina", "sincronizarFundos")
-
-	files := getFilesName(
-		"FI/DOC/LAMINA/DADOS/lamina_fi_",
-		".zip",
-		"2019-01-01",
-		time.Now().AddDate(0, -2, 0).Format("2006-01-02"),
-		"200601",
-		0,
-		1,
-		0,
-	)
-
-	histfiles := getFilesName(
-		"FI/DOC/LAMINA/DADOS/HIST/lamina_fi_",
-		".zip",
-		"2014-01-01",
-		"2018-12-01",
-		"200601",
-		0,
-		1,
-		0,
-	)
-
-	logger.Info("Finish getArquivosLamina", "sincronizarFundos")
-	return append(files, histfiles...)
-}
-
-func getArquivosInformacaoDiaria() []string {
-	logger.Info("Init getArquivosInformacaoDiaria", "sincronizarFundos")
-
-	files := getFilesName(
-		"FI/DOC/INF_DIARIO/DADOS/inf_diario_fi_",
-		".zip",
-		"2021-01-01",
-		time.Now().AddDate(0, -1, 0).Format("2006-01-02"),
-		"200601",
-		0,
-		1,
-		0,
-	)
-
-	histfiles := getFilesName(
-		"FI/DOC/INF_DIARIO/DADOS/HIST/inf_diario_fi_",
-		".zip",
-		"2000-01-01",
-		"2019-12-01",
-		"2006",
-		1,
-		0,
-		0,
-	)
-
-	logger.Info("Finish getArquivosInformacaoDiaria", "sincronizarFundos")
-	return append(files, histfiles...)
-}
-
-func getArquivosInformacoesComplementares() []string {
-	logger.Info("Init getArquivosInformacoesComplementares", "sincronizarFundos")
-
-	files := getFilesName(
-		"FI/DOC/COMPL/DADOS/compl_fi_",
-		".zip",
-		"2018-01-01",
-		"2019-04-01",
-		"200601",
-		0,
-		1,
-		0,
-	)
-
-	logger.Info("Finish getArquivosInformacoesComplementares", "sincronizarFundos")
-	return files
-}
-func getArquivosExtrato() []string {
-	logger.Info("Init getArquivosExtrato", "sincronizarFundos")
-	files := []string{"FI/DOC/EXTRATO/DADOS/extrato_fi.csv"}
-	histfiles := getFilesName(
-		"FI/DOC/EXTRATO/DADOS/extrato_fi_",
-		".csv",
-		"2015-01-01",
-		"2022-12-31",
-		"2006",
-		1,
-		0,
-		0,
-	)
-
-	logger.Info("Finish getArquivosExtrato", "sincronizarFundos")
-	return append(files, histfiles...)
-}
-
-func getArquivosCda() []string {
-	logger.Info("Init getArquivosCda", "sincronizarFundos")
-
-	files := getFilesName(
-		"FI/DOC/CDA/DADOS/cda_fi_",
-		".zip",
-		"2021-01-01",
-		time.Now().AddDate(0, -2, 0).Format("2006-01-02"),
-		"200601",
-		0,
-		1,
-		0,
-	)
-
-	histfiles := getFilesName(
-		"FI/DOC/CDA/DADOS/HIST/cda_fi_",
-		".zip",
-		"2005-01-01",
-		"2020-12-01",
-		"2006",
-		1,
-		0,
-		0,
-	)
-
-	logger.Info("Finish getArquivosCda", "sincronizarFundos")
-	return append(files, histfiles...)
-}
-
-func getArquivosBalancete() []string {
-	logger.Info("Init getArquivosBalancete", "sincronizarFundos")
-
-	files := getFilesName(
-		"FI/DOC/BALANCETE/DADOS/balancete_fi_",
-		".zip",
-		"2015-01-01",
-		time.Now().AddDate(0, -2, 0).Format("2006-01-02"),
-		"200601",
-		0,
-		1,
-		0,
-	)
-
-	histfiles := getFilesName(
-		"FI/DOC/BALANCETE/DADOS/HIST/balancete_fi_",
-		".zip",
-		"2005-05-01",
-		"2014-12-01",
-		"200601",
-		0,
-		1,
-		0,
-	)
-
-	logger.Info("Finish getArquivosBalancete", "sincronizarFundos")
-	return append(files, histfiles...)
-}
-
-func getFilesName(folder, extension, DataInicial, DataFinal, formato string, ano, mes, dia int) []string {
+func getFilesName(arquivos env.ArquivosCVM) []string {
 	logger.Info("Init getFilesName", "sincronizarFundos")
-	sufixos := getArquivosSufixo(DataInicial, DataFinal, ano, mes, dia, formato)
+	sufixos := getArquivosSufixo(arquivos)
 
 	files := []string{}
 	for _, value := range sufixos {
 		array := []string{
-			folder,
+			arquivos.Folder,
 			value,
-			extension,
+			arquivos.Extension,
 		}
 		files = append(files, strings.Join(array, ""))
 	}
@@ -244,16 +85,15 @@ func getFilesName(folder, extension, DataInicial, DataFinal, formato string, ano
 
 }
 
-func getArquivosSufixo(dataInicio string, dataFinal string, ano int, mes int, dia int, formato string) []string {
-	datas := []string{}
-	dataInicioConvertida, _ := time.Parse("2006-01-02", dataInicio)
-	dataFinalConvertida, _ := time.Parse("2006-01-02", dataFinal)
-	for dataInicioConvertida.Before(dataFinalConvertida) {
-		datas = append(datas, dataInicioConvertida.Format(formato))
-		dataInicioConvertida = dataInicioConvertida.AddDate(ano, mes, dia)
-	}
-	datas = append(datas, dataInicioConvertida.Format(formato))
+func getArquivosSufixo(arquivo env.ArquivosCVM) []string {
 
-	return datas
+	sufixos := []string{}
+	dataInicioConvertida, _ := time.Parse("2006-01-02", arquivo.DataInicial)
+	dataFinalConvertida, _ := time.Parse("2006-01-02", arquivo.DataFinal)
+	for dataInicioConvertida.Before(dataFinalConvertida) {
+		sufixos = append(sufixos, dataInicioConvertida.Format(arquivo.Formato))
+		dataInicioConvertida = dataInicioConvertida.AddDate(arquivo.Ano, arquivo.Mes, arquivo.Dia)
+	}
+	return append(sufixos, dataInicioConvertida.Format(arquivo.Formato))
 
 }
