@@ -4,8 +4,8 @@ import (
 	"api-fundos-investimentos/configuration/logger"
 )
 
-func (fc *fundosControllerInterface) DownloadArquivosCVMController(folder string) {
+func (fc *fundosControllerInterface) DownloadArquivosCVMController(file string) {
 	logger.Info("Init DownloadArquivosCVMController", "sincronizarFundos")
-	fc.service.DownloadArquivosCVMService(folder)
+	fc.service.DownloadArquivosCVMService(file)
 	logger.Info("Finish DownloadArquivosCVMController", "sincronizarFundos")
 }

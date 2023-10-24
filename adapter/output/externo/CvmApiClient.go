@@ -21,15 +21,15 @@ func NewFundosClient() *fundosClient {
 	return &fundosClient{}
 }
 
-func (fc *fundosClient) DownloadArquivosCVMPort(folder string) *resterrors.RestErr {
+func (fc *fundosClient) DownloadArquivosCVMPort(file string) *resterrors.RestErr {
 	logger.Info("Init DownloadArquivosCVMPort", "sincronizar")
 
-	folders := []string{
+	files := []string{
 		os.Getenv(CVM_URL),
-		folder,
+		file,
 	}
-	folder = strings.Join(folders, "")
-	logger.Info(folder, "sincronizar")
+	file = strings.Join(files, "")
+	logger.Info(file, "sincronizar")
 
 	err := cp.Copy("https://dados.cvm.gov.br/dados/FIP/DOC/INF_TRIMESTRAL/DADOS/", "storage/CVM")
 	if err != nil {

@@ -7,5 +7,5 @@ import (
 type FundosDomainService interface {
 	QueueFundosSincronizarService(response.FundosQueueResponse)
 	GetFundosExternoService()
-	DownloadArquivosCVMService(folder string)
+	DownloadArquivosCVMService(file string)
 }
