@@ -9,7 +9,20 @@ import (
 func (fc *fundosControllerInterface) SincronizarFundosController(c *gin.Context) {
 	logger.Info("Init SincronizarFundos", "sincronizarFundos")
 
-	fc.service.QueueFundosSincronizarService("all")
+	tipo := []string{
+
+		"cadastros",
+		"balancete",
+		"cda",
+		"informacoes-complementares",
+		"extrato",
+		"informacao-diaria",
+		"lamina",
+		"perfil-mensal",
+	}
+	for _, value := range tipo {
+		fc.service.QueueFundosSincronizarService(value)
+	}
 
 	logger.Info("Finish SincronizarFundos", "sincronizarFundos")
 }
