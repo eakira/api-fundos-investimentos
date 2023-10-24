@@ -17,7 +17,7 @@ func (fs *fundosDomainService) QueueFundosSincronizarService(tipo string) {
 		"FII",
 		"FIP",
 	}
-	datas := getArquivosSufixoAnoMes("2012-02-01", "2023-09-01")
+	datas := getArquivosSufixo("2012-02-01", "2023-09-01", 0, 1, 0, "200601")
 
 	logger.Info(
 		fmt.Sprintf("json %v", datas),
@@ -48,13 +48,13 @@ func getArquivosBalancete() []string {
 	}
 }
 
-func getArquivosSufixoAnoMes(dataInicio string, dataFinal string) []string {
+func getArquivosSufixo(dataInicio string, dataFinal string, ano int, mes int, dia int, formato string) []string {
 	datas := []string{}
 	dataInicioConvertida, _ := time.Parse("2006-01-02", dataInicio)
 	dataFinalConvertida, _ := time.Parse("2006-01-02", dataFinal)
 	for dataInicioConvertida.Before(dataFinalConvertida) {
-		dataInicioConvertida = dataInicioConvertida.AddDate(0, 1, 0)
-		datas = append(datas, dataInicioConvertida.Format("200601"))
+		dataInicioConvertida = dataInicioConvertida.AddDate(ano, mes, dia)
+		datas = append(datas, dataInicioConvertida.Format(formato))
 	}
 
 	return datas
