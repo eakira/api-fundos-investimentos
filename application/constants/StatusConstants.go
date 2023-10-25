@@ -1,0 +1,8 @@
+package constants
+
+var (
+	ENVIADO     = "ENVIADO"
+	DOWNLOAD    = "DOWNLOAD"
+	PROCESSANDO = "PROCESSANDO"
+	FINALIZADO  = "FINALIZADO"
+)
