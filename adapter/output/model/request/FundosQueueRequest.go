@@ -7,7 +7,7 @@ type FundosQueueSincronizarRequest struct {
 	Data  []string `json:"data"`
 }
 
-type FundosDownloadCvmFilesQueueRequest struct {
+type FundosCvmArquivosQueueRequest struct {
 	Id          string    `json:"id"`
 	Endereco    string    `json:"endereco"`
 	TipoArquivo string    `json:"tipo-arquivo"`

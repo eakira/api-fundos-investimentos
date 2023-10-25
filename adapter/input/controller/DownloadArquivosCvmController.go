@@ -8,7 +8,7 @@ import (
 	"github.com/jinzhu/copier"
 )
 
-func (fc *fundosControllerInterface) DownloadArquivosCVMController(request request.FundosDownloadCvmFilesQueueRequest) {
+func (fc *fundosControllerInterface) DownloadArquivosCVMController(request request.FundosCvmArquivosQueueRequest) {
 	logger.Info("Init DownloadArquivosCVMController", "sincronizarFundos")
 
 	arquivoDomain := &domain.ArquivosDomain{}

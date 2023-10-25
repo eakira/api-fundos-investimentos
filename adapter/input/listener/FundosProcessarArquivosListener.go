@@ -9,11 +9,11 @@ import (
 	"fmt"
 )
 
-func FundosSincronizarListener(
+func FundosProcessarArquivosListener(
 	message []byte,
 	controller controller.FundosControllerInterface,
 ) *resterrors.RestErr {
-	logger.Info("Init FundosSincronizarListener", "sincronizar")
+	logger.Info("Init FundosProcessarArquivosListener", "sincronizar")
 	dados := request.FundosCvmArquivosQueueRequest{}
 
 	err := json.Unmarshal(message, &dados)
@@ -26,7 +26,7 @@ func FundosSincronizarListener(
 
 	controller.DownloadArquivosCVMController(dados)
 
-	logger.Info("Finish FundosSincronizarListener", "sincronizar")
+	logger.Info("Finish FundosProcessarArquivosListener", "sincronizar")
 
 	return nil
 }

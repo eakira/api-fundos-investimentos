@@ -23,7 +23,7 @@ func (fs *fundosDomainService) DownloadArquivosCVMService(arquivosDomain domain.
 
 	salvando(fs, arquivosDomain)
 
-	proximoQueue(fs, arquivosDomain)
+	//proximoQueue(fs, arquivosDomain)
 
 	logger.Info("Finish GetFundosExternoService", "sincronizarFundos")
 }
@@ -36,7 +36,7 @@ func salvando(fs *fundosDomainService, arquivosDomain domain.ArquivosDomain) {
 }
 
 func proximoQueue(fs *fundosDomainService, arquivosDomain domain.ArquivosDomain) {
-	arquivosRequest := request.FundosDownloadCvmFilesQueueRequest{}
+	arquivosRequest := request.FundosCvmArquivosQueueRequest{}
 	copier.Copy(arquivosRequest, arquivosDomain)
 
 	data, _ := json.Marshal(arquivosRequest)
