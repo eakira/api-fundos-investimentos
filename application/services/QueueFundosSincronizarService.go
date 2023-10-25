@@ -60,7 +60,12 @@ func (fs *fundosDomainService) QueueFundosSincronizarService(tipo string) {
 		arquivosDomain := &domain.ArquivosDomain{}
 		copier.Copy(arquivosDomain, value)
 
-		fs.repository.CreateArquivosRepository(*arquivosDomain)
+		domain, err := fs.repository.CreateArquivosRepository(*arquivosDomain)
+		if err != nil {
+			logger.Error("Error trying to CreateArquivosRepository", err, "sincronizarFundos")
+		}
+		value.Id = domain.Id
+
 		data, _ := json.Marshal(value)
 		response := response.FundosQueueResponse{
 			Topic: env.GetTopicSincronizar(),
