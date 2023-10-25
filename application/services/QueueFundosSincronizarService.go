@@ -3,11 +3,14 @@ package services
 import (
 	"api-fundos-investimentos/adapter/output/model/response"
 	"api-fundos-investimentos/application/constants"
+	"api-fundos-investimentos/application/domain"
 	"api-fundos-investimentos/configuration/env"
 	"api-fundos-investimentos/configuration/logger"
 	"encoding/json"
 	"strings"
 	"time"
+
+	"github.com/jinzhu/copier"
 )
 
 func (fs *fundosDomainService) QueueFundosSincronizarService(tipo string) {
@@ -54,6 +57,10 @@ func (fs *fundosDomainService) QueueFundosSincronizarService(tipo string) {
 		value.UpdateAt = time.Now()
 		value.Status = constants.ENVIADO
 
+		arquivosDomain := &domain.ArquivosDomain{}
+		copier.Copy(arquivosDomain, value)
+
+		fs.repository.CreateArquivosRepository(*arquivosDomain)
 		data, _ := json.Marshal(value)
 		response := response.FundosQueueResponse{
 			Topic: env.GetTopicSincronizar(),
