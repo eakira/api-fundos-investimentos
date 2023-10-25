@@ -8,7 +8,6 @@ import (
 	"net/http"
 	"os"
 	"path"
-	"strings"
 
 	"github.com/go-resty/resty/v2"
 )
@@ -27,14 +26,10 @@ func NewFundosClient() *fundosClient {
 func (fc *fundosClient) DownloadArquivosCVMPort(file string) *resterrors.RestErr {
 	logger.Info("Init DownloadArquivosCVMPort", "sincronizar")
 
-	files := []string{
-		os.Getenv(CVM_URL),
-		file,
-	}
-	file = strings.Join(files, "")
+	url := os.Getenv(CVM_URL) + file
 
 	//Buscando o arquivo
-	resp, err := http.Get(file)
+	resp, err := http.Get(url)
 	if err != nil {
 		logger.Error("Erro ao tentar baixar o arquivo", err, "sincronizar")
 		return resterrors.NewInternalServerError("Erro ao tentar baixar o arquivo")
@@ -42,21 +37,16 @@ func (fc *fundosClient) DownloadArquivosCVMPort(file string) *resterrors.RestErr
 	defer resp.Body.Close()
 
 	// Criando a pasta do arquivo
-	pasta := env.GetPathArquivosCvm()
-	err = os.MkdirAll(pasta, os.ModePerm)
+	storage := env.GetPathArquivosCvm()
+	storage = storage + path.Dir(file)
+	err = os.MkdirAll(storage, os.ModePerm)
 	if err != nil {
 		logger.Error("Erro ao tentar criar a pasta do arquivo", err, "sincronizar")
 		return resterrors.NewInternalServerError("Erro ao tentar criar a pasta do arquivo")
 	}
 
-	filepath := []string{
-		pasta,
-		path.Base(resp.Request.URL.String()),
-	}
-	file = strings.Join(filepath, "")
-
 	// Criando a pasta do arquivo
-	out, err := os.Create(file)
+	out, err := os.Create(storage + "/" + path.Base(file))
 	if err != nil {
 		logger.Error("Erro ao criar o arquivo", err, "sincronizar")
 		return resterrors.NewInternalServerError("Erro ao criar o arquivo")
