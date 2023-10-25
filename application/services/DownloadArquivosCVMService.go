@@ -21,21 +21,21 @@ func (fs *fundosDomainService) DownloadArquivosCVMService(arquivosDomain domain.
 		return
 	}
 
-	salvando(fs, arquivosDomain)
+	salvandoDownload(fs, arquivosDomain)
 
-	//proximoQueue(fs, arquivosDomain)
+	//proximoQueueDownload(fs, arquivosDomain)
 
 	logger.Info("Finish GetFundosExternoService", "sincronizarFundos")
 }
 
-func salvando(fs *fundosDomainService, arquivosDomain domain.ArquivosDomain) {
+func salvandoDownload(fs *fundosDomainService, arquivosDomain domain.ArquivosDomain) {
 	arquivosDomain.UpdateAt = time.Now()
 	arquivosDomain.Download = true
 	arquivosDomain.Status = constants.DOWNLOAD
 	fs.repository.UpdateArquivosRepository(arquivosDomain)
 }
 
-func proximoQueue(fs *fundosDomainService, arquivosDomain domain.ArquivosDomain) {
+func proximoQueueDownload(fs *fundosDomainService, arquivosDomain domain.ArquivosDomain) {
 	arquivosRequest := request.FundosCvmArquivosQueueRequest{}
 	copier.Copy(arquivosRequest, arquivosDomain)
 
