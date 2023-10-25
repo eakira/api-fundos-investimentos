@@ -9,7 +9,11 @@ import (
 
 func (fs *fundosDomainService) DownloadArquivosCVMService(arquivosDomain domain.ArquivosDomain) {
 	logger.Info("Init GetFundosExternoService", "sincronizarFundos")
-	fs.externo.DownloadArquivosCVMPort(arquivosDomain.Endereco)
+	err := fs.externo.DownloadArquivosCVMPort(arquivosDomain.Endereco)
+	if err != nil {
+		logger.Error("Error trying to DownloadArquivosCVMPort", err, "sincronizarFundos")
+		return
+	}
 
 	arquivosDomain.UpdateAt = time.Now()
 	arquivosDomain.Download = true
