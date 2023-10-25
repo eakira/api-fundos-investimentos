@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"api-fundos-investimentos/adapter/output/model/request"
 	"api-fundos-investimentos/application/port/input"
 
 	"github.com/gin-gonic/gin"
@@ -16,7 +17,7 @@ func NewFundosControllerInterface(
 
 type FundosControllerInterface interface {
 	SincronizarFundosController(c *gin.Context)
-	DownloadArquivosCVMController(folder string)
+	DownloadArquivosCVMController(request.FundosDownloadCvmFilesQueueRequest)
 }
 
 type fundosControllerInterface struct {
