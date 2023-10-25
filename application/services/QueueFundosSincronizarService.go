@@ -4,6 +4,7 @@ import (
 	"api-fundos-investimentos/adapter/output/model/response"
 	"api-fundos-investimentos/configuration/env"
 	"api-fundos-investimentos/configuration/logger"
+	"encoding/json"
 	"fmt"
 	"strings"
 	"time"
@@ -52,17 +53,19 @@ func (fs *fundosDomainService) QueueFundosSincronizarService(tipo string) {
 	logger.Info(
 		fmt.Sprintf("json %v", files),
 		"sincronizar")
-	/*
-		for _, value := range files {
-			response := response.FundosQueueResponse{
-				Topic: env.GetTopicSincronizar(),
-				Queue: "update-all",
-				Data:  []string{value},
-			}
-			fs.queue.Produce(response)
 
+	for _, value := range files {
+
+		data, _ := json.Marshal(value)
+		response := response.FundosQueueResponse{
+			Topic: env.GetTopicSincronizar(),
+			Queue: "update-all",
+			Data:  data,
 		}
-	*/
+		fs.queue.Produce(response)
+
+	}
+
 	logger.Info("Finish QueueFundosExternoService", "sincronizarFundos")
 }
 
