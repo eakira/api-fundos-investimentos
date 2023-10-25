@@ -2,6 +2,7 @@ package services
 
 import (
 	"api-fundos-investimentos/adapter/output/model/response"
+	"api-fundos-investimentos/application/constants"
 	"api-fundos-investimentos/configuration/env"
 	"api-fundos-investimentos/configuration/logger"
 	"encoding/json"
@@ -49,6 +50,9 @@ func (fs *fundosDomainService) QueueFundosSincronizarService(tipo string) {
 	}
 
 	for _, value := range files {
+		value.CreatedAt = time.Now()
+		value.UpdateAt = time.Now()
+		value.Status = constants.ENVIADO
 
 		data, _ := json.Marshal(value)
 		response := response.FundosQueueResponse{
@@ -74,9 +78,9 @@ func getFilesName(arquivos env.ArquivosCVM) []response.FundosDownloadCvmFilesQue
 			arquivos.Extension,
 		}
 		file := response.FundosDownloadCvmFilesQueueResponse{
-			FileName:   strings.Join(array, ""),
-			Referencia: value,
-			Tipo:       arquivos.Tipo,
+			Endereco:    strings.Join(array, ""),
+			Referencia:  value,
+			TipoArquivo: arquivos.Tipo,
 		}
 		files = append(files, file)
 	}
@@ -104,15 +108,15 @@ func getArquivosCadastro(env []string) []response.FundosDownloadCvmFilesQueueRes
 	files := []response.FundosDownloadCvmFilesQueueResponse{}
 
 	file := response.FundosDownloadCvmFilesQueueResponse{
-		FileName:   env[0],
-		Referencia: "2023",
-		Tipo:       env[2],
+		Endereco:    env[0],
+		Referencia:  "2023",
+		TipoArquivo: env[2],
 	}
 	files = append(files, file)
 	file = response.FundosDownloadCvmFilesQueueResponse{
-		FileName:   env[0],
-		Referencia: "2022",
-		Tipo:       env[2],
+		Endereco:    env[0],
+		Referencia:  "2022",
+		TipoArquivo: env[2],
 	}
 	return append(files, file)
 }
