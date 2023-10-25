@@ -9,6 +9,7 @@ type FundosQueueResponse struct {
 }
 
 type FundosDownloadCvmFilesQueueResponse struct {
+	Id          string    `json:"id"`
 	Endereco    string    `json:"endereco"`
 	TipoArquivo string    `json:"tipo-arquivo"`
 	Referencia  string    `json:"referencia"`
