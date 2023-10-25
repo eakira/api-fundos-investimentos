@@ -10,6 +10,10 @@ func GetTopicSincronizar() string {
 	return "sincronizar"
 }
 
+func GetTopicProcessarArquivos() string {
+	return "processar-arquivos"
+}
+
 func GetPathArquivosCvm() string {
 	return "storage/cvm/"
 }
