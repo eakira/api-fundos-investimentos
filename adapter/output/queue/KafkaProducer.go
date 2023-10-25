@@ -29,9 +29,10 @@ func (nc *queueProduce) Produce(response response.FundosQueueResponse) *resterro
 		logger.Error("SendMessage err:", err, "kafkaProduce")
 		return resterrors.NewNotFoundError("Failed to send message, err:")
 	}
+	logger.Info("Finish Kafka Produce", "kafkaProduce")
 
 	logger.Info(
-		fmt.Sprintf("Finish Kafka Produce partition id: %d; offset:%d, value: %v\n", partition, offset, response.Data),
+		fmt.Sprintf("Finish Kafka Produce partition id: %d; offset:%d", partition, offset),
 		"kafkaProduce",
 	)
 	return nil
