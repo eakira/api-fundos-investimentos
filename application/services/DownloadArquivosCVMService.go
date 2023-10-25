@@ -8,6 +8,6 @@ import (
 func (fs *fundosDomainService) DownloadArquivosCVMService(arquivosDomain domain.ArquivosDomain) {
 	logger.Info("Init GetFundosExternoService", "sincronizarFundos")
 
-	//	fs.externo.DownloadArquivosCVMPort(request)
+	fs.externo.DownloadArquivosCVMPort(arquivosDomain.Endereco)
 	logger.Info("Finish GetFundosExternoService", "sincronizarFundos")
 }
