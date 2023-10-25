@@ -11,7 +11,8 @@ import (
 
 func FundosSincronizarListener(
 	message []byte,
-	controller controller.FundosControllerInterface) *resterrors.RestErr {
+	controller controller.FundosControllerInterface,
+) *resterrors.RestErr {
 	logger.Info("Init FundosSincronizarListener", "sincronizar")
 	dados := request.FundosDownloadCvmFilesQueueRequest{}
 
