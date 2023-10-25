@@ -1,5 +1,7 @@
 package response
 
+import "time"
+
 type FundosQueueResponse struct {
 	Topic string
 	Queue string
@@ -7,7 +9,12 @@ type FundosQueueResponse struct {
 }
 
 type FundosDownloadCvmFilesQueueResponse struct {
-	FileName   string `json:"file-name"`
-	Referencia string `json:"referencia"`
-	Tipo       string `json:"tipo"`
+	Endereco    string    `json:"endereco"`
+	TipoArquivo string    `json:"tipo-arquivo"`
+	Referencia  string    `json:"referencia"`
+	Status      string    `json:"status"`
+	Download    string    `json:"download"`
+	Processado  string    `json:"processado"`
+	CreatedAt   time.Time `json:"created-at"`
+	UpdateAt    time.Time `json:"update-at"`
 }
