@@ -9,3 +9,7 @@ func GetKafkaHost() string {
 func GetTopicSincronizar() string {
 	return "sincronizar"
 }
+
+func GetPathArquivosCvm() string {
+	return "storage/cvm/"
+}
