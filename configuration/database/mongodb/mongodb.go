@@ -10,7 +10,7 @@ import (
 
 var (
 	MONGODB_URL      = "MONGODB_URL"
-	MONGODB_DATABASE = "MONGODB_USER_DB"
+	MONGODB_DATABASE = "MONGODB_DATABASE"
 )
 
 func NewMongoDBConnection(
