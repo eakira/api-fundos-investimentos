@@ -39,6 +39,7 @@ func (ur *fundosRepository) CreateArquivosRepository(
 
 	arquivosDomainReturn := &domain.ArquivosDomain{}
 	copier.Copy(arquivosDomainReturn, arquivosEntity)
+	arquivosDomainReturn.Id = arquivosEntity.ID.Hex()
 
 	return arquivosDomainReturn, nil
 }
