@@ -15,6 +15,44 @@ import (
 
 func (fs *fundosDomainService) QueueFundosSincronizarService(tipo string) {
 	logger.Info("Init QueueFundosExternoService", "sincronizarFundos")
+
+	files := getFiles(tipo)
+
+	for _, value := range files {
+		value.CreatedAt = time.Now()
+		value.UpdateAt = time.Now()
+		value.Status = constants.ENVIADO
+
+		arquivosDomain := &domain.ArquivosDomain{}
+		copier.Copy(arquivosDomain, value)
+
+		domain, err := fs.repository.CreateArquivosRepository(*arquivosDomain)
+		if err != nil {
+			logger.Error("Error trying to CreateArquivosRepository", err, "sincronizarFundos")
+		}
+		value.Id = domain.Id
+
+		nextQueue(fs, value)
+
+	}
+
+	logger.Info("Finish QueueFundosExternoService", "sincronizarFundos")
+}
+
+func nextQueue(
+	fs *fundosDomainService,
+	value response.FundosDownloadCvmFilesQueueResponse,
+) {
+	data, _ := json.Marshal(value)
+	response := response.FundosQueueResponse{
+		Topic: env.GetTopicSincronizar(),
+		Queue: "update-all",
+		Data:  data,
+	}
+	fs.queue.Produce(response)
+
+}
+func getFiles(tipo string) []response.FundosDownloadCvmFilesQueueResponse {
 	files := []response.FundosDownloadCvmFilesQueueResponse{}
 
 	switch tipo {
@@ -52,31 +90,7 @@ func (fs *fundosDomainService) QueueFundosSincronizarService(tipo string) {
 
 	}
 
-	for _, value := range files {
-		value.CreatedAt = time.Now()
-		value.UpdateAt = time.Now()
-		value.Status = constants.ENVIADO
-
-		arquivosDomain := &domain.ArquivosDomain{}
-		copier.Copy(arquivosDomain, value)
-
-		domain, err := fs.repository.CreateArquivosRepository(*arquivosDomain)
-		if err != nil {
-			logger.Error("Error trying to CreateArquivosRepository", err, "sincronizarFundos")
-		}
-		value.Id = domain.Id
-
-		data, _ := json.Marshal(value)
-		response := response.FundosQueueResponse{
-			Topic: env.GetTopicSincronizar(),
-			Queue: "update-all",
-			Data:  data,
-		}
-		fs.queue.Produce(response)
-
-	}
-
-	logger.Info("Finish QueueFundosExternoService", "sincronizarFundos")
+	return files
 }
 
 func getFilesName(arquivos env.ArquivosCVM) []response.FundosDownloadCvmFilesQueueResponse {
