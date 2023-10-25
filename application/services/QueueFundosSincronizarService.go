@@ -5,7 +5,6 @@ import (
 	"api-fundos-investimentos/configuration/env"
 	"api-fundos-investimentos/configuration/logger"
 	"encoding/json"
-	"fmt"
 	"strings"
 	"time"
 )
@@ -13,7 +12,6 @@ import (
 func (fs *fundosDomainService) QueueFundosSincronizarService(tipo string) {
 	logger.Info("Init QueueFundosExternoService", "sincronizarFundos")
 	files := []response.FundosDownloadCvmFilesQueueResponse{}
-	logger.Info(time.Now().AddDate(0, -1, 0).Format("2006-01-02"), "sincronizarFundos")
 
 	switch tipo {
 	case "cadastros":
@@ -49,10 +47,6 @@ func (fs *fundosDomainService) QueueFundosSincronizarService(tipo string) {
 		files = getFilesName(env.GetConfigCvmArquivosPerfilMensal())
 
 	}
-
-	logger.Info(
-		fmt.Sprintf("json %v", files),
-		"sincronizar")
 
 	for _, value := range files {
 
