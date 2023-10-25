@@ -10,10 +10,11 @@ type ArquivosCVM struct {
 	DataInicial string
 	DataFinal   string
 	Formato     string
+	Outro       string
+	tipo        string
 	Ano         int
 	Mes         int
 	Dia         int
-	Outro       string
 }
 
 func GetConfigCvmBalancete() ArquivosCVM {
@@ -26,6 +27,7 @@ func GetConfigCvmBalancete() ArquivosCVM {
 		Ano:         0,
 		Mes:         1,
 		Dia:         0,
+		tipo:        "balancete",
 	}
 }
 
@@ -39,6 +41,7 @@ func GetConfigCvmBalanceteHist() ArquivosCVM {
 		Ano:         0,
 		Mes:         1,
 		Dia:         0,
+		tipo:        "balancete",
 	}
 }
 
@@ -52,6 +55,7 @@ func GetConfigCvmCda() ArquivosCVM {
 		Ano:         0,
 		Mes:         1,
 		Dia:         0,
+		tipo:        "cda",
 	}
 }
 
@@ -65,6 +69,7 @@ func GetConfigCvmCdaHist() ArquivosCVM {
 		Ano:         1,
 		Mes:         0,
 		Dia:         0,
+		tipo:        "cda",
 	}
 }
 
@@ -78,6 +83,7 @@ func GetConfigCvmArquivosPerfilMensal() ArquivosCVM {
 		Ano:         0,
 		Mes:         1,
 		Dia:         0,
+		tipo:        "perfil-mensal",
 	}
 }
 
@@ -91,6 +97,7 @@ func GetConfigCvmInformacoesComplementares() ArquivosCVM {
 		Ano:         0,
 		Mes:         1,
 		Dia:         0,
+		tipo:        "informacoes-complementares",
 	}
 }
 
@@ -105,6 +112,7 @@ func GetConfigCvmExtrato() ArquivosCVM {
 		Ano:         1,
 		Mes:         0,
 		Dia:         0,
+		tipo:        "extrato",
 	}
 }
 
@@ -118,6 +126,7 @@ func GetConfigInformacaoDiaria() ArquivosCVM {
 		Ano:         0,
 		Mes:         1,
 		Dia:         0,
+		tipo:        "informacao-diaria",
 	}
 }
 
@@ -131,6 +140,7 @@ func GetConfigInformacaoDiariaHist() ArquivosCVM {
 		Ano:         1,
 		Mes:         0,
 		Dia:         0,
+		tipo:        "informacao-diaria",
 	}
 }
 
@@ -144,6 +154,7 @@ func GetConfigCvmArquivosLaminas() ArquivosCVM {
 		Ano:         0,
 		Mes:         1,
 		Dia:         0,
+		tipo:        "lamina",
 	}
 }
 
@@ -157,6 +168,7 @@ func GetConfigCvmArquivosLaminasHist() ArquivosCVM {
 		Ano:         0,
 		Mes:         1,
 		Dia:         0,
+		tipo:        "lamina",
 	}
 }
 
@@ -164,5 +176,6 @@ func GetConfigCvmArquivosCadastros() []string {
 	return []string{
 		"FI/CAD/DADOS/cad_fi.csv",
 		"FI/CAD/DADOS/cad_fi_hist.zip",
+		"cadastros",
 	}
 }
