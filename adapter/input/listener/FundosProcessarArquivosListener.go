@@ -24,7 +24,7 @@ func FundosProcessarArquivosListener(
 		fmt.Sprintf("json %s", dados),
 		"sincronizar")
 
-	controller.DownloadArquivosCVMController(dados)
+	controller.ProcessarArquivosCVMController(dados)
 
 	logger.Info("Finish FundosProcessarArquivosListener", "sincronizar")
 
