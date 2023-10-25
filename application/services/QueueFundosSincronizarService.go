@@ -121,7 +121,7 @@ func getArquivosCadastro(env []string) []response.FundosDownloadCvmFilesQueueRes
 	}
 	files = append(files, file)
 	file = response.FundosDownloadCvmFilesQueueResponse{
-		Endereco:    env[0],
+		Endereco:    env[1],
 		Referencia:  "2022",
 		TipoArquivo: env[2],
 	}
