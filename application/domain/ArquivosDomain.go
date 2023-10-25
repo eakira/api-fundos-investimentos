@@ -3,6 +3,7 @@ package domain
 import "time"
 
 type ArquivosDomain struct {
+	Id          string
 	Endereco    string
 	TipoArquivo string
 	Referencia  string
