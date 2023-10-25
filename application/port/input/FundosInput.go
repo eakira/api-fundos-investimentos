@@ -1,9 +1,11 @@
 package input
 
-import "api-fundos-investimentos/adapter/output/model/request"
+import (
+	"api-fundos-investimentos/application/domain"
+)
 
 type FundosDomainService interface {
 	QueueFundosSincronizarService(string)
 	GetFundosExternoService()
-	DownloadArquivosCVMService(request.FundosDownloadCvmFilesQueueRequest)
+	DownloadArquivosCVMService(domain.ArquivosDomain)
 }

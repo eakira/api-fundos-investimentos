@@ -3,12 +3,12 @@ package domain
 import "time"
 
 type ArquivosDomain struct {
-	endereco    string
-	tipoArquivo string
-	referencia  string
-	status      string
-	download    bool
-	processado  bool
-	createdAt   time.Time
-	updateAt    time.Time
+	Endereco    string
+	TipoArquivo string
+	Referencia  string
+	Status      string
+	Download    bool
+	Processado  bool
+	CreatedAt   time.Time
+	UpdateAt    time.Time
 }

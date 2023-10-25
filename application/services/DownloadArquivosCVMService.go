@@ -1,11 +1,11 @@
 package services
 
 import (
-	"api-fundos-investimentos/adapter/output/model/request"
+	"api-fundos-investimentos/application/domain"
 	"api-fundos-investimentos/configuration/logger"
 )
 
-func (fs *fundosDomainService) DownloadArquivosCVMService(request request.FundosDownloadCvmFilesQueueRequest) {
+func (fs *fundosDomainService) DownloadArquivosCVMService(arquivosDomain domain.ArquivosDomain) {
 	logger.Info("Init GetFundosExternoService", "sincronizarFundos")
 
 	//	fs.externo.DownloadArquivosCVMPort(request)
