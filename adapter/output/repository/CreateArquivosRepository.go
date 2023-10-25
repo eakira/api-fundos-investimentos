@@ -24,6 +24,10 @@ func (ur *fundosRepository) CreateArquivosRepository(
 	copier.Copy(arquivosEntity, arquivosDomain)
 
 	result, err := collection.InsertOne(context.Background(), arquivosEntity)
+	if err != nil {
+		return nil, resterrors.NewInternalServerError(err.Error())
+	}
+
 	logger.Info(
 		fmt.Sprintf("Domain: %v", arquivosDomain),
 		"createArquivos")
