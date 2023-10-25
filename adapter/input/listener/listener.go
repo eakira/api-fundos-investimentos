@@ -60,7 +60,7 @@ func switchCaseTopic(
 
 	switch topic {
 	case env.GetTopicSincronizar():
-		return FundosSincroniszarListener(message, fundosController)
+		return FundosSincronizarListener(message, fundosController)
 	default:
 		return resterrors.NewNotFoundError(
 			fmt.Sprintf("Queue not found: %s", topic),
