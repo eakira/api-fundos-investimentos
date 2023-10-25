@@ -11,7 +11,7 @@ type ArquivosCVM struct {
 	DataFinal   string
 	Formato     string
 	Outro       string
-	tipo        string
+	Tipo        string
 	Ano         int
 	Mes         int
 	Dia         int
@@ -27,7 +27,7 @@ func GetConfigCvmBalancete() ArquivosCVM {
 		Ano:         0,
 		Mes:         1,
 		Dia:         0,
-		tipo:        "balancete",
+		Tipo:        "balancete",
 	}
 }
 
@@ -41,7 +41,7 @@ func GetConfigCvmBalanceteHist() ArquivosCVM {
 		Ano:         0,
 		Mes:         1,
 		Dia:         0,
-		tipo:        "balancete",
+		Tipo:        "balancete",
 	}
 }
 
@@ -55,7 +55,7 @@ func GetConfigCvmCda() ArquivosCVM {
 		Ano:         0,
 		Mes:         1,
 		Dia:         0,
-		tipo:        "cda",
+		Tipo:        "cda",
 	}
 }
 
@@ -69,7 +69,7 @@ func GetConfigCvmCdaHist() ArquivosCVM {
 		Ano:         1,
 		Mes:         0,
 		Dia:         0,
-		tipo:        "cda",
+		Tipo:        "cda",
 	}
 }
 
@@ -83,7 +83,7 @@ func GetConfigCvmArquivosPerfilMensal() ArquivosCVM {
 		Ano:         0,
 		Mes:         1,
 		Dia:         0,
-		tipo:        "perfil-mensal",
+		Tipo:        "perfil-mensal",
 	}
 }
 
@@ -97,7 +97,7 @@ func GetConfigCvmInformacoesComplementares() ArquivosCVM {
 		Ano:         0,
 		Mes:         1,
 		Dia:         0,
-		tipo:        "informacoes-complementares",
+		Tipo:        "informacoes-complementares",
 	}
 }
 
@@ -112,7 +112,7 @@ func GetConfigCvmExtrato() ArquivosCVM {
 		Ano:         1,
 		Mes:         0,
 		Dia:         0,
-		tipo:        "extrato",
+		Tipo:        "extrato",
 	}
 }
 
@@ -126,7 +126,7 @@ func GetConfigInformacaoDiaria() ArquivosCVM {
 		Ano:         0,
 		Mes:         1,
 		Dia:         0,
-		tipo:        "informacao-diaria",
+		Tipo:        "informacao-diaria",
 	}
 }
 
@@ -140,7 +140,7 @@ func GetConfigInformacaoDiariaHist() ArquivosCVM {
 		Ano:         1,
 		Mes:         0,
 		Dia:         0,
-		tipo:        "informacao-diaria",
+		Tipo:        "informacao-diaria",
 	}
 }
 
@@ -154,7 +154,7 @@ func GetConfigCvmArquivosLaminas() ArquivosCVM {
 		Ano:         0,
 		Mes:         1,
 		Dia:         0,
-		tipo:        "lamina",
+		Tipo:        "lamina",
 	}
 }
 
@@ -168,7 +168,7 @@ func GetConfigCvmArquivosLaminasHist() ArquivosCVM {
 		Ano:         0,
 		Mes:         1,
 		Dia:         0,
-		tipo:        "lamina",
+		Tipo:        "lamina",
 	}
 }
 
