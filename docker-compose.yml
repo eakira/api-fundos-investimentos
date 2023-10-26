@@ -19,7 +19,7 @@ services:
     networks:
       - api-network
   kafka:
-    image: 'bitnami/kafka:2.8.0'
+    image: 'bitnami/kafka:latest'
     ports:
       - '9092:9092'
     environment:
