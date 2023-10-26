@@ -8,4 +8,5 @@ type FundosDomainService interface {
 	QueueFundosSincronizarService(string)
 	GetFundosExternoService()
 	DownloadArquivosCVMService(domain.ArquivosDomain)
+	ProcessarArquivosCVMService(domain.ArquivosDomain)
 }
