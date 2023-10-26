@@ -13,7 +13,6 @@ func (fc *fundosControllerInterface) ProcessarArquivosCVMController(request requ
 
 	arquivoDomain := &domain.ArquivosDomain{}
 	copier.Copy(arquivoDomain, request)
-
-	fc.service.DownloadArquivosCVMService(*arquivoDomain)
+	fc.service.ProcessarArquivosCVMService(*arquivoDomain)
 
 }
