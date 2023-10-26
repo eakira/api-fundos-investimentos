@@ -6,6 +6,7 @@ import (
 	"api-fundos-investimentos/configuration/logger"
 	"api-fundos-investimentos/configuration/resterrors"
 	"fmt"
+	"sync"
 
 	"github.com/IBM/sarama"
 )
@@ -44,6 +45,7 @@ func initProduce() (sarama.SyncProducer, *resterrors.RestErr) {
 	config := sarama.NewConfig()
 	config.Producer.Return.Successes = true
 	config.Producer.Return.Errors = true
+	config.Producer.MaxMessageBytes = 10000000
 
 	producer, err := sarama.NewSyncProducer([]string{KAFKA_HOST}, config)
 	if err != nil {
@@ -51,4 +53,32 @@ func initProduce() (sarama.SyncProducer, *resterrors.RestErr) {
 		return nil, resterrors.NewNotFoundError("Failed to initialize NewSyncProducer, err:")
 	}
 	return producer, nil
+}
+
+func (nc *queueProduce) ProduceLote(
+	responseChan chan response.FundosQueueResponse,
+	wg *sync.WaitGroup,
+) *resterrors.RestErr {
+	logger.Info("Init Kafka Produce", "kafkaProduce")
+
+	producer, _ := initProduce()
+	defer producer.Close()
+
+	for response := range responseChan {
+		msg := &sarama.ProducerMessage{Topic: response.Topic, Key: nil, Value: sarama.StringEncoder(response.Data)}
+		partition, offset, err := producer.SendMessage(msg)
+		if err != nil {
+			logger.Error("SendMessage err:", err, "kafkaProduce")
+			//			return resterrors.NewNotFoundError("Failed to send message, err:")
+		}
+		logger.Info(
+			fmt.Sprintf("Finish Kafka Produce partition id: %d; offset:%d", partition, offset),
+			"kafkaProduce",
+		)
+	}
+	wg.Done()
+
+	logger.Info("Finish Kafka Produce", "kafkaProduce")
+
+	return nil
 }
