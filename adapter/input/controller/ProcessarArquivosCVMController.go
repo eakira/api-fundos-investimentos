@@ -9,7 +9,7 @@ import (
 )
 
 func (fc *fundosControllerInterface) ProcessarArquivosCVMController(request request.FundosCvmArquivosQueueRequest) {
-	logger.Info("Init DownloadArquivosCVMController", "sincronizarFundos")
+	logger.Info("Init ProcessarArquivosCVMController", "sincronizarFundos")
 
 	arquivoDomain := &domain.ArquivosDomain{}
 	copier.Copy(arquivoDomain, request)
