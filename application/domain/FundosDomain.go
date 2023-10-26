@@ -6,7 +6,7 @@ type FundosDomain struct {
 	Id                    string
 	AdministradorNome     string
 	AuditorNome           string
-	CodigoCVM             int16
+	CodigoCVM             int
 	Classe                string
 	ClasseAnbima          string
 	AdministradorCNPJ     string
