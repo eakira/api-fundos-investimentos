@@ -12,6 +12,7 @@ import (
 	"io"
 	"log"
 	"os"
+	"strings"
 	"sync"
 	"time"
 
@@ -76,7 +77,10 @@ func processaCsv(
 	cabecalhoChan chan []string,
 	arquivosDomain domain.ArquivosDomain,
 ) {
-	file, err := os.Open(env.GetPathArquivosCvm() + arquivosDomain.Endereco)
+	aquivo := strings.Replace(arquivosDomain.Endereco, ".zip", ".csv", 1)
+
+	file, err := os.Open(env.GetPathArquivosCvm() + aquivo)
+
 	if err != nil {
 		panic(err)
 	}
@@ -127,5 +131,6 @@ func proximoQueue(
 		}
 		mensagemChan <- response
 	}
+	close(mensagemChan)
 
 }
