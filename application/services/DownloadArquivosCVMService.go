@@ -15,15 +15,17 @@ import (
 
 func (fs *fundosDomainService) DownloadArquivosCVMService(arquivosDomain domain.ArquivosDomain) {
 	logger.Info("Init GetFundosExternoService", "sincronizarFundos")
-	err := fs.externo.DownloadArquivosCVMPort(arquivosDomain.Endereco)
-	if err != nil {
-		logger.Error("Error trying to DownloadArquivosCVMPort", err, "sincronizarFundos")
-		return
-	}
 
+	/*
+		err := fs.externo.DownloadArquivosCVMPort(arquivosDomain.Endereco)
+		if err != nil {
+			logger.Error("Error trying to DownloadArquivosCVMPort", err, "sincronizarFundos")
+			return
+		}
+	*/
 	salvandoDownload(fs, arquivosDomain)
 
-	//proximoQueueDownload(fs, arquivosDomain)
+	proximoQueueDownload(fs, arquivosDomain)
 
 	logger.Info("Finish GetFundosExternoService", "sincronizarFundos")
 }
@@ -36,12 +38,12 @@ func salvandoDownload(fs *fundosDomainService, arquivosDomain domain.ArquivosDom
 }
 
 func proximoQueueDownload(fs *fundosDomainService, arquivosDomain domain.ArquivosDomain) {
-	arquivosRequest := request.FundosCvmArquivosQueueRequest{}
+	arquivosRequest := &request.FundosCvmArquivosQueueRequest{}
 	copier.Copy(arquivosRequest, arquivosDomain)
 
 	data, _ := json.Marshal(arquivosRequest)
 	response := response.FundosQueueResponse{
-		Topic: env.GetTopicSincronizar(),
+		Topic: env.GetTopicProcessarArquivos(),
 		Queue: "update-all",
 		Data:  data,
 	}
