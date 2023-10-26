@@ -65,12 +65,12 @@ func getFiles(tipo string) []response.FundosDownloadCvmFilesQueueResponse {
 		files = append(files, histfiles...)
 
 	case "cda":
-		files = getFilesName(env.GetConfigCvmCda())
-		histfiles := getFilesName(env.GetConfigCvmCdaHist())
-		files = append(files, histfiles...)
+		//		files = getFilesName(env.GetConfigCvmCda())
+		//		histfiles := getFilesName(env.GetConfigCvmCdaHist())
+		//		files = append(files, histfiles...)
 
 	case "informacoes-complementares":
-		files = getFilesName(env.GetConfigCvmInformacoesComplementares())
+		//		files = getFilesName(env.GetConfigCvmInformacoesComplementares())
 
 	case "extrato":
 		files = getFilesName(env.GetConfigCvmExtrato())
@@ -81,12 +81,12 @@ func getFiles(tipo string) []response.FundosDownloadCvmFilesQueueResponse {
 		files = append(files, histfiles...)
 
 	case "lamina":
-		files = getFilesName(env.GetConfigCvmArquivosLaminas())
-		histfiles := getFilesName(env.GetConfigCvmArquivosLaminasHist())
-		files = append(files, histfiles...)
+		//		files = getFilesName(env.GetConfigCvmArquivosLaminas())
+		//		histfiles := getFilesName(env.GetConfigCvmArquivosLaminasHist())
+		//		files = append(files, histfiles...)
 
 	case "perfil-mensal":
-		files = getFilesName(env.GetConfigCvmArquivosPerfilMensal())
+		//		files = getFilesName(env.GetConfigCvmArquivosPerfilMensal())
 
 	}
 
