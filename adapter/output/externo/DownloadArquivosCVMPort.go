@@ -4,6 +4,7 @@ import (
 	"api-fundos-investimentos/configuration/env"
 	"api-fundos-investimentos/configuration/logger"
 	"api-fundos-investimentos/configuration/resterrors"
+	"archive/zip"
 	"io"
 	"net/http"
 	"os"
@@ -48,6 +49,25 @@ func (fc *fundosClient) DownloadArquivosCVMPort(file string) *resterrors.RestErr
 	}
 	logger.Info("Finish DownloadArquivosCVMPort", "sincronizar")
 
+	if file[len(file)-3:] == "zip" {
+		unzip(storage + "/" + path.Base(file))
+	}
+
 	return nil
 
+}
+
+func unzip(filename string) {
+	reader, _ := zip.OpenReader(filename)
+	defer reader.Close()
+	for _, file := range reader.File {
+		in, _ := file.Open()
+		defer in.Close()
+		relname := path.Join(path.Dir(filename), file.Name)
+		dir := path.Dir(relname)
+		os.MkdirAll(dir, 0777)
+		out, _ := os.Create(relname)
+		defer out.Close()
+		io.Copy(out, in)
+	}
 }
