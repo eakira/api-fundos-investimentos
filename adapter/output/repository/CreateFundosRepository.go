@@ -15,7 +15,7 @@ func (ur *fundosRepository) CreateFundosRepository(
 	fundosDomain domain.FundosDomain,
 ) (*domain.FundosDomain, *resterrors.RestErr) {
 
-	logger.Info("Init createUser repository", "createArquivos")
+	logger.Info("Init CreateFundosRepository", "createFundos")
 
 	collection := ur.databaseConnection.Collection(env.GetCollectionFundos())
 
@@ -28,11 +28,11 @@ func (ur *fundosRepository) CreateFundosRepository(
 	}
 
 	if err != nil {
-		logger.Error("Error trying to create user", err, "createArquivos")
+		logger.Error("Error trying to CreateFundosRepository", err, "createFundos")
 		return nil, resterrors.NewInternalServerError(err.Error())
 	}
 
-	logger.Info("CreateUser repository executed successfully", "createArquivos")
+	logger.Info("CreateFundosRepository executed successfully", "createFundos")
 
 	return &fundosDomain, nil
 }

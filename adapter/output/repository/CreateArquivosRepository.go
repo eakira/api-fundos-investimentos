@@ -16,7 +16,7 @@ import (
 func (ur *fundosRepository) CreateArquivosRepository(
 	arquivosDomain domain.ArquivosDomain,
 ) (*domain.ArquivosDomain, *resterrors.RestErr) {
-	logger.Info("Init createUser repository", "createArquivos")
+	logger.Info("Init CreateArquivosRepository", "createArquivos")
 
 	collection := ur.databaseConnection.Collection(env.GetCollectionArquivos())
 
@@ -33,13 +33,13 @@ func (ur *fundosRepository) CreateArquivosRepository(
 		"createArquivos")
 
 	if err != nil {
-		logger.Error("Error trying to create user", err, "createArquivos")
+		logger.Error("Error trying to CreateArquivosRepository", err, "createArquivos")
 		return nil, resterrors.NewInternalServerError(err.Error())
 	}
 
 	arquivosEntity.ID = result.InsertedID.(primitive.ObjectID)
 
-	logger.Info("CreateUser repository executed successfully", "createArquivos")
+	logger.Info("CreateArquivosRepository executed successfully", "createArquivos")
 
 	arquivosDomainReturn := &domain.ArquivosDomain{}
 	copier.Copy(arquivosDomainReturn, arquivosEntity)

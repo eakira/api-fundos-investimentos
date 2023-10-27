@@ -15,7 +15,7 @@ func (ur *fundosRepository) CreateBalecenteRepository(
 	balanceteDomain domain.BalanceteDomain,
 ) (*domain.BalanceteDomain, *resterrors.RestErr) {
 
-	logger.Info("Init createUser repository", "createArquivos")
+	logger.Info("Init CreateBalecenteRepository", "createBalacente")
 
 	collection := ur.databaseConnection.Collection(env.GetCollectionBalancete())
 
@@ -28,11 +28,11 @@ func (ur *fundosRepository) CreateBalecenteRepository(
 	}
 
 	if err != nil {
-		logger.Error("Error trying to create user", err, "createArquivos")
+		logger.Error("Error trying to CreateBalecenteRepository", err, "createBalacente")
 		return nil, resterrors.NewInternalServerError(err.Error())
 	}
 
-	logger.Info("CreateUser repository executed successfully", "createArquivos")
+	logger.Info("CreateBalecenteRepository executed successfully", "createBalacente")
 
 	return &balanceteDomain, nil
 }
