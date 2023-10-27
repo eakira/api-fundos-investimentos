@@ -8,11 +8,12 @@ import (
 	"github.com/jinzhu/copier"
 )
 
-func (fc *fundosControllerInterface) CreateFundosController(request request.FundosCvmArquivosQueueRequest) {
+func (fc *fundosControllerInterface) CreateFundosController(request request.FundosCadastrosRequest) {
 	logger.Info("Init CreateFundosController", "sincronizarFundos")
 
-	arquivoDomain := &domain.ArquivosDomain{}
-	copier.Copy(arquivoDomain, request)
-	fc.service.ProcessarArquivosCVMService(*arquivoDomain)
+	domain := &domain.FundosDomain{}
+	copier.Copy(domain, request)
+	fc.service.CreateFundosService(*domain)
+	logger.Info("Finish CreateFundosController", "sincronizarFundos")
 
 }
