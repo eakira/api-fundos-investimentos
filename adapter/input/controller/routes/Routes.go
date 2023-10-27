@@ -14,6 +14,8 @@ func InitRoutes(
 	{
 		v1.GET("sincronizar", fundosController.SincronizarFundosController)
 
+		v1.GET("config-kafka", fundosController.CreateTopicController)
+
 	}
 
 }
