@@ -29,7 +29,7 @@ func GetCollectionInformacaoDiaria() string {
 }
 
 func GetCollectionLamina() string {
-	return "informacao-diaria"
+	return "lamina"
 }
 
 func GetCollectionPerfilMensal() string {
