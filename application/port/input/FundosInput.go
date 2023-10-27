@@ -12,4 +12,5 @@ type FundosDomainService interface {
 	CreateFundosService(domain.FundosDomain)
 	CreateBalanceteService(domain.BalanceteDomain)
 	CreateExtratoService(domain.ExtratoDomain)
+	CreateInformacaoDiariaService(domain.InformacaoDiariaDomain)
 }

@@ -43,6 +43,9 @@ func FundosPersistenciaDadosListener(
 		controller.CreateExtratoController(dados)
 
 	case "informacao-diaria":
+		dados := request.InformacaoDiariaRequest{}
+		json.Unmarshal(message, &dados)
+		controller.CreateInformacaoDiariaController(dados)
 
 	case "lamina":
 		//		São vários arquivos precisa verificar quais arquivos vou usar

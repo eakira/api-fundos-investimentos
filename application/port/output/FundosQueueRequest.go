@@ -27,6 +27,10 @@ type FundosPort interface {
 	CreateExtratoRepository(
 		extratoDomain domain.ExtratoDomain,
 	) (*domain.ExtratoDomain, *resterrors.RestErr)
+
+	CreateInformacaoDiariaRepository(
+		informacaoDiariaDomain domain.InformacaoDiariaDomain,
+	) (*domain.InformacaoDiariaDomain, *resterrors.RestErr)
 }
 
 type FundosExternoPort interface {
