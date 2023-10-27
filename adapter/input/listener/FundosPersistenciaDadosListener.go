@@ -6,7 +6,6 @@ import (
 	"api-fundos-investimentos/configuration/logger"
 	"api-fundos-investimentos/configuration/resterrors"
 	"encoding/json"
-	"fmt"
 )
 
 func FundosPersistenciaDadosListener(
@@ -26,11 +25,11 @@ func FundosPersistenciaDadosListener(
 		dados := request.FundosCadastrosRequest{}
 		json.Unmarshal(message, &dados)
 		controller.CreateFundosController(dados)
-		fmt.Println(dados)
-		fmt.Println(mapa)
-		panic("teste")
 
 	case "balancete":
+		dados := request.BalanceteRequest{}
+		json.Unmarshal(message, &dados)
+		controller.CreateBalanceteController(dados)
 
 	case "cda":
 		//		files = getFilesName(env.GetConfigCvmCda())
