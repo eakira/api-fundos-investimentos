@@ -19,7 +19,7 @@ type FundosControllerInterface interface {
 	SincronizarFundosController(c *gin.Context)
 	DownloadArquivosCVMController(request.FundosCvmArquivosQueueRequest)
 	ProcessarArquivosCVMController(request.FundosCvmArquivosQueueRequest)
-	CreateFundosController(request.FundosCvmArquivosQueueRequest)
+	CreateFundosController(request.FundosCadastrosRequest)
 }
 
 type fundosControllerInterface struct {

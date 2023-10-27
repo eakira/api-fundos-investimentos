@@ -15,6 +15,10 @@ type FundosPort interface {
 	UpdateArquivosRepository(
 		arquivosDomain domain.ArquivosDomain,
 	) *resterrors.RestErr
+
+	CreateFundosRepository(
+		fundosDomain domain.FundosDomain,
+	) (*domain.FundosDomain, *resterrors.RestErr)
 }
 
 type FundosExternoPort interface {

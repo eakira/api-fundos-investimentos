@@ -9,4 +9,5 @@ type FundosDomainService interface {
 	GetFundosExternoService()
 	DownloadArquivosCVMService(domain.ArquivosDomain)
 	ProcessarArquivosCVMService(domain.ArquivosDomain)
+	CreateFundosService(domain.FundosDomain)
 }

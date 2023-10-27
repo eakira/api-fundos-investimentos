@@ -1,12 +1,10 @@
 package domain
 
-import "time"
-
 type FundosDomain struct {
 	Id                    string
 	AdministradorNome     string
 	AuditorNome           string
-	CodigoCVM             int
+	CodigoCVM             string
 	Classe                string
 	ClasseAnbima          string
 	AdministradorCNPJ     string
@@ -20,15 +18,15 @@ type FundosDomain struct {
 	Custodiante           string
 	FundoNome             string
 	Diretor               string
-	DataCancelamento      time.Time
-	DataConstituicao      time.Time
-	DataFim               time.Time
-	DataInicio            time.Time
-	DataInicioClasse      time.Time
-	DataInicioSocial      time.Time
-	DataInicioSituacao    time.Time
-	DataPatrimonioLiquido time.Time
-	DataRegistro          time.Time
+	DataCancelamento      string
+	DataConstituicao      string
+	DataFim               string
+	DataInicio            string
+	DataInicioClasse      string
+	DataInicioSocial      string
+	DataInicioSituacao    string
+	DataPatrimonioLiquido string
+	DataRegistro          string
 	Entidade              string
 	CotasPossui           string
 	Exclusivo             string
@@ -40,9 +38,9 @@ type FundosDomain struct {
 	PublicoAlvo           string
 	IndicadorDesempenho   string
 	Situacao              string
-	TaxaAdm               float64
-	TaxaPerformance       float64
+	TaxaAdm               string
+	TaxaPerformance       string
 	TipoFundo             string
 	TributacaoLongoPrazo  string
-	ValorPatriminioLiq    float64
+	ValorPatriminioLiq    string
 }
