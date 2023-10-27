@@ -24,12 +24,12 @@ func initConsume() (sarama.Consumer, *resterrors.RestErr) {
 	return consumer, nil
 }
 
-func Consume(topic string, fundosController controller.FundosControllerInterface) {
+func Consume(topic string, partition int32, fundosController controller.FundosControllerInterface) {
 	logger.Info(fmt.Sprintf("Init Listener: %s", topic), "listener")
 	consumer, _ := initConsume()
 	defer consumer.Close()
 
-	partitionConsumer, err := consumer.ConsumePartition(topic, 0, sarama.OffsetNewest)
+	partitionConsumer, err := consumer.ConsumePartition(topic, partition, sarama.OffsetNewest)
 	if err != nil {
 		log.Fatal("ConsumePartition err: ", err)
 		resterrors.NewNotFoundError("ConsumePartition err:")

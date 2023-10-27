@@ -11,8 +11,10 @@ import (
 	"api-fundos-investimentos/configuration/database/mongodb"
 	"api-fundos-investimentos/configuration/logger"
 	"context"
+	"fmt"
 	"log"
 	"os"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
@@ -40,7 +42,12 @@ func main() {
 
 	x := os.Args
 	if len(x) > 1 {
-		listener.Consume(x[1], fundosController)
+		partition := 0
+		if len(x) == 3 {
+			partition, _ = strconv.Atoi(x[2])
+			fmt.Println(int32(partition))
+		}
+		listener.Consume(x[1], int32(partition), fundosController)
 	}
 
 	router := gin.Default()
