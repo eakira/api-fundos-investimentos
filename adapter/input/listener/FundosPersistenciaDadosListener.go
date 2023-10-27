@@ -32,21 +32,20 @@ func FundosPersistenciaDadosListener(
 		controller.CreateBalanceteController(dados)
 
 	case "cda":
-		//		files = getFilesName(env.GetConfigCvmCda())
-		//		histfiles := getFilesName(env.GetConfigCvmCdaHist())
-		//		files = append(files, histfiles...)
+		//		São vários arquivos precisa verificar quais arquivos vou usar
 
 	case "informacoes-complementares":
-		//		files = getFilesName(env.GetConfigCvmInformacoesComplementares())
+		//		São vários arquivos precisa verificar quais arquivos vou usar
 
 	case "extrato":
+		dados := request.ExtratoRequest{}
+		json.Unmarshal(message, &dados)
+		controller.CreateExtratoController(dados)
 
 	case "informacao-diaria":
 
 	case "lamina":
-		//		files = getFilesName(env.GetConfigCvmArquivosLaminas())
-		//		histfiles := getFilesName(env.GetConfigCvmArquivosLaminasHist())
-		//		files = append(files, histfiles...)
+		//		São vários arquivos precisa verificar quais arquivos vou usar
 
 	case "perfil-mensal":
 		//		files = getFilesName(env.GetConfigCvmArquivosPerfilMensal())

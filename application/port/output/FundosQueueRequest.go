@@ -23,6 +23,10 @@ type FundosPort interface {
 	CreateBalecenteRepository(
 		balanceteDomain domain.BalanceteDomain,
 	) (*domain.BalanceteDomain, *resterrors.RestErr)
+
+	CreateExtratoRepository(
+		extratoDomain domain.ExtratoDomain,
+	) (*domain.ExtratoDomain, *resterrors.RestErr)
 }
 
 type FundosExternoPort interface {

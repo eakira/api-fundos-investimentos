@@ -21,6 +21,7 @@ type FundosControllerInterface interface {
 	ProcessarArquivosCVMController(request.FundosCvmArquivosQueueRequest)
 	CreateFundosController(request.FundosCadastrosRequest)
 	CreateBalanceteController(request.BalanceteRequest)
+	CreateExtratoController(request.ExtratoRequest)
 }
 
 type fundosControllerInterface struct {
