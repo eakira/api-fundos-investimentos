@@ -22,12 +22,12 @@ func (fc *fundosControllerInterface) CreateTopicController(c *gin.Context) {
 	}
 	defer admin.Close()
 	admin.CreateTopic(env.GetTopicProcessarArquivos(), &sarama.TopicDetail{
-		NumPartitions:     20,
+		NumPartitions:     5,
 		ReplicationFactor: 1,
 	}, false)
 
 	admin.CreateTopic(env.GetTopicPersistenciaDados(), &sarama.TopicDetail{
-		NumPartitions:     10,
+		NumPartitions:     5,
 		ReplicationFactor: 1,
 	}, false)
 

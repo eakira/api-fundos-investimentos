@@ -86,7 +86,10 @@ func processaCsv(
 	}
 	defer file.Close()
 
+	// reader := csv.NewReader(charmap.ISO8859_15.NewDecoder().Reader(file))
+
 	reader := csv.NewReader(charmap.ISO8859_15.NewDecoder().Reader(file))
+	//reader := csv.NewReader(bufio.NewReader(file))
 	reader.Comma = ';'
 	reader.FieldsPerRecord = -1
 	reader.LazyQuotes = true
@@ -94,6 +97,8 @@ func processaCsv(
 	cabecalhoChanArq, err := reader.Read()
 	cabecalhoChan <- cabecalhoChanArq
 	i := 0
+
+	//	records, err := reader.ReadAll()
 	for {
 		record, err := reader.Read()
 		if err == io.EOF {
