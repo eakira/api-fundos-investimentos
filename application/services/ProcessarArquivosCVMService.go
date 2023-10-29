@@ -33,13 +33,14 @@ func processaArquivo(fs *fundosDomainService, arquivosDomain domain.ArquivosDoma
 	cabecalhoChan := make(chan []string, 1)
 	linhaChan := make(chan []string, 1000)
 	jsonChan := make(chan []byte, 1000)
-	mensagemChan := make(chan response.FundosQueueResponse, 1000)
+	mensagemChan := make(chan any, 1000)
 
 	var wg sync.WaitGroup
 	wg.Add(1)
 	go processaCsv(linhaChan, cabecalhoChan, arquivosDomain)
 	go processarLinha(linhaChan, cabecalhoChan, arquivosDomain, jsonChan)
-	go proximoQueue(jsonChan, mensagemChan)
+	go converteLinha(jsonChan, arquivosDomain, mensagemChan)
+
 	go fs.queue.ProduceLote(mensagemChan, &wg)
 
 	wg.Wait()
@@ -123,18 +124,48 @@ func salvandoProcessar(fs *fundosDomainService, arquivosDomain domain.ArquivosDo
 	fs.repository.UpdateArquivosRepository(arquivosDomain)
 }
 
-func proximoQueue(
+func converteLinha(
 	jsonChan chan []byte,
-	mensagemChan chan response.FundosQueueResponse,
+	arquivosDomain domain.ArquivosDomain,
+	mensagemChan chan interface{},
 ) {
 
 	for data := range jsonChan {
-		response := response.FundosQueueResponse{
-			Topic: env.GetTopicPersistenciaDados(),
-			Queue: "update-all",
-			Data:  data,
+		switch arquivosDomain.TipoArquivo {
+		case "cadastros":
+			dados := response.FundosCadastrosResponse{}
+			json.Unmarshal(data, &dados)
+			mensagemChan <- dados
+
+		case "balancete":
+			dados := response.BalanceteResponse{}
+			json.Unmarshal(data, &dados)
+			mensagemChan <- dados
+
+		case "cda":
+			//		São vários arquivos precisa verificar quais arquivos vou usar
+
+		case "informacoes-complementares":
+			//		São vários arquivos precisa verificar quais arquivos vou usar
+
+		case "extrato":
+			dados := response.ExtratoResponse{}
+			json.Unmarshal(data, &dados)
+			mensagemChan <- dados
+
+		case "informacao-diaria":
+			dados := response.InformacaoDiariaResponse{}
+			json.Unmarshal(data, &dados)
+			mensagemChan <- dados
+
+		case "lamina":
+			//		São vários arquivos precisa verificar quais arquivos vou usar
+
+		case "perfil-mensal":
+			//		files = getFilesName(env.GetConfigCvmArquivosPerfilMensal())
+
 		}
-		mensagemChan <- response
+
 	}
 	close(mensagemChan)
 
