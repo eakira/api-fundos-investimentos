@@ -28,6 +28,37 @@ func (fs *fundosDomainService) ProcessarArquivosCVMService(arquivosDomain domain
 	logger.Info("Finish GetFundosExternoService", "sincronizarFundos")
 }
 
+func swtichTipoArquivo(
+	fs fundosDomainService,
+	arquivosDomain domain.ArquivosDomain,
+) (interface{}, interface{}) {
+	switch arquivosDomain.TipoArquivo {
+	case "cadastros":
+		return response.FundosCadastrosResponse{}, fs.repository.CreateManyFundosRepository()
+
+	case "balancete":
+		return response.BalanceteResponse{}, fs.repository.CreateManyFundosRepository()
+
+	case "cda":
+		//		São vários arquivos precisa verificar quais arquivos vou usar
+
+	case "informacoes-complementares":
+		//		São vários arquivos precisa verificar quais arquivos vou usar
+
+	case "extrato":
+		return response.ExtratoResponse{}, fs.repository.CreateManyFundosRepository()
+
+	case "informacao-diaria":
+		return response.InformacaoDiariaResponse{}, fs.repository.CreateManyFundosRepository()
+
+	case "lamina":
+		//		São vários arquivos precisa verificar quais arquivos vou usar
+
+	case "perfil-mensal":
+		//		files = getFilesName(env.GetConfigCvmArquivosPerfilMensal())
+
+	}
+}
 func processaArquivo(fs *fundosDomainService, arquivosDomain domain.ArquivosDomain) {
 
 	cabecalhoChan := make(chan []string, 1)
@@ -40,8 +71,9 @@ func processaArquivo(fs *fundosDomainService, arquivosDomain domain.ArquivosDoma
 	go processaCsv(linhaChan, cabecalhoChan, arquivosDomain)
 	go processarLinha(linhaChan, cabecalhoChan, arquivosDomain, jsonChan)
 	go converteLinha(jsonChan, arquivosDomain, mensagemChan)
+	go storeLinhas(fs, mensagemChan, arquivosDomain)
 
-	go fs.queue.ProduceLote(mensagemChan, &wg)
+	//	go fs.queue.ProduceLote(mensagemChan, &wg)
 
 	wg.Wait()
 
@@ -169,4 +201,49 @@ func converteLinha(
 	}
 	close(mensagemChan)
 
+}
+
+func storeLinhas(
+	fs *fundosDomainService,
+	mensagemChan chan interface{},
+	arquivosDomain domain.ArquivosDomain,
+) {
+	for data := range mensagemChan {
+		switch arquivosDomain.TipoArquivo {
+		case "cadastros":
+			dados := response.FundosCadastrosResponse{}
+			json.Unmarshal(data, &dados)
+			mensagemChan <- dados
+			fs.repository.CreateManyFundosRepository()
+
+		case "balancete":
+			dados := response.BalanceteResponse{}
+			json.Unmarshal(data, &dados)
+			mensagemChan <- dados
+
+		case "cda":
+			//		São vários arquivos precisa verificar quais arquivos vou usar
+
+		case "informacoes-complementares":
+			//		São vários arquivos precisa verificar quais arquivos vou usar
+
+		case "extrato":
+			dados := response.ExtratoResponse{}
+			json.Unmarshal(data, &dados)
+			mensagemChan <- dados
+
+		case "informacao-diaria":
+			dados := response.InformacaoDiariaResponse{}
+			json.Unmarshal(data, &dados)
+			mensagemChan <- dados
+
+		case "lamina":
+			//		São vários arquivos precisa verificar quais arquivos vou usar
+
+		case "perfil-mensal":
+			//		files = getFilesName(env.GetConfigCvmArquivosPerfilMensal())
+
+		}
+
+	}
 }
