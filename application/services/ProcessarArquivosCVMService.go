@@ -21,45 +21,42 @@ import (
 
 func (fs *fundosDomainService) ProcessarArquivosCVMService(arquivosDomain domain.ArquivosDomain) {
 	logger.Info("Init GetFundosExternoService", "sincronizarFundos")
-
-	processaArquivo(fs, arquivosDomain)
+	response, funcao := swtichTipoArquivo(arquivosDomain)
+	processaArquivo(fs, arquivosDomain, response, funcao)
 
 	salvandoProcessar(fs, arquivosDomain)
 	logger.Info("Finish GetFundosExternoService", "sincronizarFundos")
 }
 
 func swtichTipoArquivo(
-	fs fundosDomainService,
 	arquivosDomain domain.ArquivosDomain,
-) (interface{}, interface{}) {
+) (interface{}, string) {
 	switch arquivosDomain.TipoArquivo {
 	case "cadastros":
-		return response.FundosCadastrosResponse{}, fs.repository.CreateManyFundosRepository()
+
+		return response.FundosCadastrosResponse{}, "CreateManyFundosRepository"
 
 	case "balancete":
-		return response.BalanceteResponse{}, fs.repository.CreateManyFundosRepository()
-
-	case "cda":
-		//		São vários arquivos precisa verificar quais arquivos vou usar
-
-	case "informacoes-complementares":
-		//		São vários arquivos precisa verificar quais arquivos vou usar
+		return response.BalanceteResponse{}, "CreateManyFundosRepository"
 
 	case "extrato":
-		return response.ExtratoResponse{}, fs.repository.CreateManyFundosRepository()
+		return response.ExtratoResponse{}, "CreateManyFundosRepository"
 
 	case "informacao-diaria":
-		return response.InformacaoDiariaResponse{}, fs.repository.CreateManyFundosRepository()
-
-	case "lamina":
-		//		São vários arquivos precisa verificar quais arquivos vou usar
+		return response.InformacaoDiariaResponse{}, "CreateManyFundosRepository"
 
 	case "perfil-mensal":
 		//		files = getFilesName(env.GetConfigCvmArquivosPerfilMensal())
 
 	}
+	return nil, ""
 }
-func processaArquivo(fs *fundosDomainService, arquivosDomain domain.ArquivosDomain) {
+func processaArquivo(
+	fs *fundosDomainService,
+	arquivosDomain domain.ArquivosDomain,
+	response interface{},
+	funcao string,
+) {
 
 	cabecalhoChan := make(chan []string, 1)
 	linhaChan := make(chan []string, 1000)
