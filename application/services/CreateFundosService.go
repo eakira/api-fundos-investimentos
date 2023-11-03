@@ -5,9 +5,9 @@ import (
 	"api-fundos-investimentos/configuration/logger"
 )
 
-func (fs *fundosDomainService) CreateFundosService(domain domain.FundosDomain) {
+func (fs *fundosDomainService) CreateFundosService(domain []domain.FundosDomain) {
 	logger.Info("Init CreateFundosService", "sincronizarFundos")
 
-	fs.repository.CreateFundosRepository(domain)
+	fs.repository.CreateManyFundosRepository(domain)
 	logger.Info("Finish CreateFundosService", "sincronizarFundos")
 }
