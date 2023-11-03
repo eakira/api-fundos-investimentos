@@ -6,6 +6,7 @@ import (
 	"api-fundos-investimentos/configuration/logger"
 	"api-fundos-investimentos/configuration/resterrors"
 	"encoding/json"
+	"fmt"
 )
 
 func FundosPersistenciaDadosListener(
@@ -13,23 +14,27 @@ func FundosPersistenciaDadosListener(
 	controller controller.FundosControllerInterface,
 ) *resterrors.RestErr {
 	logger.Info("Init FundosPersistenciaDadosListener", "sincronizar")
-	mapa := map[string]string{}
+	mapa := []map[string]string{}
 
 	err := json.Unmarshal(message, &mapa)
 	if err != nil {
 		logger.Error("json Unmarshal error", err, "listener")
 	}
 
-	switch mapa["collection"] {
+	switch mapa[0]["collection"] {
 	case "cadastros":
-		dados := request.FundosCadastrosRequest{}
+		dados := []request.FundosCadastrosRequest{}
 		json.Unmarshal(message, &dados)
+		fmt.Println(dados)
 		controller.CreateFundosController(dados)
 
 	case "balancete":
-		dados := request.BalanceteRequest{}
-		json.Unmarshal(message, &dados)
-		controller.CreateBalanceteController(dados)
+		//		dados := []request.BalanceteRequest{}
+		var data []interface{}
+		json.Unmarshal(message, data)
+		fmt.Println(data)
+		panic("Aqui")
+		//		controller.CreateBalanceteController(dados)
 
 	case "cda":
 		//		São vários arquivos precisa verificar quais arquivos vou usar
@@ -38,14 +43,18 @@ func FundosPersistenciaDadosListener(
 		//		São vários arquivos precisa verificar quais arquivos vou usar
 
 	case "extrato":
-		dados := request.ExtratoRequest{}
-		json.Unmarshal(message, &dados)
-		controller.CreateExtratoController(dados)
+		//		dados := []request.ExtratoRequest{}
+		var data []interface{}
+		json.Unmarshal(message, data)
+		panic("Aqui")
+		//		controller.CreateExtratoController(dados)
 
 	case "informacao-diaria":
-		dados := request.InformacaoDiariaRequest{}
-		json.Unmarshal(message, &dados)
-		controller.CreateInformacaoDiariaController(dados)
+		// dados := []request.InformacaoDiariaRequest{}
+		var data []interface{}
+		json.Unmarshal(message, data)
+		panic("Aqui")
+		//		controller.CreateInformacaoDiariaController(dados)
 
 	case "lamina":
 		//		São vários arquivos precisa verificar quais arquivos vou usar
