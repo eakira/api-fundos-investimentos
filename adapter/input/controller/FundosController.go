@@ -20,7 +20,7 @@ type FundosControllerInterface interface {
 	CreateTopicController(c *gin.Context)
 	DownloadArquivosCVMController(request.FundosCvmArquivosQueueRequest)
 	ProcessarArquivosCVMController(request.FundosCvmArquivosQueueRequest)
-	CreateFundosController(request.FundosCadastrosRequest)
+	CreateFundosController([]request.FundosCadastrosRequest)
 	CreateBalanceteController(request.BalanceteRequest)
 	CreateExtratoController(request.ExtratoRequest)
 	CreateInformacaoDiariaController(request.InformacaoDiariaRequest)
