@@ -21,56 +21,26 @@ import (
 
 func (fs *fundosDomainService) ProcessarArquivosCVMService(arquivosDomain domain.ArquivosDomain) {
 	logger.Info("Init GetFundosExternoService", "sincronizarFundos")
-	response, funcao := swtichTipoArquivo(arquivosDomain)
-	processaArquivo(fs, arquivosDomain, response, funcao)
+
+	processaArquivo(fs, arquivosDomain)
 
 	salvandoProcessar(fs, arquivosDomain)
 	logger.Info("Finish GetFundosExternoService", "sincronizarFundos")
 }
 
-func swtichTipoArquivo(
-	arquivosDomain domain.ArquivosDomain,
-) (interface{}, string) {
-	switch arquivosDomain.TipoArquivo {
-	case "cadastros":
-
-		return response.FundosCadastrosResponse{}, "CreateManyFundosRepository"
-
-	case "balancete":
-		return response.BalanceteResponse{}, "CreateManyFundosRepository"
-
-	case "extrato":
-		return response.ExtratoResponse{}, "CreateManyFundosRepository"
-
-	case "informacao-diaria":
-		return response.InformacaoDiariaResponse{}, "CreateManyFundosRepository"
-
-	case "perfil-mensal":
-		//		files = getFilesName(env.GetConfigCvmArquivosPerfilMensal())
-
-	}
-	return nil, ""
-}
-func processaArquivo(
-	fs *fundosDomainService,
-	arquivosDomain domain.ArquivosDomain,
-	response interface{},
-	funcao string,
-) {
+func processaArquivo(fs *fundosDomainService, arquivosDomain domain.ArquivosDomain) {
 
 	cabecalhoChan := make(chan []string, 1)
-	linhaChan := make(chan []string, 1000)
-	jsonChan := make(chan []byte, 1000)
-	mensagemChan := make(chan any, 1000)
+	linhaChan := make(chan []string, 100000)
+	jsonChan := make(chan []byte, 100000)
+	mensagemChan := make(chan response.FundosQueueResponse, 1000)
 
 	var wg sync.WaitGroup
 	wg.Add(1)
 	go processaCsv(linhaChan, cabecalhoChan, arquivosDomain)
 	go processarLinha(linhaChan, cabecalhoChan, arquivosDomain, jsonChan)
-	go converteLinha(jsonChan, arquivosDomain, mensagemChan)
-	go storeLinhas(fs, mensagemChan, arquivosDomain)
-
-	//	go fs.queue.ProduceLote(mensagemChan, &wg)
+	go proximoQueue(jsonChan, mensagemChan)
+	go fs.queue.ProduceLote(mensagemChan, &wg)
 
 	wg.Wait()
 
@@ -86,18 +56,35 @@ func processarLinha(
 	mapa := make(map[string]any)
 	mapa["collection"] = arquivosDomain.TipoArquivo
 	mapa["tipo-acao"] = "store"
-
+	i := 1
+	mapaJson := make([]map[string]any, 0)
 	for linha := range linhaChan {
 		for key, coluna := range cabecalho {
 			mapa[coluna] = linha[key]
 		}
+		mapaJson = append(mapaJson, mapa)
+		if i == 100 {
+			fmt.Println(mapaJson)
+			json, err := json.Marshal(mapaJson)
+			if err != nil {
+				fmt.Println("tre")
+				panic("Marshal")
+			}
+			jsonChan <- json
 
-		json, err := json.Marshal(mapa)
-		if err != nil {
-			fmt.Println("tre")
+			mapaJson = make([]map[string]any, 0)
+			i = 0
 		}
-		jsonChan <- json
+		i++
 	}
+	fmt.Println(mapaJson)
+	json, err := json.Marshal(mapaJson)
+	if err != nil {
+		fmt.Println("tre")
+		panic("Marshal")
+	}
+	jsonChan <- json
+
 	close(jsonChan)
 
 }
@@ -153,94 +140,19 @@ func salvandoProcessar(fs *fundosDomainService, arquivosDomain domain.ArquivosDo
 	fs.repository.UpdateArquivosRepository(arquivosDomain)
 }
 
-func converteLinha(
+func proximoQueue(
 	jsonChan chan []byte,
-	arquivosDomain domain.ArquivosDomain,
-	mensagemChan chan interface{},
+	mensagemChan chan response.FundosQueueResponse,
 ) {
 
 	for data := range jsonChan {
-		switch arquivosDomain.TipoArquivo {
-		case "cadastros":
-			dados := response.FundosCadastrosResponse{}
-			json.Unmarshal(data, &dados)
-			mensagemChan <- dados
-
-		case "balancete":
-			dados := response.BalanceteResponse{}
-			json.Unmarshal(data, &dados)
-			mensagemChan <- dados
-
-		case "cda":
-			//		São vários arquivos precisa verificar quais arquivos vou usar
-
-		case "informacoes-complementares":
-			//		São vários arquivos precisa verificar quais arquivos vou usar
-
-		case "extrato":
-			dados := response.ExtratoResponse{}
-			json.Unmarshal(data, &dados)
-			mensagemChan <- dados
-
-		case "informacao-diaria":
-			dados := response.InformacaoDiariaResponse{}
-			json.Unmarshal(data, &dados)
-			mensagemChan <- dados
-
-		case "lamina":
-			//		São vários arquivos precisa verificar quais arquivos vou usar
-
-		case "perfil-mensal":
-			//		files = getFilesName(env.GetConfigCvmArquivosPerfilMensal())
-
+		response := response.FundosQueueResponse{
+			Topic: env.GetTopicPersistenciaDados(),
+			Queue: "update-all",
+			Data:  data,
 		}
-
+		mensagemChan <- response
 	}
 	close(mensagemChan)
 
-}
-
-func storeLinhas(
-	fs *fundosDomainService,
-	mensagemChan chan interface{},
-	arquivosDomain domain.ArquivosDomain,
-) {
-	for data := range mensagemChan {
-		switch arquivosDomain.TipoArquivo {
-		case "cadastros":
-			dados := response.FundosCadastrosResponse{}
-			json.Unmarshal(data, &dados)
-			mensagemChan <- dados
-			fs.repository.CreateManyFundosRepository()
-
-		case "balancete":
-			dados := response.BalanceteResponse{}
-			json.Unmarshal(data, &dados)
-			mensagemChan <- dados
-
-		case "cda":
-			//		São vários arquivos precisa verificar quais arquivos vou usar
-
-		case "informacoes-complementares":
-			//		São vários arquivos precisa verificar quais arquivos vou usar
-
-		case "extrato":
-			dados := response.ExtratoResponse{}
-			json.Unmarshal(data, &dados)
-			mensagemChan <- dados
-
-		case "informacao-diaria":
-			dados := response.InformacaoDiariaResponse{}
-			json.Unmarshal(data, &dados)
-			mensagemChan <- dados
-
-		case "lamina":
-			//		São vários arquivos precisa verificar quais arquivos vou usar
-
-		case "perfil-mensal":
-			//		files = getFilesName(env.GetConfigCvmArquivosPerfilMensal())
-
-		}
-
-	}
 }
