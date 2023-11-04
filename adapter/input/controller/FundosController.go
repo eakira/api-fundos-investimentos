@@ -23,7 +23,7 @@ type FundosControllerInterface interface {
 	CreateFundosController([]request.FundosCadastrosRequest)
 	CreateBalanceteController([]request.BalanceteRequest)
 	CreateExtratoController([]request.ExtratoRequest)
-	CreateInformacaoDiariaController(request.InformacaoDiariaRequest)
+	CreateInformacaoDiariaController([]request.InformacaoDiariaRequest)
 }
 
 type fundosControllerInterface struct {

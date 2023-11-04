@@ -11,28 +11,27 @@ import (
 	"github.com/jinzhu/copier"
 )
 
-func (ur *fundosRepository) CreateInformacaoDiariaRepository(
-	domain domain.InformacaoDiariaDomain,
-) (*domain.InformacaoDiariaDomain, *resterrors.RestErr) {
+func (ur *fundosRepository) CreateManyInformacaoDiariaRepository(
+	domain []domain.InformacaoDiariaDomain,
+) *resterrors.RestErr {
 
 	logger.Info("Init CreateBalecenteRepository", "createBalacente")
 
 	collection := ur.databaseConnection.Collection(env.GetCollectionInformacaoDiaria())
 
-	entity := &entity.InformacaoDiariaEntity{}
-	copier.Copy(entity, domain)
+	entity := []entity.InformacaoDiariaEntity{}
+	copier.Copy(&entity, &domain)
 
-	_, err := collection.InsertOne(context.Background(), entity)
-	if err != nil {
-		return nil, resterrors.NewInternalServerError(err.Error())
-	}
+	dados := make([]interface{}, len(entity))
+	copier.Copy(&dados, &entity)
 
+	_, err := collection.InsertMany(context.Background(), dados)
 	if err != nil {
 		logger.Error("Error trying to CreateBalecenteRepository", err, "createBalacente")
-		return nil, resterrors.NewInternalServerError(err.Error())
+		return resterrors.NewInternalServerError(err.Error())
 	}
 
 	logger.Info("CreateBalecenteRepository executed successfully", "createBalacente")
 
-	return &domain, nil
+	return nil
 }
