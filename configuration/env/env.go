@@ -21,3 +21,7 @@ func GetTopicPersistenciaDados() string {
 func GetPathArquivosCvm() string {
 	return "storage/cvm/"
 }
+
+func GetLimitInsert() int {
+	return 1000
+}
