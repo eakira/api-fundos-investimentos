@@ -63,8 +63,7 @@ func processarLinha(
 			mapa[coluna] = linha[key]
 		}
 		mapaJson = append(mapaJson, mapa)
-		if i == 100 {
-			fmt.Println(mapaJson)
+		if i == env.GetLimitInsert() {
 			json, err := json.Marshal(mapaJson)
 			if err != nil {
 				fmt.Println("tre")
@@ -77,7 +76,6 @@ func processarLinha(
 		}
 		i++
 	}
-	fmt.Println(mapaJson)
 	json, err := json.Marshal(mapaJson)
 	if err != nil {
 		fmt.Println("tre")
@@ -126,7 +124,6 @@ func processaCsv(
 		}
 		linhaChan <- record
 		i++
-		fmt.Println(i)
 	}
 	close(linhaChan)
 	close(cabecalhoChan)
