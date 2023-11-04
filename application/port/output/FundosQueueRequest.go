@@ -24,9 +24,9 @@ type FundosPort interface {
 		fundosDomain []domain.FundosDomain,
 	) *resterrors.RestErr
 
-	CreateBalecenteRepository(
-		balanceteDomain domain.BalanceteDomain,
-	) (*domain.BalanceteDomain, *resterrors.RestErr)
+	CreateManyBalecenteRepository(
+		balanceteDomain []domain.BalanceteDomain,
+	) *resterrors.RestErr
 
 	CreateExtratoRepository(
 		extratoDomain domain.ExtratoDomain,

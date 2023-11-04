@@ -6,7 +6,6 @@ import (
 	"api-fundos-investimentos/configuration/logger"
 	"api-fundos-investimentos/configuration/resterrors"
 	"encoding/json"
-	"fmt"
 )
 
 func FundosPersistenciaDadosListener(
@@ -25,16 +24,12 @@ func FundosPersistenciaDadosListener(
 	case "cadastros":
 		dados := []request.FundosCadastrosRequest{}
 		json.Unmarshal(message, &dados)
-		fmt.Println(dados)
 		controller.CreateFundosController(dados)
 
 	case "balancete":
-		//		dados := []request.BalanceteRequest{}
-		var data []interface{}
-		json.Unmarshal(message, data)
-		fmt.Println(data)
-		panic("Aqui")
-		//		controller.CreateBalanceteController(dados)
+		dados := []request.BalanceteRequest{}
+		json.Unmarshal(message, &dados)
+		controller.CreateBalanceteController(dados)
 
 	case "cda":
 		//		São vários arquivos precisa verificar quais arquivos vou usar

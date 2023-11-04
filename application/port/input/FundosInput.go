@@ -10,7 +10,7 @@ type FundosDomainService interface {
 	DownloadArquivosCVMService(domain.ArquivosDomain)
 	ProcessarArquivosCVMService(domain.ArquivosDomain)
 	CreateFundosService([]domain.FundosDomain)
-	CreateBalanceteService(domain.BalanceteDomain)
+	CreateBalanceteService([]domain.BalanceteDomain)
 	CreateExtratoService(domain.ExtratoDomain)
 	CreateInformacaoDiariaService(domain.InformacaoDiariaDomain)
 }

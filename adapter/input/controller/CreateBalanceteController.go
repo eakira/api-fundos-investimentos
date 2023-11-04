@@ -8,10 +8,10 @@ import (
 	"github.com/jinzhu/copier"
 )
 
-func (fc *fundosControllerInterface) CreateBalanceteController(request request.BalanceteRequest) {
+func (fc *fundosControllerInterface) CreateBalanceteController(request []request.BalanceteRequest) {
 	logger.Info("Init CreateBalanceteController", "sincronizarFundos")
 
-	domain := &domain.BalanceteDomain{}
+	domain := &[]domain.BalanceteDomain{}
 	copier.Copy(domain, request)
 	fc.service.CreateBalanceteService(*domain)
 	logger.Info("Finish CreateBalanceteController", "sincronizarFundos")
