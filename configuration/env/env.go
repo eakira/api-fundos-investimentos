@@ -23,5 +23,5 @@ func GetPathArquivosCvm() string {
 }
 
 func GetLimitInsert() int {
-	return 1000
+	return 200
 }
