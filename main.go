@@ -11,14 +11,23 @@ import (
 	"api-fundos-investimentos/configuration/database/mongodb"
 	"api-fundos-investimentos/configuration/logger"
 	"context"
+	"errors"
 	"fmt"
 	"log"
+	"net/http"
 	"os"
-	"strconv"
+	"os/signal"
+	"syscall"
+	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 	"go.mongodb.org/mongo-driver/mongo"
+)
+
+var (
+	TIME_SHUTDOWN = "TIME_SHUTDOWN"
+	PORT          = "PORT"
 )
 
 func main() {
@@ -40,23 +49,83 @@ func main() {
 
 	fundosController := initDependenciesController(database)
 
-	x := os.Args
-	if len(x) > 1 {
-		partition := 0
-		if len(x) == 3 {
-			partition, _ = strconv.Atoi(x[2])
-			fmt.Println(int32(partition))
-		}
-		listener.Consume(x[1], int32(partition), fundosController)
+	router := gin.Default()
+	addr := os.Getenv(PORT)
+	chanError := make(chan error)
+	chanShutdown := make(chan bool)
+
+	server := &http.Server{
+		Addr:    fmt.Sprintf(":%s", addr),
+		Handler: router,
 	}
 
-	router := gin.Default()
+	go initHttp(router, server, fundosController)
+	go initListener(fundosController, chanShutdown)
+	go GraceFullyShutdown(server, chanError, chanShutdown, fundosController)
+
+	if err := <-chanError; err != nil {
+		logger.Error("Error: ", err, "init")
+	}
+
+}
+func GraceFullyShutdown(
+	server *http.Server,
+	chanError chan error,
+	chanShutdown chan bool,
+	fundosController controller.FundosControllerInterface,
+) {
+
+	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM, syscall.SIGQUIT)
+
+	go func() {
+		<-ctx.Done()
+		logger.Info("Recebido sinal para desligar...", "shutdown")
+		timeout, err := time.ParseDuration(os.Getenv(TIME_SHUTDOWN))
+		if err != nil {
+			logger.Error(
+				"Variavel de ambiente do TIME_SHUTDOWN não está configurada corretamente",
+				err,
+				"shutdown",
+			)
+			panic(err)
+		}
+		ctxTimeout, cancel := context.WithTimeout(context.Background(), timeout)
+
+		defer func() {
+			stop()
+			cancel()
+			close(chanError)
+		}()
+		err = server.Shutdown(ctxTimeout)
+		if status := <-chanShutdown; status {
+			logger.Error("Desligando o listener...", err, "shutdown")
+			close(chanShutdown)
+		}
+
+		if err != nil {
+			logger.Error("Erro no shutdown", err, "shutdown")
+		}
+	}()
+
+}
+func initHttp(
+	router *gin.Engine,
+	server *http.Server,
+	fundosController controller.FundosControllerInterface,
+) {
 	routes.InitRoutes(&router.RouterGroup, fundosController)
 
-	if err := router.Run(":8080"); err != nil {
+	if err := server.ListenAndServe(); !errors.Is(err, http.ErrServerClosed) {
 		log.Fatal(err)
 	}
-
+}
+func initListener(
+	fundosController controller.FundosControllerInterface,
+	chanShutdown chan bool,
+) {
+	partition := 0
+	chanShutdown <- true
+	listener.Consume(int32(partition), fundosController, chanShutdown)
 }
 
 func initDependenciesController(
