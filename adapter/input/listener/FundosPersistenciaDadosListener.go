@@ -38,11 +38,9 @@ func FundosPersistenciaDadosListener(
 		//		São vários arquivos precisa verificar quais arquivos vou usar
 
 	case "extrato":
-		//		dados := []request.ExtratoRequest{}
-		var data []interface{}
-		json.Unmarshal(message, data)
-		panic("Aqui")
-		//		controller.CreateExtratoController(dados)
+		dados := []request.ExtratoRequest{}
+		json.Unmarshal(message, &dados)
+		controller.CreateExtratoController(dados)
 
 	case "informacao-diaria":
 		// dados := []request.InformacaoDiariaRequest{}

@@ -8,10 +8,10 @@ import (
 	"github.com/jinzhu/copier"
 )
 
-func (fc *fundosControllerInterface) CreateExtratoController(request request.ExtratoRequest) {
+func (fc *fundosControllerInterface) CreateExtratoController(request []request.ExtratoRequest) {
 	logger.Info("Init CreateExtratoController", "sincronizarFundos")
 
-	domain := &domain.ExtratoDomain{}
+	domain := &[]domain.ExtratoDomain{}
 	copier.Copy(domain, request)
 	fc.service.CreateExtratoService(*domain)
 	logger.Info("Finish CreateExtratoController", "sincronizarFundos")

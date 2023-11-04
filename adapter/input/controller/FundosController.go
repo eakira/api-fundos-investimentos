@@ -22,7 +22,7 @@ type FundosControllerInterface interface {
 	ProcessarArquivosCVMController(request.FundosCvmArquivosQueueRequest)
 	CreateFundosController([]request.FundosCadastrosRequest)
 	CreateBalanceteController([]request.BalanceteRequest)
-	CreateExtratoController(request.ExtratoRequest)
+	CreateExtratoController([]request.ExtratoRequest)
 	CreateInformacaoDiariaController(request.InformacaoDiariaRequest)
 }
 

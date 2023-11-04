@@ -5,9 +5,9 @@ import (
 	"api-fundos-investimentos/configuration/logger"
 )
 
-func (fs *fundosDomainService) CreateExtratoService(domain domain.ExtratoDomain) {
+func (fs *fundosDomainService) CreateExtratoService(domain []domain.ExtratoDomain) {
 	logger.Info("Init CreateFundosService", "sincronizarFundos")
 
-	fs.repository.CreateExtratoRepository(domain)
+	fs.repository.CreateManyExtratoRepository(domain)
 	logger.Info("Finish CreateFundosService", "sincronizarFundos")
 }

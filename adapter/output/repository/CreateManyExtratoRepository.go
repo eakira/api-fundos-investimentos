@@ -11,28 +11,27 @@ import (
 	"github.com/jinzhu/copier"
 )
 
-func (ur *fundosRepository) CreateExtratoRepository(
-	domain domain.ExtratoDomain,
-) (*domain.ExtratoDomain, *resterrors.RestErr) {
+func (ur *fundosRepository) CreateManyExtratoRepository(
+	domain []domain.ExtratoDomain,
+) *resterrors.RestErr {
 
 	logger.Info("Init CreateExtratoRepository repository", "createExtrato")
 
 	collection := ur.databaseConnection.Collection(env.GetCollectionExtrato())
 
-	entity := &entity.ExtratoEntity{}
-	copier.Copy(entity, domain)
+	entity := []entity.ExtratoEntity{}
+	copier.Copy(&entity, &domain)
 
-	_, err := collection.InsertOne(context.Background(), entity)
-	if err != nil {
-		return nil, resterrors.NewInternalServerError(err.Error())
-	}
+	dados := make([]interface{}, len(entity))
+	copier.Copy(&dados, &entity)
 
+	_, err := collection.InsertMany(context.Background(), dados)
 	if err != nil {
 		logger.Error("Error trying to create CreateExtratoRepository", err, "createExtrato")
-		return nil, resterrors.NewInternalServerError(err.Error())
+		return resterrors.NewInternalServerError(err.Error())
 	}
 
 	logger.Info("CreateExtratoRepository executed successfully", "createExtrato")
 
-	return &domain, nil
+	return nil
 }
