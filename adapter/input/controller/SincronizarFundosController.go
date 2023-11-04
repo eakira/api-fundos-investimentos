@@ -11,10 +11,10 @@ func (fc *fundosControllerInterface) SincronizarFundosController(c *gin.Context)
 
 	tipo := []string{
 
-		//		"cadastros",
-		//		"balancete",
-		//	"cda",
-		//"extrato",
+		"cadastros",
+		"balancete",
+		"cda",
+		"extrato",
 		"informacao-diaria",
 		//		"informacoes-complementares",
 		//		"lamina",
