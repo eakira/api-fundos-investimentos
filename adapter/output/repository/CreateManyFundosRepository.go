@@ -1,12 +1,12 @@
 package repository
 
 import (
+	"api-fundos-investimentos/adapter/output/model/entity"
 	"api-fundos-investimentos/application/domain"
 	"api-fundos-investimentos/configuration/env"
 	"api-fundos-investimentos/configuration/logger"
 	"api-fundos-investimentos/configuration/resterrors"
 	"context"
-	"fmt"
 
 	"github.com/jinzhu/copier"
 )
@@ -19,12 +19,13 @@ func (ur *fundosRepository) CreateManyFundosRepository(
 
 	collection := ur.databaseConnection.Collection(env.GetCollectionFundos())
 
-	entity := make([]interface{}, len(fundosDomain))
-
+	entity := []entity.FundosEntity{}
 	copier.Copy(&entity, &fundosDomain)
-	fmt.Println(fundosDomain)
 
-	_, err := collection.InsertMany(context.Background(), entity)
+	dados := make([]interface{}, len(entity))
+	copier.Copy(&dados, &entity)
+
+	_, err := collection.InsertMany(context.Background(), dados)
 
 	if err != nil {
 		logger.Error("Error CreateManyFundosRepository", err, "createFundos")
