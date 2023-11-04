@@ -24,7 +24,12 @@ func initConsume() (sarama.Consumer, *resterrors.RestErr) {
 	return consumer, nil
 }
 
-func Consume(topic string, partition int32, fundosController controller.FundosControllerInterface) {
+func Consume(
+	partition int32,
+	fundosController controller.FundosControllerInterface,
+	shutdown chan bool,
+) {
+	topic := "sincronizar"
 	logger.Info(fmt.Sprintf("Init Listener: %s", topic), "listener")
 	consumer, _ := initConsume()
 	defer consumer.Close()
@@ -37,6 +42,7 @@ func Consume(topic string, partition int32, fundosController controller.FundosCo
 	defer partitionConsumer.Close()
 
 	for message := range partitionConsumer.Messages() {
+		shutdown <- false
 
 		err := switchCaseTopic(topic, message.Value, fundosController)
 		if err != nil {
@@ -47,6 +53,7 @@ func Consume(topic string, partition int32, fundosController controller.FundosCo
 			fmt.Sprintf("[Consumer] partitionid: %d; offset:%d, value: %s\n",
 				message.Partition, message.Offset, string(message.Value)),
 			"sincronizarFundos")
+		shutdown <- true
 
 	}
 	logger.Info("Finish SincronizarFundos", "sincronizarFundos")
