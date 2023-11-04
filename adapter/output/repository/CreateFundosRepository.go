@@ -23,9 +23,6 @@ func (ur *fundosRepository) CreateFundosRepository(
 	copier.Copy(entity, fundosDomain)
 
 	_, err := collection.InsertOne(context.Background(), entity)
-	if err != nil {
-		return nil, resterrors.NewInternalServerError(err.Error())
-	}
 
 	if err != nil {
 		logger.Error("Error trying to CreateFundosRepository", err, "createFundos")
