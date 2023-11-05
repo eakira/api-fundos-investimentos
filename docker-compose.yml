@@ -1,7 +1,7 @@
 version: "3"
 networks: 
-    api-network:
-      driver: bridge
+  api-network:
+    driver: bridge
 services:
   mongodb:
     image: mongo
@@ -41,14 +41,14 @@ services:
     profiles:
       - setup
     build:
-      context: setup/
+      context: docker/setup/
       args:
         ELASTIC_VERSION: ${ELASTIC_VERSION}
     init: true
     volumes:
-      - ./setup/entrypoint.sh:/entrypoint.sh:ro,Z
-      - ./setup/lib.sh:/lib.sh:ro,Z
-      - ./setup/roles:/roles:ro,Z
+      - ./docker/setup/entrypoint.sh:/entrypoint.sh:ro,Z
+      - ./docker/setup/lib.sh:/lib.sh:ro,Z
+      - ./docker/setup/roles:/roles:ro,Z
     environment:
       ELASTIC_PASSWORD: ${ELASTIC_PASSWORD:-}
       LOGSTASH_INTERNAL_PASSWORD: ${LOGSTASH_INTERNAL_PASSWORD:-}
