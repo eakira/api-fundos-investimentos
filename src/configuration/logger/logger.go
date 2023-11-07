@@ -12,12 +12,14 @@ var (
 	log *zap.Logger
 
 	LOG_OUTPUT = "LOG_OUTPUT"
+	LOG_PATH   = "logs/go.log"
 	LOG_LEVEL  = "LOG_LEVEL"
 )
 
 func init() {
+	os.OpenFile(LOG_PATH, os.O_RDONLY|os.O_CREATE, 0666)
 	logConfig := zap.Config{
-		OutputPaths: []string{getOutputLogs()},
+		OutputPaths: []string{"stdout", LOG_PATH},
 		Level:       zap.NewAtomicLevelAt(getLevelLogs()),
 		Encoding:    "json",
 		EncoderConfig: zapcore.EncoderConfig{
@@ -29,7 +31,6 @@ func init() {
 			EncodeCaller: zapcore.ShortCallerEncoder,
 		},
 	}
-
 	log, _ = logConfig.Build()
 }
 
