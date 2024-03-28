@@ -26,7 +26,7 @@ services:
     volumes:
       - type: bind
         source: ./data
-        target: ../data/db
+        target: /data/db
     networks:
       - api-network
 
@@ -85,8 +85,8 @@ services:
       - ./docker/tls/certs/elasticsearch/elasticsearch.crt:/usr/share/elasticsearch/config/elasticsearch.crt:ro,z
       - ./docker/tls/certs/elasticsearch/elasticsearch.key:/usr/share/elasticsearch/config/elasticsearch.key:ro,z
     ports:
-      - 9500:9200
-      - 9600:9300
+      - 9200:9200
+      - 9300:9300
     environment:
       node.name: elasticsearch
       ES_JAVA_OPTS: -Xms512m -Xmx512m
