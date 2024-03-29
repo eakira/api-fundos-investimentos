@@ -1,6 +1,9 @@
 package env
 
-import "os"
+import (
+	"os"
+	"strconv"
+)
 
 func GetKafkaHost() string {
 	return os.Getenv("KAFKA_HOST")
@@ -24,4 +27,11 @@ func GetPathArquivosCvm() string {
 
 func GetLimitInsert() int {
 	return 200
+}
+
+func GetNumParticoes() int32 {
+
+	value := os.Getenv("NUM_PARTITIONS")
+	v, _ := strconv.ParseInt(value, 10, 32)
+	return int32(v)
 }
