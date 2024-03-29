@@ -7,6 +7,8 @@ import (
 	"api-fundos-investimentos/configuration/resterrors"
 	"fmt"
 	"log"
+	"strconv"
+	"strings"
 
 	"github.com/IBM/sarama"
 )
@@ -25,11 +27,35 @@ func initConsume() (sarama.Consumer, *resterrors.RestErr) {
 }
 
 func Consume(
+	fundosController controller.FundosControllerInterface,
+	shutdown chan bool,
+) {
+
+	topic := env.GetTopics()
+	partition := env.GetPartitions()
+	topics := strings.Split(topic, ",")
+	partitions := strings.Split(partition, ",")
+
+	for _, topic := range topics {
+		for _, partition := range partitions {
+			value, _ := strconv.ParseInt(partition, 10, 32)
+			go consumeTopic(
+				topic,
+				int32(value),
+				fundosController,
+				shutdown,
+			)
+		}
+	}
+
+}
+
+func consumeTopic(
+	topic string,
 	partition int32,
 	fundosController controller.FundosControllerInterface,
 	shutdown chan bool,
 ) {
-	topic := "sincronizar"
 	logger.Info(fmt.Sprintf("Init Listener: %s", topic), "listener")
 	consumer, _ := initConsume()
 	defer consumer.Close()
@@ -56,7 +82,7 @@ func Consume(
 		shutdown <- true
 
 	}
-	logger.Info("Finish SincronizarFundos", "sincronizarFundos")
+	logger.Info("Finish consumeTopic", "listener")
 }
 
 func switchCaseTopic(
