@@ -1,5 +1,7 @@
 # Para subir o Docker
 
+docker network create api-network
+
 docker compose up tls
 
 docker compose up setup
