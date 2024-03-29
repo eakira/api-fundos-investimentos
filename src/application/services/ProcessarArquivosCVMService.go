@@ -60,13 +60,14 @@ func processaArquivo(
 
 func processarLinhas(arquivosDomain domain.ArquivosDomain, cabecalhoChan chan []string, linhaChan chan []string, jsonChan chan []byte) {
 	cabecalho := <-cabecalhoChan
-	mapa := make(map[string]any)
-	mapa["collection"] = arquivosDomain.TipoArquivo
-	mapa["tipo-acao"] = "store"
 
-	mapaJson := make([]map[string]any, 0)
+	// Use um tamanho de buffer adequado para a slice
+	mapaJson := make([]map[string]any, 0, env.GetLimitInsert())
 
 	for linha := range linhaChan {
+		mapa := make(map[string]any)
+		mapa["collection"] = arquivosDomain.TipoArquivo
+		mapa["tipo-acao"] = "store"
 		for key, coluna := range cabecalho {
 			if key < len(linha) {
 				mapa[coluna] = linha[key]
@@ -81,7 +82,7 @@ func processarLinhas(arquivosDomain domain.ArquivosDomain, cabecalhoChan chan []
 				continue
 			}
 			jsonChan <- json
-			mapaJson = make([]map[string]any, 0)
+			mapaJson = make([]map[string]any, 0, env.GetLimitInsert())
 		}
 	}
 
@@ -97,11 +98,7 @@ func processarLinhas(arquivosDomain domain.ArquivosDomain, cabecalhoChan chan []
 	close(jsonChan)
 }
 
-func processaCsv(
-	arquivosDomain domain.ArquivosDomain,
-	cabecalhoChan chan []string,
-	linhaChan chan []string,
-) {
+func processaCsv(arquivosDomain domain.ArquivosDomain, cabecalhoChan chan []string, linhaChan chan []string) {
 	nomeArquivo := strings.Replace(arquivosDomain.Endereco, ".zip", ".csv", 1)
 	arquivo, err := os.Open(env.GetPathArquivosCvm() + nomeArquivo)
 
@@ -152,10 +149,7 @@ func salvarProcessamento(fs *fundosDomainService, arquivosDomain domain.Arquivos
 	}
 }
 
-func proximoQueue(
-	jsonChan chan []byte,
-	mensagemChan chan response.FundosQueueResponse,
-) {
+func proximoQueue(jsonChan chan []byte, mensagemChan chan response.FundosQueueResponse) {
 	for data := range jsonChan {
 		response := response.FundosQueueResponse{
 			Topic: env.GetTopicPersistenciaDados(),
