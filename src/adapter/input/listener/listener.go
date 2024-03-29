@@ -15,7 +15,7 @@ import (
 
 func initConsume() (sarama.Consumer, *resterrors.RestErr) {
 	config := sarama.NewConfig()
-	logger.Info(env.GetKafkaHost(), "kafka")
+	logger.Info("Init Consume", "kafka")
 
 	consumer, err := sarama.NewConsumer([]string{env.GetKafkaHost()}, config)
 	if err != nil {
@@ -23,6 +23,7 @@ func initConsume() (sarama.Consumer, *resterrors.RestErr) {
 		return nil, resterrors.NewNotFoundError("ConsumePartition err:")
 
 	}
+	logger.Info("Finish Init Consume", "kafka")
 	return consumer, nil
 }
 
@@ -57,6 +58,7 @@ func consumeTopic(
 	shutdown chan bool,
 ) {
 	logger.Info(fmt.Sprintf("Init Listener: %s", topic), "listener")
+
 	consumer, _ := initConsume()
 	defer consumer.Close()
 
@@ -67,8 +69,9 @@ func consumeTopic(
 	}
 	defer partitionConsumer.Close()
 
+	logger.Info(fmt.Sprintf("Init Read Message: %s %d", topic, partition), "listener")
+
 	for message := range partitionConsumer.Messages() {
-		shutdown <- false
 
 		err := switchCaseTopic(topic, message.Value, fundosController)
 		if err != nil {
@@ -79,7 +82,6 @@ func consumeTopic(
 			fmt.Sprintf("[Consumer] partitionid: %d; offset:%d, value: %s\n",
 				message.Partition, message.Offset, string(message.Value)),
 			"sincronizarFundos")
-		shutdown <- true
 
 	}
 	logger.Info("Finish consumeTopic", "listener")
@@ -102,7 +104,6 @@ func switchCaseTopic(
 		return resterrors.NewNotFoundError(
 			fmt.Sprintf("Queue not found: %s", topic),
 		)
-
 	}
 
 }
