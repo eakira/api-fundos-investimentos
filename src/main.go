@@ -123,8 +123,8 @@ func initListener(
 	fundosController controller.FundosControllerInterface,
 	chanShutdown chan bool,
 ) {
-	chanShutdown <- true
 	listener.Consume(fundosController, chanShutdown)
+	chanShutdown <- true
 }
 
 func initDependenciesController(
