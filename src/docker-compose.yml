@@ -1,5 +1,12 @@
 version: '3.7'
 
+networks:
+  api-network:
+    external: true
+
+volumes:
+  elasticsearch:
+
 services:
   api-fundos:
     build:
