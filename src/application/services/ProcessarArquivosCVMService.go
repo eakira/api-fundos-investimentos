@@ -47,7 +47,6 @@ func processaArquivo(
 	mensagemChan chan response.FundosQueueResponse,
 	wg *sync.WaitGroup,
 ) {
-	defer wg.Done()
 
 	go processaCsv(arquivosDomain, cabecalhoChan, linhaChan)
 
@@ -58,7 +57,12 @@ func processaArquivo(
 	fs.queue.ProduceLote(mensagemChan, wg)
 }
 
-func processarLinhas(arquivosDomain domain.ArquivosDomain, cabecalhoChan chan []string, linhaChan chan []string, jsonChan chan []byte) {
+func processarLinhas(
+	arquivosDomain domain.ArquivosDomain,
+	cabecalhoChan chan []string,
+	linhaChan chan []string,
+	jsonChan chan []byte,
+) {
 	cabecalho := <-cabecalhoChan
 
 	// Use um tamanho de buffer adequado para a slice
@@ -98,7 +102,11 @@ func processarLinhas(arquivosDomain domain.ArquivosDomain, cabecalhoChan chan []
 	close(jsonChan)
 }
 
-func processaCsv(arquivosDomain domain.ArquivosDomain, cabecalhoChan chan []string, linhaChan chan []string) {
+func processaCsv(
+	arquivosDomain domain.ArquivosDomain,
+	cabecalhoChan chan []string,
+	linhaChan chan []string,
+) {
 	nomeArquivo := strings.Replace(arquivosDomain.Endereco, ".zip", ".csv", 1)
 	arquivo, err := os.Open(env.GetPathArquivosCvm() + nomeArquivo)
 
@@ -137,7 +145,10 @@ func processaCsv(arquivosDomain domain.ArquivosDomain, cabecalhoChan chan []stri
 	close(cabecalhoChan)
 }
 
-func salvarProcessamento(fs *fundosDomainService, arquivosDomain domain.ArquivosDomain) {
+func salvarProcessamento(
+	fs *fundosDomainService,
+	arquivosDomain domain.ArquivosDomain,
+) {
 	arquivosDomain.UpdateAt = time.Now()
 	arquivosDomain.Processado = true
 	arquivosDomain.Status = constants.PROCESSANDO
@@ -149,7 +160,10 @@ func salvarProcessamento(fs *fundosDomainService, arquivosDomain domain.Arquivos
 	}
 }
 
-func proximoQueue(jsonChan chan []byte, mensagemChan chan response.FundosQueueResponse) {
+func proximoQueue(
+	jsonChan chan []byte,
+	mensagemChan chan response.FundosQueueResponse,
+) {
 	for data := range jsonChan {
 		response := response.FundosQueueResponse{
 			Topic: env.GetTopicPersistenciaDados(),
