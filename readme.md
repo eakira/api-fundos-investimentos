@@ -7,7 +7,7 @@ docker compose up tls
 docker compose up setup
 
 
-docker compose up
+docker compose up -d
 
 
 Para apagar tudo é o
