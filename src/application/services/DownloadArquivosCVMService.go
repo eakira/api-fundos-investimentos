@@ -16,13 +16,12 @@ import (
 func (fs *fundosDomainService) DownloadArquivosCVMService(arquivosDomain domain.ArquivosDomain) {
 	logger.Info("Init GetFundosExternoService", "sincronizarFundos")
 
-	/*
-		err := fs.externo.DownloadArquivosCVMPort(arquivosDomain.Endereco)
-		if err != nil {
-			logger.Error("Error trying to DownloadArquivosCVMPort", err, "sincronizarFundos")
-			return
-		}
-	*/
+	err := fs.externo.DownloadArquivosCVMPort(arquivosDomain.Endereco)
+	if err != nil {
+		logger.Error("Error trying to DownloadArquivosCVMPort", err, "sincronizarFundos")
+		return
+	}
+
 	salvandoDownload(fs, arquivosDomain)
 
 	proximoQueueDownload(fs, arquivosDomain)
