@@ -35,3 +35,11 @@ func GetNumParticoes() int32 {
 	v, _ := strconv.ParseInt(value, 10, 32)
 	return int32(v)
 }
+
+func GetTopics() string {
+	return os.Getenv("TOPICS")
+}
+
+func GetPartitions() string {
+	return os.Getenv("PARTITIONS")
+}
