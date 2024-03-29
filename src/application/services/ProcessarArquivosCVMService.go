@@ -8,9 +8,7 @@ import (
 	"api-fundos-investimentos/configuration/logger"
 	"encoding/csv"
 	"encoding/json"
-	"fmt"
 	"io"
-	"log"
 	"os"
 	"strings"
 	"sync"
@@ -19,17 +17,17 @@ import (
 	"golang.org/x/text/encoding/charmap"
 )
 
+// ProcessarArquivosCVMService processa arquivos CVM
 func (fs *fundosDomainService) ProcessarArquivosCVMService(arquivosDomain domain.ArquivosDomain) {
-	logger.Info("Init GetFundosExternoService", "sincronizarFundos")
+	logger.Info("Iniciando Processamento de Arquivos CVM", "ProcessarArquivosCVMService")
 
 	processaArquivo(fs, arquivosDomain)
 
-	salvandoProcessar(fs, arquivosDomain)
-	logger.Info("Finish GetFundosExternoService", "sincronizarFundos")
+	salvarProcessamento(fs, arquivosDomain)
+	logger.Info("Processamento de Arquivos CVM Concluído", "ProcessarArquivosCVMService")
 }
 
 func processaArquivo(fs *fundosDomainService, arquivosDomain domain.ArquivosDomain) {
-
 	cabecalhoChan := make(chan []string, 1)
 	linhaChan := make(chan []string, 100000)
 	jsonChan := make(chan []byte, 100000)
@@ -38,15 +36,14 @@ func processaArquivo(fs *fundosDomainService, arquivosDomain domain.ArquivosDoma
 	var wg sync.WaitGroup
 	wg.Add(1)
 	go processaCsv(linhaChan, cabecalhoChan, arquivosDomain)
-	go processarLinha(linhaChan, cabecalhoChan, arquivosDomain, jsonChan)
+	go processarLinhas(linhaChan, cabecalhoChan, arquivosDomain, jsonChan)
 	go proximoQueue(jsonChan, mensagemChan)
 	go fs.queue.ProduceLote(mensagemChan, &wg)
 
 	wg.Wait()
-
 }
 
-func processarLinha(
+func processarLinhas(
 	linhaChan chan []string,
 	cabecalhoChan chan []string,
 	arquivosDomain domain.ArquivosDomain,
@@ -56,35 +53,38 @@ func processarLinha(
 	mapa := make(map[string]any)
 	mapa["collection"] = arquivosDomain.TipoArquivo
 	mapa["tipo-acao"] = "store"
-	i := 1
+
 	mapaJson := make([]map[string]any, 0)
+
 	for linha := range linhaChan {
 		for key, coluna := range cabecalho {
-			mapa[coluna] = linha[key]
+			if key < len(linha) {
+				mapa[coluna] = linha[key]
+			}
 		}
 		mapaJson = append(mapaJson, mapa)
-		if i == env.GetLimitInsert() {
+
+		if len(mapaJson) == env.GetLimitInsert() {
 			json, err := json.Marshal(mapaJson)
 			if err != nil {
-				fmt.Println("tre")
-				panic("Marshal")
+				logger.Error("Erro ao serializar JSON: ", err, "ProcessarLinhas")
+				continue
 			}
 			jsonChan <- json
-
 			mapaJson = make([]map[string]any, 0)
-			i = 0
 		}
-		i++
 	}
-	json, err := json.Marshal(mapaJson)
-	if err != nil {
-		fmt.Println("tre")
-		panic("Marshal")
+
+	if len(mapaJson) > 0 {
+		json, err := json.Marshal(mapaJson)
+		if err != nil {
+			logger.Error("Erro ao serializar JSON: ", err, "ProcessarLinhas")
+			panic("Erro ao serializar JSON")
+		}
+		jsonChan <- json
 	}
-	jsonChan <- json
 
 	close(jsonChan)
-
 }
 
 func processaCsv(
@@ -92,56 +92,60 @@ func processaCsv(
 	cabecalhoChan chan []string,
 	arquivosDomain domain.ArquivosDomain,
 ) {
-	aquivo := strings.Replace(arquivosDomain.Endereco, ".zip", ".csv", 1)
-
-	file, err := os.Open(env.GetPathArquivosCvm() + aquivo)
+	nomeArquivo := strings.Replace(arquivosDomain.Endereco, ".zip", ".csv", 1)
+	arquivo, err := os.Open(env.GetPathArquivosCvm() + nomeArquivo)
 
 	if err != nil {
+		logger.Error("Erro ao abrir arquivo CSV: ", err, "ProcessarCsv")
 		panic(err)
 	}
-	defer file.Close()
+	defer arquivo.Close()
 
-	// reader := csv.NewReader(charmap.ISO8859_15.NewDecoder().Reader(file))
-
-	reader := csv.NewReader(charmap.ISO8859_15.NewDecoder().Reader(file))
-	//reader := csv.NewReader(bufio.NewReader(file))
+	decoder := charmap.ISO8859_1.NewDecoder()
+	reader := csv.NewReader(decoder.Reader(arquivo))
 	reader.Comma = ';'
 	reader.FieldsPerRecord = -1
 	reader.LazyQuotes = true
 
-	cabecalhoChanArq, err := reader.Read()
-	cabecalhoChan <- cabecalhoChanArq
-	i := 0
+	cabecalho, err := reader.Read()
+	if err != nil {
+		logger.Error("Erro ao ler cabeçalho do CSV: ", err, "ProcessarCsv")
+		panic(err)
+	}
+	cabecalhoChan <- cabecalho
 
-	//	records, err := reader.ReadAll()
 	for {
-		record, err := reader.Read()
+		linha, err := reader.Read()
 		if err == io.EOF {
 			break
-		} else if err != nil {
-			logger.Error("error try reader.Read(): ", err, "processarArquivos")
-			log.Fatal(err)
 		}
-		linhaChan <- record
-		i++
+		if err != nil {
+			logger.Error("Erro ao ler linha do CSV: ", err, "ProcessarCsv")
+			panic(err)
+		}
+		linhaChan <- linha
 	}
+
 	close(linhaChan)
 	close(cabecalhoChan)
-	fmt.Println("Done")
 }
 
-func salvandoProcessar(fs *fundosDomainService, arquivosDomain domain.ArquivosDomain) {
+func salvarProcessamento(fs *fundosDomainService, arquivosDomain domain.ArquivosDomain) {
 	arquivosDomain.UpdateAt = time.Now()
 	arquivosDomain.Processado = true
 	arquivosDomain.Status = constants.PROCESSANDO
-	fs.repository.UpdateArquivosRepository(arquivosDomain)
+
+	err := fs.repository.UpdateArquivosRepository(arquivosDomain)
+	if err != nil {
+		logger.Error("Erro ao salvar processamento: ", err, "SalvarProcessamento")
+		panic(err)
+	}
 }
 
 func proximoQueue(
 	jsonChan chan []byte,
 	mensagemChan chan response.FundosQueueResponse,
 ) {
-
 	for data := range jsonChan {
 		response := response.FundosQueueResponse{
 			Topic: env.GetTopicPersistenciaDados(),
@@ -151,5 +155,4 @@ func proximoQueue(
 		mensagemChan <- response
 	}
 	close(mensagemChan)
-
 }
