@@ -22,6 +22,11 @@ func (fc *fundosControllerInterface) CreateTopicController(c *gin.Context) {
 	}
 	defer admin.Close()
 
+	admin.CreateTopic(env.GetTopicSincronizar(), &sarama.TopicDetail{
+		NumPartitions:     env.GetNumParticoes(),
+		ReplicationFactor: 1,
+	}, false)
+
 	admin.CreateTopic(env.GetTopicProcessarArquivos(), &sarama.TopicDetail{
 		NumPartitions:     env.GetNumParticoes(),
 		ReplicationFactor: 1,
