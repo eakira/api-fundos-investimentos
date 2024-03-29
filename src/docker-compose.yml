@@ -1,0 +1,12 @@
+version: '3.7'
+
+services:
+  api-fundos:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
+    networks: 
+      - api-network
