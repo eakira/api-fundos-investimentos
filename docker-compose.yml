@@ -7,18 +7,7 @@ networks:
 volumes:
   elasticsearch:
 
-
 services:
-
-  api-fundos:
-    build:
-      context: .
-      dockerfile: src/Dockerfile
-    ports:
-      - "8080:8080"
-    restart: unless-stopped
-    networks: 
-      - api-network
   mongodb:
     image: mongo
     ports:
@@ -61,7 +50,7 @@ services:
       context: docker/tls/
       args:
         ELASTIC_VERSION: ${ELASTIC_VERSION}
-    user: root  # ensures we can write to the local tls/ directory.
+    user: root
     init: true
     volumes:
       - ./docker/tls/entrypoint.sh:/entrypoint.sh:ro,Z
@@ -80,7 +69,6 @@ services:
       - ./docker/setup/entrypoint.sh:/entrypoint.sh:ro,Z
       - ./docker/setup/lib.sh:/lib.sh:ro,Z
       - ./docker/setup/roles:/roles:ro,Z
-      # (!) CA certificate. Generate using the 'tls' service.
       - ./docker/tls/certs/ca/ca.crt:/ca.crt:ro,z
     environment:
       ELASTIC_PASSWORD: ${ELASTIC_PASSWORD:-}
@@ -104,7 +92,6 @@ services:
     volumes:
       - ./docker/elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro,Z
       - elasticsearch:/usr/share/elasticsearch/data:Z
-      # (!) TLS certificates. Generate using the 'tls' service.
       - ./docker/tls/certs/ca/ca.crt:/usr/share/elasticsearch/config/ca.crt:ro,z
       - ./docker/tls/certs/elasticsearch/elasticsearch.crt:/usr/share/elasticsearch/config/elasticsearch.crt:ro,z
       - ./docker/tls/certs/elasticsearch/elasticsearch.key:/usr/share/elasticsearch/config/elasticsearch.key:ro,z
@@ -114,12 +101,7 @@ services:
     environment:
       node.name: elasticsearch
       ES_JAVA_OPTS: -Xms512m -Xmx512m
-      # Bootstrap password.
-      # Used to initialize the keystore during the initial startup of
-      # Elasticsearch. Ignored on subsequent runs.
       ELASTIC_PASSWORD: ${ELASTIC_PASSWORD:-}
-      # Use single node discovery in order to disable production mode and avoid bootstrap checks.
-      # see: https://www.elastic.co/guide/en/elasticsearch/reference/current/bootstrap-checks.html
       discovery.type: single-node
     networks:
       - api-network
@@ -133,7 +115,6 @@ services:
     volumes:
       - ./docker/logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml:ro,Z
       - ./docker/logstash/pipeline:/usr/share/logstash/pipeline:ro,Z
-      # (!) CA certificate. Generate using the 'tls' service.
       - ./docker/tls/certs/ca/ca.crt:/usr/share/logstash/config/ca.crt:ro,z
     ports:
       - 5044:5044
@@ -156,7 +137,6 @@ services:
         ELASTIC_VERSION: ${ELASTIC_VERSION}
     volumes:
       - ./docker/kibana/config/kibana.yml:/usr/share/kibana/config/kibana.yml:ro,Z
-      # (!) TLS certificates. Generate using the 'tls' service.
       - ./docker/tls/certs/ca/ca.crt:/usr/share/kibana/config/ca.crt:ro,z
       - ./docker/tls/certs/kibana/kibana.crt:/usr/share/kibana/config/kibana.crt:ro,Z
       - ./docker/tls/certs/kibana/kibana.key:/usr/share/kibana/config/kibana.key:ro,Z
@@ -175,15 +155,9 @@ services:
       context: docker/extensions/filebeat/
       args:
         ELASTIC_VERSION: ${ELASTIC_VERSION}
-    # Run as 'root' instead of 'filebeat' (uid 1000) to allow reading
-    # 'docker.sock' and the host's filesystem.
     user: root
     command:
-      # Log to stderr.
       - -e
-      # Disable config file permissions checks. Allows mounting
-      # 'config/filebeat.yml' even if it's not owned by root.
-      # see: https://www.elastic.co/guide/en/beats/libbeat/current/config-file-permissions.html
       - --strict.perms=false
     volumes:
       - ./docker/extensions/filebeat/config/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro,Z
@@ -195,7 +169,6 @@ services:
         source: /var/run/docker.sock
         target: /var/run/docker.sock
         read_only: true
-      # (!) CA certificate. Generate using the 'tls' service.
       - ./docker/tls/certs/ca/ca.crt:/usr/share/filebeat/ca.crt:ro,z
     environment:
       FILEBEAT_INTERNAL_PASSWORD: ${FILEBEAT_INTERNAL_PASSWORD:-}
