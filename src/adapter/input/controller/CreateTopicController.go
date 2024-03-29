@@ -21,6 +21,7 @@ func (fc *fundosControllerInterface) CreateTopicController(c *gin.Context) {
 		log.Fatal("Error while creating cluster admin: ", err.Error())
 	}
 	defer admin.Close()
+
 	admin.CreateTopic(env.GetTopicProcessarArquivos(), &sarama.TopicDetail{
 		NumPartitions:     env.GetNumParticoes(),
 		ReplicationFactor: 1,
