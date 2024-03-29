@@ -21,13 +21,6 @@ import (
 func (fs *fundosDomainService) ProcessarArquivosCVMService(arquivosDomain domain.ArquivosDomain) {
 	logger.Info("Iniciando Processamento de Arquivos CVM", "ProcessarArquivosCVMService")
 
-	processaArquivo(fs, arquivosDomain)
-
-	salvarProcessamento(fs, arquivosDomain)
-	logger.Info("Processamento de Arquivos CVM Concluído", "ProcessarArquivosCVMService")
-}
-
-func processaArquivo(fs *fundosDomainService, arquivosDomain domain.ArquivosDomain) {
 	cabecalhoChan := make(chan []string, 1)
 	linhaChan := make(chan []string, 100000)
 	jsonChan := make(chan []byte, 100000)
@@ -35,20 +28,37 @@ func processaArquivo(fs *fundosDomainService, arquivosDomain domain.ArquivosDoma
 
 	var wg sync.WaitGroup
 	wg.Add(1)
-	go processaCsv(linhaChan, cabecalhoChan, arquivosDomain)
-	go processarLinhas(linhaChan, cabecalhoChan, arquivosDomain, jsonChan)
-	go proximoQueue(jsonChan, mensagemChan)
-	go fs.queue.ProduceLote(mensagemChan, &wg)
+
+	go processaArquivo(fs, arquivosDomain, cabecalhoChan, linhaChan, jsonChan, mensagemChan, &wg)
 
 	wg.Wait()
+
+	salvarProcessamento(fs, arquivosDomain)
+
+	logger.Info("Processamento de Arquivos CVM Concluído", "ProcessarArquivosCVMService")
 }
 
-func processarLinhas(
-	linhaChan chan []string,
-	cabecalhoChan chan []string,
+func processaArquivo(
+	fs *fundosDomainService,
 	arquivosDomain domain.ArquivosDomain,
+	cabecalhoChan chan []string,
+	linhaChan chan []string,
 	jsonChan chan []byte,
+	mensagemChan chan response.FundosQueueResponse,
+	wg *sync.WaitGroup,
 ) {
+	defer wg.Done()
+
+	go processaCsv(arquivosDomain, cabecalhoChan, linhaChan)
+
+	go processarLinhas(arquivosDomain, cabecalhoChan, linhaChan, jsonChan)
+
+	go proximoQueue(jsonChan, mensagemChan)
+
+	fs.queue.ProduceLote(mensagemChan, wg)
+}
+
+func processarLinhas(arquivosDomain domain.ArquivosDomain, cabecalhoChan chan []string, linhaChan chan []string, jsonChan chan []byte) {
 	cabecalho := <-cabecalhoChan
 	mapa := make(map[string]any)
 	mapa["collection"] = arquivosDomain.TipoArquivo
@@ -88,9 +98,9 @@ func processarLinhas(
 }
 
 func processaCsv(
-	linhaChan chan []string,
-	cabecalhoChan chan []string,
 	arquivosDomain domain.ArquivosDomain,
+	cabecalhoChan chan []string,
+	linhaChan chan []string,
 ) {
 	nomeArquivo := strings.Replace(arquivosDomain.Endereco, ".zip", ".csv", 1)
 	arquivo, err := os.Open(env.GetPathArquivosCvm() + nomeArquivo)
