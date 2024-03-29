@@ -123,9 +123,8 @@ func initListener(
 	fundosController controller.FundosControllerInterface,
 	chanShutdown chan bool,
 ) {
-	partition := 0
 	chanShutdown <- true
-	listener.Consume(int32(partition), fundosController, chanShutdown)
+	listener.Consume(fundosController, chanShutdown)
 }
 
 func initDependenciesController(
