@@ -18,6 +18,3 @@ docker system prune -a
 
 # Primeiros passos
 
-Precisa criar a configuração do kafka
-
-Nessa rota /api/v1/fundos/config-kafka vai criar 
