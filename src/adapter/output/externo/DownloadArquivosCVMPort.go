@@ -5,6 +5,7 @@ import (
 	"api-fundos-investimentos/configuration/logger"
 	"api-fundos-investimentos/configuration/resterrors"
 	"archive/zip"
+	"fmt"
 	"io"
 	"net/http"
 	"os"
@@ -62,7 +63,7 @@ func unzip(filename string) {
 	// Abre o arquivo ZIP para leitura
 	reader, err := zip.OpenReader(filename)
 	if err != nil {
-		logger.Error("Erro ao abrir arquivo ZIP:", err, "sincronizar")
+		logger.Error(fmt.Sprintf("Erro ao abrir arquivo ZIP: %s", filename), err, "sincronizar")
 		return
 	}
 	defer reader.Close()
