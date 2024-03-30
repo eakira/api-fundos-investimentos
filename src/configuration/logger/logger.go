@@ -48,10 +48,8 @@ func Error(message string, err error, journey string, tags ...zap.Field) {
 	tags = append(tags, zap.String("journey", journey))
 	tags = append(tags, zap.NamedError("error", err))
 	log.Info(message, tags...)
-	errSync := log.Sync()
-	if errSync != nil {
-		return
-	}
+	log.Sync()
+	panic(err)
 }
 
 func getOutputLogs() string {
