@@ -23,7 +23,7 @@ func (fs *fundosDomainService) ProcessarArquivosCVMService(arquivosDomain domain
 
 	cabecalhoChan := make(chan []string, 1)
 	linhaChan := make(chan []string, 100000)
-	jsonChan := make(chan []byte, 100000)
+	jsonChan := make(chan []byte, 500)
 	mensagemChan := make(chan response.FundosQueueResponse, 1000)
 
 	var wg sync.WaitGroup
@@ -66,12 +66,18 @@ func processarLinhas(
 	cabecalho := <-cabecalhoChan
 
 	// Use um tamanho de buffer adequado para a slice
-	mapaJson := make([]map[string]any, 0, env.GetLimitInsert())
+	limit := env.GetLimitInsert()
+	if len(cabecalho) > 20 {
+		limit = 1
+	}
+
+	mapaJson := make([]map[string]any, 0, limit)
 
 	for linha := range linhaChan {
 		mapa := make(map[string]any)
 		mapa["collection"] = arquivosDomain.TipoArquivo
 		mapa["tipo-acao"] = "store"
+
 		for key, coluna := range cabecalho {
 			if key < len(linha) {
 				mapa[coluna] = linha[key]
@@ -79,14 +85,14 @@ func processarLinhas(
 		}
 		mapaJson = append(mapaJson, mapa)
 
-		if len(mapaJson) == env.GetLimitInsert() {
+		if len(mapaJson) == limit {
 			json, err := json.Marshal(mapaJson)
 			if err != nil {
 				logger.Error("Erro ao serializar JSON: ", err, "ProcessarLinhas")
 				continue
 			}
 			jsonChan <- json
-			mapaJson = make([]map[string]any, 0, env.GetLimitInsert())
+			mapaJson = make([]map[string]any, 0, limit)
 		}
 	}
 
