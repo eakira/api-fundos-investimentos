@@ -13,7 +13,7 @@ func (fc *fundosControllerInterface) SincronizarFundosController(c *gin.Context)
 
 		"cadastros",
 		"balancete",
-		"cda",
+		//		"cda",
 		"extrato",
 		"informacao-diaria",
 		//		"informacoes-complementares",
