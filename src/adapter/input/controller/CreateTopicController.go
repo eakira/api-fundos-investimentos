@@ -7,10 +7,9 @@ import (
 	"log"
 
 	"github.com/IBM/sarama"
-	"github.com/gin-gonic/gin"
 )
 
-func (fc *fundosControllerInterface) CreateTopicController(c *gin.Context) {
+func (fc *fundosControllerInterface) CreateTopicController() {
 	logger.Info("Init CreateTopicController", "sincronizarFundos")
 
 	brokerAddrs := []string{env.GetKafkaHost()}

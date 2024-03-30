@@ -17,7 +17,7 @@ func NewFundosControllerInterface(
 
 type FundosControllerInterface interface {
 	SincronizarFundosController(c *gin.Context)
-	CreateTopicController(c *gin.Context)
+	CreateTopicController()
 	DownloadArquivosCVMController(request.FundosCvmArquivosQueueRequest)
 	ProcessarArquivosCVMController(request.FundosCvmArquivosQueueRequest)
 	CreateFundosController([]request.FundosCadastrosRequest)
