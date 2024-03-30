@@ -49,7 +49,7 @@ func GetConfigCvmCda() ArquivosCVM {
 	return ArquivosCVM{
 		Folder:      "FI/DOC/CDA/DADOS/cda_fi_",
 		Extension:   ".zip",
-		DataInicial: "2021-01-01",
+		DataInicial: "2023-01-01",
 		DataFinal:   time.Now().AddDate(0, -2, 0).Format("2006-01-02"),
 		Formato:     "200601",
 		Ano:         0,
@@ -64,7 +64,7 @@ func GetConfigCvmCdaHist() ArquivosCVM {
 		Folder:      "FI/DOC/CDA/DADOS/HIST/cda_fi_",
 		Extension:   ".zip",
 		DataInicial: "2005-01-01",
-		DataFinal:   "2020-12-01",
+		DataFinal:   "2021-12-01",
 		Formato:     "2006",
 		Ano:         1,
 		Mes:         0,
