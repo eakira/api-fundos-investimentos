@@ -6,13 +6,14 @@ import (
 	"api-fundos-investimentos/configuration/logger"
 	"api-fundos-investimentos/configuration/resterrors"
 	"fmt"
-	"log"
 	"strconv"
 	"strings"
+	"sync"
 
 	"github.com/IBM/sarama"
 )
 
+// initConsume inicializa o consumidor Kafka
 func initConsume() (sarama.Consumer, *resterrors.RestErr) {
 	config := sarama.NewConfig()
 	logger.Info("Init Consume", "kafka")
@@ -20,79 +21,71 @@ func initConsume() (sarama.Consumer, *resterrors.RestErr) {
 	consumer, err := sarama.NewConsumer([]string{env.GetKafkaHost()}, config)
 	if err != nil {
 		logger.Error("NewConsumer err: ", err, "listener")
-		return nil, resterrors.NewNotFoundError("ConsumePartition err:")
-
+		return nil, resterrors.NewInternalServerError("Failed to create Kafka consumer")
 	}
 	logger.Info("Finish Init Consume", "kafka")
 	return consumer, nil
 }
 
-func Consume(
-	fundosController controller.FundosControllerInterface,
-	shutdown chan bool,
-) {
-
+// Consume inicia a escuta nos tópicos Kafka
+func Consume(fundosController controller.FundosControllerInterface, shutdown chan bool) {
 	topic := env.GetTopics()
 	partition := env.GetPartitions()
 	topics := strings.Split(topic, ",")
 	partitions := strings.Split(partition, ",")
 
+	var wg sync.WaitGroup
+
 	for _, topic := range topics {
 		for _, partition := range partitions {
 			value, _ := strconv.ParseInt(partition, 10, 32)
-			go consumeTopic(
-				topic,
-				int32(value),
-				fundosController,
-				shutdown,
-			)
+			wg.Add(1)
+			go consumeTopic(topic, int32(value), fundosController, shutdown, &wg)
 		}
 	}
 
+	wg.Wait()
 }
 
-func consumeTopic(
-	topic string,
-	partition int32,
-	fundosController controller.FundosControllerInterface,
-	shutdown chan bool,
-) {
+// consumeTopic consome mensagens de um tópico específico e uma partição específica
+func consumeTopic(topic string, partition int32, fundosController controller.FundosControllerInterface, shutdown chan bool, wg *sync.WaitGroup) {
+	defer wg.Done()
+
 	logger.Info(fmt.Sprintf("Init Listener: %s", topic), "listener")
 
-	consumer, _ := initConsume()
+	consumer, err := initConsume()
+	if err != nil {
+		logger.Error("Failed to initialize Kafka consumer: ", err, "listener")
+		return
+	}
 	defer consumer.Close()
 
-	partitionConsumer, err := consumer.ConsumePartition(topic, partition, sarama.OffsetNewest)
-	if err != nil {
-		log.Fatal("ConsumePartition err: ", err)
-		resterrors.NewNotFoundError("ConsumePartition err:")
+	partitionConsumer, err2 := consumer.ConsumePartition(topic, partition, sarama.OffsetNewest)
+	if err2 != nil {
+		logger.Error("Failed to consume partition: ", err, "listener")
+		return
 	}
 	defer partitionConsumer.Close()
 
 	logger.Info(fmt.Sprintf("Init Read Message: %s %d", topic, partition), "listener")
 
-	for message := range partitionConsumer.Messages() {
-
-		err := switchCaseTopic(topic, message.Value, fundosController)
-		if err != nil {
-			logger.Error("error trying switchCaseTopic", err, "listener")
+	for {
+		select {
+		case <-shutdown:
+			logger.Info(fmt.Sprintf("Shutting down listener for topic %s partition %d", topic, partition), "listener")
+			return
+		case message := <-partitionConsumer.Messages():
+			err := switchCaseTopic(topic, message.Value, fundosController)
+			if err != nil {
+				logger.Error("Error processing message: ", err, "listener")
+			}
+			logger.Info(fmt.Sprintf("[Consumer] partitionid: %d; offset:%d, value: %s\n", message.Partition, message.Offset, string(message.Value)), "sincronizarFundos")
 		}
-
-		logger.Info(
-			fmt.Sprintf("[Consumer] partitionid: %d; offset:%d, value: %s\n",
-				message.Partition, message.Offset, string(message.Value)),
-			"sincronizarFundos")
-
 	}
-	logger.Info("Finish consumeTopic", "listener")
 }
 
-func switchCaseTopic(
-	topic string,
-	message []byte,
-	fundosController controller.FundosControllerInterface,
-) *resterrors.RestErr {
-
+// switchCaseTopic decide qual função de tratamento de mensagem invocar com base no tópico
+func switchCaseTopic(topic string, message []byte, fundosController controller.FundosControllerInterface) *resterrors.RestErr {
 	switch topic {
 	case env.GetTopicSincronizar():
 		return FundosSincronizarListener(message, fundosController)
@@ -101,9 +94,6 @@ func switchCaseTopic(
 	case env.GetTopicPersistenciaDados():
 		return FundosPersistenciaDadosListener(message, fundosController)
 	default:
-		return resterrors.NewNotFoundError(
-			fmt.Sprintf("Queue not found: %s", topic),
-		)
+		return resterrors.NewNotFoundError(fmt.Sprintf("Queue not found: %s", topic))
 	}
-
 }
