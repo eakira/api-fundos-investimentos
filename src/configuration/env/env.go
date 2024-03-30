@@ -22,7 +22,7 @@ func GetTopicPersistenciaDados() string {
 }
 
 func GetPathArquivosCvm() string {
-	return "storage/cvm/"
+	return os.Getenv("STORAGE")
 }
 
 func GetLimitInsert() int {
