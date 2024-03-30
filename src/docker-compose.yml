@@ -3,9 +3,7 @@ version: '3.7'
 networks:
   api-network:
     external: true
-
-volumes:
-  compartilhado:
+    driver: bridge
 
 services:
   api-fundos-1:
@@ -14,14 +12,12 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8080:8080"
-    restart: unless-stopped
     environment:
-      - PARTITIONS=0,1,2,3,4,
-      - STORAGE=path/to/shared/directory/
+      - PARTITIONS=0,1,2,3,4
     networks: 
       - api-network
     volumes:
-      - compartilhado:/path/to/shared/directory
+      - ./storage:/storage
       
   api-fundos-2:
     build:
@@ -29,14 +25,12 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8081:8080"
-    restart: unless-stopped
     environment:
       - PARTITIONS=5,6,7,8,9
-      - STORAGE=path/to/shared/directory/
     networks: 
       - api-network
     volumes:
-      - compartilhado:/path/to/shared/directory
+      - ./storage:/storage
     
   api-fundos-3:
     build:
@@ -44,14 +38,12 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8082:8080"
-    restart: unless-stopped
     environment:
       - PARTITIONS=10,11,12,13,14
-      - STORAGE=path/to/shared/directory/
     networks: 
       - api-network 
     volumes:
-      - compartilhado:/path/to/shared/directory
+      - ./storage:/storage
     
   api-fundos-4:
     build:
@@ -59,11 +51,9 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8083:8080"
-    restart: unless-stopped
     environment:
       - PARTITIONS=15,16,17,18,19
-      - STORAGE=path/to/shared/directory/
     networks: 
       - api-network
     volumes:
-      - compartilhado:/path/to/shared/directory
+      - ./storage:/storage
