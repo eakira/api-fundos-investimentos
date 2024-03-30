@@ -3,6 +3,7 @@ version: '3.7'
 networks:
   api-network:
     external: true
+    driver: bridge
 
 volumes:
   elasticsearch:
