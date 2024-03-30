@@ -48,6 +48,7 @@ func main() {
 	}
 
 	fundosController := initDependenciesController(database)
+	fundosController.CreateTopicController() // Carregando os topicos do kafka
 
 	router := gin.Default()
 	addr := os.Getenv(PORT)
