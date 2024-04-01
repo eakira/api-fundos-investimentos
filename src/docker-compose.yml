@@ -14,7 +14,8 @@ services:
       - "8080:8080"
     environment:
       - PARTITIONS=0,1,2,3,4
-      - LOG_PATH=logs/api-fundos-1.log
+      - LOG_INFO_PATH=logs/api-fundos-info-1.log
+      - LOG_ERROR_PATH=logs/api-fundos-error-1.log
     volumes:
       - ./storage:/app/storage
       - ./logs:/app/logs
@@ -29,7 +30,8 @@ services:
       - "8081:8080"
     environment:
       - PARTITIONS=5,6,7,8,9
-      - LOG_PATH=logs/api-fundos-2.log
+      - LOG_INFO_PATH=logs/api-fundos-info-2.log
+      - LOG_ERROR_PATH=logs/api-fundos-error-2.log
     volumes:
       - ./storage:/app/storage
       - ./logs:/app/logs
@@ -44,7 +46,8 @@ services:
       - "8082:8080"
     environment:
       - PARTITIONS=10,11,12,13,14
-      - LOG_PATH=logs/api-fundos-3.log
+      - LOG_INFO_PATH=logs/api-fundos-info-3.log
+      - LOG_ERROR_PATH=logs/api-fundos-error-3.log
     volumes:
       - ./storage:/app/storage
       - ./logs:/app/logs
@@ -59,7 +62,8 @@ services:
       - "8083:8080"
     environment:
       - PARTITIONS=15,16,17,18,19
-      - LOG_PATH=logs/api-fundos-4.log
+      - LOG_INFO_PATH=logs/api-fundos-info-4.log
+      - LOG_ERROR_PATH=logs/api-fundos-error-4.log
     volumes:
       - ./storage:/app/storage
       - ./logs:/app/logs
