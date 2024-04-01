@@ -53,15 +53,6 @@ func Error(message string, err error, journey string, tags ...zap.Field) {
 	panic(err)
 }
 
-func getOutputLogs() string {
-	output := strings.ToLower(strings.TrimSpace(LOG_OUTPUT))
-	if output == "" {
-		return "stdout"
-	}
-
-	return output
-}
-
 func getLevelLogs() zapcore.Level {
 	switch strings.ToLower(strings.TrimSpace(LOG_LEVEL)) {
 	case "info":
