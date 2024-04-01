@@ -51,6 +51,11 @@ func GetPartitions() string {
 func GetLogOutup() string {
 	return os.Getenv("LOG_OUTPUT")
 }
-func GetPathLogs() string {
+
+func GetLogPath() string {
 	return os.Getenv("LOG_PATH")
+}
+
+func GetLogLevel() string {
+	return os.Getenv("LOG_LEVEL")
 }
