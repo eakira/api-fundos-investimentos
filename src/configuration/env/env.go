@@ -5,6 +5,10 @@ import (
 	"strconv"
 )
 
+func GetAppName() string {
+	return os.Getenv("APP_NAME")
+}
+
 func GetKafkaHost() string {
 	return os.Getenv("KAFKA_HOST")
 }
@@ -42,4 +46,11 @@ func GetTopics() string {
 
 func GetPartitions() string {
 	return os.Getenv("PARTITIONS")
+}
+
+func GetLogOutup() string {
+	return os.Getenv("LOG_OUTPUT")
+}
+func GetPathLogs() string {
+	return os.Getenv("LOG_PATH")
 }
