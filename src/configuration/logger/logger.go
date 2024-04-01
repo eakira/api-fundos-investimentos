@@ -12,17 +12,25 @@ import (
 var (
 	log *zap.Logger
 
-	LOG_OUTPUT = env.GetLogOutup()
-	LOG_PATH   = env.GetLogPath()
-	LOG_LEVEL  = env.GetLogLevel()
+	LOG_OUTPUT     = env.GetLogOutup()
+	LOG_PATH       = env.GetLogInfoLevel()
+	LOG_ERROR_PATH = env.GetLogErrorPath()
+	LOG_LEVEL      = env.GetLogLevel()
 )
 
 func init() {
-	os.OpenFile(LOG_PATH, os.O_RDONLY|os.O_CREATE, 0666)
+	// Abra ou crie o arquivo de log de erro
+	errFile, err := os.OpenFile(LOG_ERROR_PATH, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+	if err != nil {
+		panic(err)
+	}
+	defer errFile.Close() // Feche o arquivo depois de usar
+
 	logConfig := zap.Config{
-		OutputPaths: []string{"stdout", LOG_PATH},
-		Level:       zap.NewAtomicLevelAt(getLevelLogs()),
-		Encoding:    "json",
+		OutputPaths:      []string{"stdout", LOG_PATH},
+		ErrorOutputPaths: []string{LOG_ERROR_PATH},
+		Level:            zap.NewAtomicLevelAt(getLevelLogs()),
+		Encoding:         "json",
 		EncoderConfig: zapcore.EncoderConfig{
 			LevelKey:     "level",
 			TimeKey:      "time",
@@ -32,6 +40,7 @@ func init() {
 			EncodeCaller: zapcore.ShortCallerEncoder,
 		},
 	}
+
 	log, _ = logConfig.Build()
 }
 
@@ -48,7 +57,8 @@ func Info(message string, journey string, tags ...zap.Field) {
 func Error(message string, err error, journey string, tags ...zap.Field) {
 	tags = append(tags, zap.String("journey", journey))
 	tags = append(tags, zap.NamedError("error", err))
-	log.Info(message, tags...)
+
+	log.Error(message, tags...)
 	log.Sync()
 	panic(err)
 }
