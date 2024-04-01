@@ -1,6 +1,7 @@
 package logger
 
 import (
+	"api-fundos-investimentos/configuration/env"
 	"os"
 	"strings"
 
@@ -11,9 +12,9 @@ import (
 var (
 	log *zap.Logger
 
-	LOG_OUTPUT = "LOG_OUTPUT"
-	LOG_PATH   = "logs/go.log"
-	LOG_LEVEL  = "LOG_LEVEL"
+	LOG_OUTPUT = env.GetLogOutup()
+	LOG_PATH   = env.GetLogPath()
+	LOG_LEVEL  = env.GetLogLevel()
 )
 
 func init() {
@@ -53,7 +54,7 @@ func Error(message string, err error, journey string, tags ...zap.Field) {
 }
 
 func getOutputLogs() string {
-	output := strings.ToLower(strings.TrimSpace(os.Getenv(LOG_OUTPUT)))
+	output := strings.ToLower(strings.TrimSpace(LOG_OUTPUT))
 	if output == "" {
 		return "stdout"
 	}
@@ -62,7 +63,7 @@ func getOutputLogs() string {
 }
 
 func getLevelLogs() zapcore.Level {
-	switch strings.ToLower(strings.TrimSpace(os.Getenv(LOG_LEVEL))) {
+	switch strings.ToLower(strings.TrimSpace(LOG_LEVEL)) {
 	case "info":
 		return zapcore.InfoLevel
 	case "error":
