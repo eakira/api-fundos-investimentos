@@ -52,8 +52,12 @@ func GetLogOutup() string {
 	return os.Getenv("LOG_OUTPUT")
 }
 
-func GetLogPath() string {
-	return os.Getenv("LOG_PATH")
+func GetLogInfoLevel() string {
+	return os.Getenv("LOG_INFO_PATH")
+}
+
+func GetLogErrorPath() string {
+	return os.Getenv("LOG_ERROR_PATH")
 }
 
 func GetLogLevel() string {
