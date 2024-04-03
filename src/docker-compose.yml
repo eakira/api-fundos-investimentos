@@ -14,7 +14,7 @@ services:
       - "8080:8080"
     environment:
       - TOPICS=processar-arquivos
-      - PARTITIONS=0,1,2,3,4
+      - PARTITIONS=0,1,2,3,4,5,6
       - LOG_INFO_PATH=logs/api-fundos-info-1.log
       - LOG_ERROR_PATH=logs/api-fundos-error-1.log
     volumes:
@@ -31,7 +31,7 @@ services:
       - "8081:8080"
     environment:
       - TOPICS=sincronizar,processar-arquivos
-      - PARTITIONS=5,6,7,8,9
+      - PARTITIONS=7,8,9,10,11,12
       - LOG_INFO_PATH=logs/api-fundos-info-2.log
       - LOG_ERROR_PATH=logs/api-fundos-error-2.log
     volumes:
@@ -48,7 +48,7 @@ services:
       - "8082:8080"
     environment:
       - TOPICS=processar-arquivos
-      - PARTITIONS=10,11,12,13,14
+      - PARTITIONS=13,14,15,16,17,18,19
       - LOG_INFO_PATH=logs/api-fundos-info-3.log
       - LOG_ERROR_PATH=logs/api-fundos-error-3.log
     volumes:
@@ -64,8 +64,8 @@ services:
     ports:
       - "8083:8080"
     environment:
-      - TOPICS=processar-arquivos
-      - PARTITIONS=15,16,17,18,19
+      - TOPICS=persistencia-dados
+      - PARTITIONS=0,1,2,3
       - LOG_INFO_PATH=logs/api-fundos-info-4.log
       - LOG_ERROR_PATH=logs/api-fundos-error-4.log
     volumes:
@@ -82,7 +82,7 @@ services:
       - "8084:8080"
     environment:
       - TOPICS=persistencia-dados
-      - PARTITIONS=0,1,2,3,4,5,6
+      - PARTITIONS=4,5,6,7
       - LOG_INFO_PATH=logs/api-fundos-info-5.log
       - LOG_ERROR_PATH=logs/api-fundos-error-5.log
     volumes:
@@ -99,7 +99,7 @@ services:
       - "8085:8080"
     environment:
       - TOPICS=persistencia-dados
-      - PARTITIONS=7,8,9,10,11,12
+      - PARTITIONS=8,9,10,11
       - LOG_INFO_PATH=logs/api-fundos-info-6.log
       - LOG_ERROR_PATH=logs/api-fundos-error-6.log
     volumes:
@@ -116,9 +116,26 @@ services:
       - "8086:8080"
     environment:
       - TOPICS=persistencia-dados
-      - PARTITIONS=13,14,15,16,17,18,19
+      - PARTITIONS=12,13,14,15
       - LOG_INFO_PATH=logs/api-fundos-info-7.log
       - LOG_ERROR_PATH=logs/api-fundos-error-7.log
+    volumes:
+      - ./storage:/app/storage
+      - ./logs:/app/logs
+    networks: 
+      - api-network
+    
+  api-fundos-8:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8087:8080"
+    environment:
+      - TOPICS=persistencia-dados
+      - PARTITIONS=16,17,18,19
+      - LOG_INFO_PATH=logs/api-fundos-info-8.log
+      - LOG_ERROR_PATH=logs/api-fundos-error-8.log
     volumes:
       - ./storage:/app/storage
       - ./logs:/app/logs
