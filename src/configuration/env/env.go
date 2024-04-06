@@ -9,6 +9,10 @@ func GetAppName() string {
 	return os.Getenv("APP_NAME")
 }
 
+func GetPersistenciaLocal() bool {
+	return os.Getenv("PERSISTENCIA") == "local"
+}
+
 func GetKafkaHost() string {
 	return os.Getenv("KAFKA_HOST")
 }
