@@ -9,6 +9,7 @@ func GetAppName() string {
 	return os.Getenv("APP_NAME")
 }
 
+// Se a persistencia vai ser executado na hora ou se vai para fila
 func GetPersistenciaLocal() bool {
 	return os.Getenv("PERSISTENCIA") == "local"
 }
