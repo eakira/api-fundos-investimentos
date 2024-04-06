@@ -168,8 +168,8 @@ services:
     environment:
       - TOPICS=persistencia-dados
       - PARTITIONS=6
-      - LOG_INFO_PATH=logs/api-fundos-info-9.log
-      - LOG_ERROR_PATH=logs/api-fundos-error-9.log
+      - LOG_INFO_PATH=logs/api-fundos-info-10.log
+      - LOG_ERROR_PATH=logs/api-fundos-error-10.log
     volumes:
       - ./storage:/app/storage
       - ./logs:/app/logs
@@ -185,8 +185,8 @@ services:
     environment:
       - TOPICS=persistencia-dados
       - PARTITIONS=7
-      - LOG_INFO_PATH=logs/api-fundos-info-8.log
-      - LOG_ERROR_PATH=logs/api-fundos-error-8.log
+      - LOG_INFO_PATH=logs/api-fundos-info-11.log
+      - LOG_ERROR_PATH=logs/api-fundos-error-11.log
     volumes:
       - ./storage:/app/storage
       - ./logs:/app/logs
@@ -232,12 +232,12 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "8087:8080"
+      - "8093:8080"
     environment:
       - TOPICS=persistencia-dados
-      - PARTITIONS=16,17,18,19
-      - LOG_INFO_PATH=logs/api-fundos-info-8.log
-      - LOG_ERROR_PATH=logs/api-fundos-error-8.log
+      - PARTITIONS=10
+      - LOG_INFO_PATH=logs/api-fundos-info-14.log
+      - LOG_ERROR_PATH=logs/api-fundos-error-14.log
     volumes:
       - ./storage:/app/storage
       - ./logs:/app/logs
@@ -249,12 +249,12 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "8087:8080"
+      - "8094:8080"
     environment:
       - TOPICS=persistencia-dados
-      - PARTITIONS=16,17,18,19
-      - LOG_INFO_PATH=logs/api-fundos-info-8.log
-      - LOG_ERROR_PATH=logs/api-fundos-error-8.log
+      - PARTITIONS=11
+      - LOG_INFO_PATH=logs/api-fundos-info-15.log
+      - LOG_ERROR_PATH=logs/api-fundos-error-15.log
     volumes:
       - ./storage:/app/storage
       - ./logs:/app/logs
@@ -266,12 +266,12 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "8087:8080"
+      - "8095:8080"
     environment:
       - TOPICS=persistencia-dados
-      - PARTITIONS=16,17,18,19
-      - LOG_INFO_PATH=logs/api-fundos-info-8.log
-      - LOG_ERROR_PATH=logs/api-fundos-error-8.log
+      - PARTITIONS=12
+      - LOG_INFO_PATH=logs/api-fundos-info-16.log
+      - LOG_ERROR_PATH=logs/api-fundos-error-16.log
     volumes:
       - ./storage:/app/storage
       - ./logs:/app/logs
@@ -283,12 +283,12 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "8087:8080"
+      - "8096:8080"
     environment:
       - TOPICS=persistencia-dados
-      - PARTITIONS=16,17,18,19
-      - LOG_INFO_PATH=logs/api-fundos-info-8.log
-      - LOG_ERROR_PATH=logs/api-fundos-error-8.log
+      - PARTITIONS=13
+      - LOG_INFO_PATH=logs/api-fundos-info-17.log
+      - LOG_ERROR_PATH=logs/api-fundos-error-17.log
     volumes:
       - ./storage:/app/storage
       - ./logs:/app/logs
@@ -300,12 +300,12 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "8087:8080"
+      - "8097:8080"
     environment:
       - TOPICS=persistencia-dados
-      - PARTITIONS=16,17,18,19
-      - LOG_INFO_PATH=logs/api-fundos-info-8.log
-      - LOG_ERROR_PATH=logs/api-fundos-error-8.log
+      - PARTITIONS=14
+      - LOG_INFO_PATH=logs/api-fundos-info-18.log
+      - LOG_ERROR_PATH=logs/api-fundos-error-18.log
     volumes:
       - ./storage:/app/storage
       - ./logs:/app/logs
@@ -317,12 +317,97 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "8087:8080"
+      - "8098:8080"
     environment:
       - TOPICS=persistencia-dados
-      - PARTITIONS=16,17,18,19
-      - LOG_INFO_PATH=logs/api-fundos-info-8.log
-      - LOG_ERROR_PATH=logs/api-fundos-error-8.log
+      - PARTITIONS=15
+      - LOG_INFO_PATH=logs/api-fundos-info-19.log
+      - LOG_ERROR_PATH=logs/api-fundos-error-19.log
+    volumes:
+      - ./storage:/app/storage
+      - ./logs:/app/logs
+    networks: 
+      - api-network
+    
+  api-fundos-20:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8099:8080"
+    environment:
+      - TOPICS=persistencia-dados
+      - PARTITIONS=16
+      - LOG_INFO_PATH=logs/api-fundos-info-20.log
+      - LOG_ERROR_PATH=logs/api-fundos-error-20.log
+    volumes:
+      - ./storage:/app/storage
+      - ./logs:/app/logs
+    networks: 
+      - api-network
+    
+  api-fundos-21:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8100s:8080"
+    environment:
+      - TOPICS=persistencia-dados
+      - PARTITIONS=17
+      - LOG_INFO_PATH=logs/api-fundos-info-21.log
+      - LOG_ERROR_PATH=logs/api-fundos-error-21.log
+    volumes:
+      - ./storage:/app/storage
+      - ./logs:/app/logs
+    networks: 
+      - api-network
+    
+  api-fundos-22:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8101:8080"
+    environment:
+      - TOPICS=persistencia-dados
+      - PARTITIONS=18
+      - LOG_INFO_PATH=logs/api-fundos-info-22.log
+      - LOG_ERROR_PATH=logs/api-fundos-error-22.log
+    volumes:
+      - ./storage:/app/storage
+      - ./logs:/app/logs
+    networks: 
+      - api-network
+    
+  api-fundos-23:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8102:8080"
+    environment:
+      - TOPICS=persistencia-dados
+      - PARTITIONS=19
+      - LOG_INFO_PATH=logs/api-fundos-info-23.log
+      - LOG_ERROR_PATH=logs/api-fundos-error-23.log
+    volumes:
+      - ./storage:/app/storage
+      - ./logs:/app/logs
+    networks: 
+      - api-network
+    
+  api-fundos-24:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8103:8080"
+    environment:
+      - TOPICS=persistencia-dados
+      - PARTITIONS=20
+      - LOG_INFO_PATH=logs/api-fundos-info-24.log
+      - LOG_ERROR_PATH=logs/api-fundos-error-24.log
     volumes:
       - ./storage:/app/storage
       - ./logs:/app/logs
