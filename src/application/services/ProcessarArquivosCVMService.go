@@ -68,9 +68,6 @@ func processarLinhas(
 	cabecalho := <-cabecalhoChan
 
 	limit := env.GetLimitInsert()
-	if len(cabecalho) > 20 {
-		limit = 20
-	}
 	mapaJson := make([]map[string]interface{}, 0, limit)
 
 	for linha := range linhaChan {
