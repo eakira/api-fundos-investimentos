@@ -119,7 +119,6 @@ func processaCsv(
 	arquivo, err := os.Open(env.GetPathArquivosCvm() + nomeArquivo)
 	if err != nil {
 		logger.Error("Erro ao abrir arquivo CSV: ", err, "ProcessarCsv")
-		panic(err)
 	}
 	defer arquivo.Close()
 
@@ -132,7 +131,6 @@ func processaCsv(
 	cabecalho, err := reader.Read()
 	if err != nil {
 		logger.Error("Erro ao ler cabeçalho do CSV: ", err, "ProcessarCsv")
-		panic(err)
 	}
 	cabecalhoChan <- cabecalho
 
@@ -143,7 +141,6 @@ func processaCsv(
 		}
 		if err != nil {
 			logger.Error("Erro ao ler linha do CSV: ", err, "ProcessarCsv")
-			panic(err)
 		}
 		linhaChan <- linha
 	}
@@ -163,7 +160,6 @@ func salvarProcessamento(
 	err := fs.repository.UpdateArquivosRepository(arquivosDomain)
 	if err != nil {
 		logger.Error("Erro ao salvar processamento: ", err, "SalvarProcessamento")
-		panic(err)
 	}
 }
 
