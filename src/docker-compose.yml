@@ -64,7 +64,7 @@ services:
     ports:
       - "8083:8080"
     environment:
-      - TOPICS=persistencia-dados
+      - TOPICS=processar-arquivos
       - PARTITIONS=12,13,14,15
       - LOG_INFO_PATH=logs/api-fundos-info-4.log
       - LOG_ERROR_PATH=logs/api-fundos-error-4.log
@@ -81,7 +81,7 @@ services:
     ports:
       - "8084:8080"
     environment:
-      - TOPICS=persistencia-dados
+      - TOPICS=processar-arquivos
       - PARTITIONS=16,17,18,19
       - LOG_INFO_PATH=logs/api-fundos-info-5.log
       - LOG_ERROR_PATH=logs/api-fundos-error-5.log
