@@ -23,17 +23,15 @@ func (fs *fundosDomainService) ProcessarArquivosCVMService(arquivosDomain domain
 
 	cabecalhoChan := make(chan []string, 1)
 	linhaChan := make(chan []string, 100000)
-	jsonChan := make(chan []byte, 500)
+	jsonChan := make(chan []byte, 5000)
 	mensagemChan := make(chan response.FundosQueueResponse, 1000)
 
 	var wg sync.WaitGroup
 	wg.Add(1)
 
 	go processaArquivo(fs, arquivosDomain, cabecalhoChan, linhaChan, jsonChan, mensagemChan, &wg)
-
-	wg.Wait()
-
 	salvarProcessamento(fs, arquivosDomain)
+	wg.Wait()
 
 	logger.Info("Processamento de Arquivos CVM Concluído", "ProcessarArquivosCVMService")
 }
@@ -52,12 +50,13 @@ func processaArquivo(
 
 	if env.GetPersistenciaLocal() {
 		// Envio para persistência local
-		enviaPersistencia(fs, jsonChan, mensagemChan)
+		enviaPersistencia(fs, jsonChan, mensagemChan, wg)
 	} else {
 		// Envio para Kafka
 		proximoQueue(jsonChan, mensagemChan)
 		fs.queue.ProduceLote(mensagemChan, wg)
 	}
+
 }
 
 func processarLinhas(
@@ -67,7 +66,11 @@ func processarLinhas(
 	jsonChan chan []byte,
 ) {
 	cabecalho := <-cabecalhoChan
+
 	limit := env.GetLimitInsert()
+	if len(cabecalho) > 20 {
+		limit = 20
+	}
 	mapaJson := make([]map[string]interface{}, 0, limit)
 
 	for linha := range linhaChan {
@@ -182,8 +185,11 @@ func enviaPersistencia(
 	fs *fundosDomainService,
 	jsonChan chan []byte,
 	mensagemChan chan response.FundosQueueResponse,
+	wg *sync.WaitGroup,
 ) {
 	for data := range jsonChan {
 		CreateMany(fs, data)
 	}
+	close(mensagemChan)
+	wg.Done()
 }
