@@ -45,13 +45,13 @@ func CreateMany(
 	case "extrato":
 		dados := []request.ExtratoRequest{}
 		json.Unmarshal(data, &dados)
+		domain := &[]domain.ExtratoDomain{}
+		copier.Copy(domain, dados)
+		fs.CreateExtratoService(*domain)
 
 	case "informacao-diaria":
 		dados := []request.InformacaoDiariaRequest{}
 		json.Unmarshal(data, &dados)
-		domain := &[]domain.ExtratoDomain{}
-		copier.Copy(domain, dados)
-		fs.CreateExtratoService(*domain)
 
 	case "lamina":
 		//		São vários arquivos precisa verificar quais arquivos vou usar
