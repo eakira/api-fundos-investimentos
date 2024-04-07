@@ -13,4 +13,5 @@ apagar-logs:
 	cd src/logs && git clean -xdf
 
 build:
+	cd src/logs && git clean -xdf
 	cd src && docker compose up --build
