@@ -17,13 +17,6 @@ import (
 	"golang.org/x/text/encoding/charmap"
 )
 
-var (
-	LIMIT              = env.GetLimitInsert()
-	PATHCVM            = env.GetPathArquivosCvm()
-	TOPIC_PERSISTENCIA = env.GetTopicPersistenciaDados()
-	PERSISTENCIA_LOCAL = env.GetPersistenciaLocal()
-)
-
 // ProcessarArquivosCVMService processa arquivos CVM
 func (fs *fundosDomainService) ProcessarArquivosCVMService(arquivosDomain domain.ArquivosDomain) {
 	logger.Info("Iniciando Processamento de Arquivos CVM", "ProcessarArquivosCVMService")
@@ -57,7 +50,7 @@ func processaArquivo(
 	go processaCsv(arquivosDomain, cabecalhoChan, linhaChan)
 	go processarLinhas(arquivosDomain, cabecalhoChan, linhaChan, jsonChan)
 
-	if PERSISTENCIA_LOCAL {
+	if env.GetPersistenciaLocal() {
 		// Envio para persistência local
 		enviaPersistencia(fs, jsonChan, mensagemChan)
 	} else {
@@ -74,7 +67,8 @@ func processarLinhas(
 	jsonChan chan []byte,
 ) {
 	cabecalho := <-cabecalhoChan
-	mapaJson := make([]map[string]interface{}, 0, LIMIT)
+	limit := env.GetLimitInsert()
+	mapaJson := make([]map[string]interface{}, 0, limit)
 
 	for linha := range linhaChan {
 		mapa := make(map[string]interface{})
@@ -89,11 +83,11 @@ func processarLinhas(
 
 		mapaJson = append(mapaJson, mapa)
 
-		if len(mapaJson) == LIMIT {
+		if len(mapaJson) == limit {
 			if err := enviarJSON(mapaJson, jsonChan); err != nil {
 				logger.Error("Erro ao serializar JSON: ", err, "ProcessarLinhas")
 			}
-			mapaJson = make([]map[string]interface{}, 0, LIMIT)
+			mapaJson = make([]map[string]interface{}, 0, limit)
 		}
 	}
 
@@ -122,7 +116,7 @@ func processaCsv(
 	linhaChan chan []string,
 ) {
 	nomeArquivo := strings.Replace(arquivosDomain.Endereco, ".zip", ".csv", 1)
-	arquivo, err := os.Open(PATHCVM + nomeArquivo)
+	arquivo, err := os.Open(env.GetPathArquivosCvm() + nomeArquivo)
 	if err != nil {
 		logger.Error("Erro ao abrir arquivo CSV: ", err, "ProcessarCsv")
 		panic(err)
@@ -179,7 +173,7 @@ func proximoQueue(
 ) {
 	for data := range jsonChan {
 		response := response.FundosQueueResponse{
-			Topic: TOPIC_PERSISTENCIA,
+			Topic: env.GetTopicPersistenciaDados(),
 			Queue: "update-all",
 			Data:  data,
 		}
