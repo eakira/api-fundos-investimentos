@@ -35,7 +35,7 @@ func GetPathArquivosCvm() string {
 }
 
 func GetLimitInsert() int {
-	return 100
+	return 1000
 }
 
 func GetNumParticoes() int32 {
