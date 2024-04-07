@@ -17,6 +17,13 @@ import (
 	"golang.org/x/text/encoding/charmap"
 )
 
+var (
+	LIMIT              = env.GetLimitInsert()
+	PATHCVM            = env.GetPathArquivosCvm()
+	TOPIC_PERSISTENCIA = env.GetTopicPersistenciaDados()
+	PERSISTENCIA_LOCAL = env.GetPersistenciaLocal()
+)
+
 // ProcessarArquivosCVMService processa arquivos CVM
 func (fs *fundosDomainService) ProcessarArquivosCVMService(arquivosDomain domain.ArquivosDomain) {
 	logger.Info("Iniciando Processamento de Arquivos CVM", "ProcessarArquivosCVMService")
@@ -47,16 +54,15 @@ func processaArquivo(
 	mensagemChan chan response.FundosQueueResponse,
 	wg *sync.WaitGroup,
 ) {
-
 	go processaCsv(arquivosDomain, cabecalhoChan, linhaChan)
-
 	go processarLinhas(arquivosDomain, cabecalhoChan, linhaChan, jsonChan)
 
-	if env.GetPersistenciaLocal() {
-		go enviaPersistencia(fs, jsonChan)
-		close(mensagemChan)
+	if PERSISTENCIA_LOCAL {
+		// Envio para persistência local
+		enviaPersistencia(fs, jsonChan, mensagemChan)
 	} else {
-		go proximoQueue(jsonChan, mensagemChan)
+		// Envio para Kafka
+		proximoQueue(jsonChan, mensagemChan)
 		fs.queue.ProduceLote(mensagemChan, wg)
 	}
 }
@@ -68,17 +74,10 @@ func processarLinhas(
 	jsonChan chan []byte,
 ) {
 	cabecalho := <-cabecalhoChan
-
-	// Use um tamanho de buffer adequado para a slice
-	limit := env.GetLimitInsert()
-	if len(cabecalho) > 20 {
-		limit = 1
-	}
-
-	mapaJson := make([]map[string]any, 0, limit)
+	mapaJson := make([]map[string]interface{}, 0, LIMIT)
 
 	for linha := range linhaChan {
-		mapa := make(map[string]any)
+		mapa := make(map[string]interface{})
 		mapa["collection"] = arquivosDomain.TipoArquivo
 		mapa["tipo-acao"] = "store"
 
@@ -87,29 +86,34 @@ func processarLinhas(
 				mapa[coluna] = linha[key]
 			}
 		}
+
 		mapaJson = append(mapaJson, mapa)
 
-		if len(mapaJson) == limit {
-			json, err := json.Marshal(mapaJson)
-			if err != nil {
+		if len(mapaJson) == LIMIT {
+			if err := enviarJSON(mapaJson, jsonChan); err != nil {
 				logger.Error("Erro ao serializar JSON: ", err, "ProcessarLinhas")
-				continue
 			}
-			jsonChan <- json
-			mapaJson = make([]map[string]any, 0, limit)
+			mapaJson = make([]map[string]interface{}, 0, LIMIT)
 		}
 	}
 
+	// Enviar o restante dos dados, se houver
 	if len(mapaJson) > 0 {
-		json, err := json.Marshal(mapaJson)
-		if err != nil {
+		if err := enviarJSON(mapaJson, jsonChan); err != nil {
 			logger.Error("Erro ao serializar JSON: ", err, "ProcessarLinhas")
-			panic("Erro ao serializar JSON")
 		}
-		jsonChan <- json
 	}
 
 	close(jsonChan)
+}
+
+func enviarJSON(mapaJson []map[string]interface{}, jsonChan chan []byte) error {
+	jsonData, err := json.Marshal(mapaJson)
+	if err != nil {
+		return err
+	}
+	jsonChan <- jsonData
+	return nil
 }
 
 func processaCsv(
@@ -118,8 +122,7 @@ func processaCsv(
 	linhaChan chan []string,
 ) {
 	nomeArquivo := strings.Replace(arquivosDomain.Endereco, ".zip", ".csv", 1)
-	arquivo, err := os.Open(env.GetPathArquivosCvm() + nomeArquivo)
-
+	arquivo, err := os.Open(PATHCVM + nomeArquivo)
 	if err != nil {
 		logger.Error("Erro ao abrir arquivo CSV: ", err, "ProcessarCsv")
 		panic(err)
@@ -176,7 +179,7 @@ func proximoQueue(
 ) {
 	for data := range jsonChan {
 		response := response.FundosQueueResponse{
-			Topic: env.GetTopicPersistenciaDados(),
+			Topic: TOPIC_PERSISTENCIA,
 			Queue: "update-all",
 			Data:  data,
 		}
@@ -188,6 +191,7 @@ func proximoQueue(
 func enviaPersistencia(
 	fs *fundosDomainService,
 	jsonChan chan []byte,
+	mensagemChan chan response.FundosQueueResponse,
 ) {
 	for data := range jsonChan {
 		CreateMany(fs, data)
