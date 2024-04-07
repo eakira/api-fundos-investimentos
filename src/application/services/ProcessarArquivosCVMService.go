@@ -52,9 +52,13 @@ func processaArquivo(
 
 	go processarLinhas(arquivosDomain, cabecalhoChan, linhaChan, jsonChan)
 
-	go proximoQueue(jsonChan, mensagemChan)
-
-	fs.queue.ProduceLote(mensagemChan, wg)
+	if env.GetPersistenciaLocal() {
+		go enviaPersistencia(fs, jsonChan)
+		close(mensagemChan)
+	} else {
+		go proximoQueue(jsonChan, mensagemChan)
+		fs.queue.ProduceLote(mensagemChan, wg)
+	}
 }
 
 func processarLinhas(
@@ -179,4 +183,13 @@ func proximoQueue(
 		mensagemChan <- response
 	}
 	close(mensagemChan)
+}
+
+func enviaPersistencia(
+	fs *fundosDomainService,
+	jsonChan chan []byte,
+) {
+	for data := range jsonChan {
+		CreateMany(fs, data)
+	}
 }
