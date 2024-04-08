@@ -28,6 +28,10 @@ func GetTopicProcessarArquivos() string {
 
 func GetTopicPersistenciaDados() string {
 	return "persistencia-dados"
+
+}
+func GetCvmUrl() string {
+	return os.Getenv("CVM_URL")
 }
 
 func GetPathArquivosCvm() string {
