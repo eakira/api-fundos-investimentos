@@ -3,7 +3,6 @@ package externo
 import (
 	"api-fundos-investimentos/configuration/env"
 	"api-fundos-investimentos/configuration/logger"
-	"api-fundos-investimentos/configuration/resterrors"
 	"archive/zip"
 	"fmt"
 	"io"
@@ -12,33 +11,42 @@ import (
 	"path"
 )
 
-// DownloadArquivosCVMPort faz o download de um arquivo CVM do URL especificado e o salva no sistema de arquivos local.
-func (fc *fundosClient) DownloadArquivosCVMPort(file string) *resterrors.RestErr {
+func (fc *fundosClient) DownloadArquivosCVMPort(file string) []string {
 	logger.Info("Iniciando DownloadArquivosCVMPort", "sincronizar")
+	var nomes []string
 
-	url := os.Getenv(CVM_URL) + file
+	storagePath := env.GetPathArquivosCvm() + path.Dir(file)
+
+	downloadArquivo(storagePath, file)
+
+	// Descompactando o arquivo ZIP, se necessário
+	if path.Ext(file) == ".zip" {
+		nomes = unzip(storagePath + "/" + path.Base(file))
+	}
+
+	return nomes
+}
+
+func downloadArquivo(storagePath, file string) {
+	url := env.GetCvmUrl() + file
 
 	// Fazendo a requisição HTTP para baixar o arquivo
 	resp, err := http.Get(url)
 	if err != nil {
 		logger.Error("Erro ao tentar baixar o arquivo:", err, "sincronizar")
-		return resterrors.NewInternalServerError("Erro ao tentar baixar o arquivo")
 	}
 	defer resp.Body.Close()
 
 	// Criando o diretório de armazenamento do arquivo, se não existir
-	storagePath := env.GetPathArquivosCvm() + path.Dir(file)
 	err = os.MkdirAll(storagePath, os.ModePerm)
 	if err != nil {
 		logger.Error("Erro ao tentar criar a pasta do arquivo:", err, "sincronizar")
-		return resterrors.NewInternalServerError("Erro ao tentar criar a pasta do arquivo")
 	}
 
 	// Criando o arquivo local
 	out, err := os.Create(storagePath + "/" + path.Base(file))
 	if err != nil {
 		logger.Error("Erro ao criar o arquivo:", err, "sincronizar")
-		return resterrors.NewInternalServerError("Erro ao criar o arquivo")
 	}
 	defer out.Close()
 
@@ -46,27 +54,20 @@ func (fc *fundosClient) DownloadArquivosCVMPort(file string) *resterrors.RestErr
 	_, err = io.Copy(out, resp.Body)
 	if err != nil {
 		logger.Error("Erro ao salvar o arquivo:", err, "sincronizar")
-		return resterrors.NewInternalServerError("Erro ao salvar o arquivo")
 	}
 	logger.Info("Download de arquivo concluído com sucesso.", "sincronizar")
-
-	// Descompactando o arquivo ZIP, se necessário
-	if path.Ext(file) == ".zip" {
-		unzip(storagePath + "/" + path.Base(file))
-	}
-
-	return nil
 }
 
 // unzip descompacta um arquivo ZIP especificado e salva seus conteúdos no sistema de arquivos local.
-func unzip(filename string) {
+func unzip(filename string) []string {
 	// Abre o arquivo ZIP para leitura
 	reader, err := zip.OpenReader(filename)
 	if err != nil {
 		logger.Error(fmt.Sprintf("Erro ao abrir arquivo ZIP: %s", filename), err, "sincronizar")
-		return
 	}
 	defer reader.Close()
+
+	var nomes []string
 
 	// Itera sobre todos os arquivos no arquivo ZIP
 	for _, file := range reader.File {
@@ -100,5 +101,9 @@ func unzip(filename string) {
 			logger.Error("Erro ao copiar conteúdo do arquivo dentro do ZIP:", err, "sincronizar")
 			continue
 		}
+
+		nomes = append(nomes, file.Name)
 	}
+
+	return nomes
 }
