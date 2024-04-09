@@ -52,6 +52,9 @@ func CreateMany(
 	case "informacao-diaria":
 		dados := []request.InformacaoDiariaRequest{}
 		json.Unmarshal(data, &dados)
+		domain := &[]domain.InformacaoDiariaDomain{}
+		copier.Copy(domain, dados)
+		fs.CreateInformacaoDiariaService(*domain)
 
 	case "lamina":
 		//		São vários arquivos precisa verificar quais arquivos vou usar
