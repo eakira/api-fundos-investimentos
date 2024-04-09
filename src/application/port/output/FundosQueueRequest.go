@@ -35,6 +35,38 @@ type FundosPort interface {
 	CreateManyInformacaoDiariaRepository(
 		informacaoDiariaDomain []domain.InformacaoDiariaDomain,
 	) *resterrors.RestErr
+
+	CreateManyCdaBlc1Repository(
+		cdaDomain []domain.CdaBlc1Domain,
+	) *resterrors.RestErr
+
+	CreateManyCdaBlc2Repository(
+		cdaDomain []domain.CdaBlc2Domain,
+	) *resterrors.RestErr
+
+	CreateManyCdaBlc3Repository(
+		cdaDomain []domain.CdaBlc3Domain,
+	) *resterrors.RestErr
+
+	CreateManyCdaBlc4Repository(
+		cdaDomain []domain.CdaBlc4Domain,
+	) *resterrors.RestErr
+
+	CreateManyCdaBlc5Repository(
+		cdaDomain []domain.CdaBlc5Domain,
+	) *resterrors.RestErr
+
+	CreateManyCdaBlc6Repository(
+		cdaDomain []domain.CdaBlc6Domain,
+	) *resterrors.RestErr
+
+	CreateManyCdaBlc7Repository(
+		cdaDomain []domain.CdaBlc7Domain,
+	) *resterrors.RestErr
+
+	CreateManyCdaBlc8Repository(
+		cdaDomain []domain.CdaBlc8Domain,
+	) *resterrors.RestErr
 }
 
 type FundosExternoPort interface {
