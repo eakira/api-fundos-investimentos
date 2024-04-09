@@ -66,13 +66,13 @@ func processarLinhas(
 	jsonChan chan []byte,
 ) {
 	cabecalho := <-cabecalhoChan
-
+	tipoArquivo := definirCollection(arquivosDomain)
 	limit := env.GetLimitInsert()
 	mapaJson := make([]map[string]interface{}, 0, limit)
 
 	for linha := range linhaChan {
 		mapa := make(map[string]interface{})
-		mapa["collection"] = arquivosDomain.TipoArquivo
+		mapa["collection"] = tipoArquivo
 		mapa["tipo-acao"] = "store"
 
 		for key, coluna := range cabecalho {
@@ -101,6 +101,26 @@ func processarLinhas(
 	close(jsonChan)
 }
 
+func definirCollection(
+	arquivosDomain domain.ArquivosDomain,
+) string {
+	tipoArquivo := arquivosDomain.TipoArquivo
+
+	if tipoArquivo == "cda" {
+		collection := ""
+		mapCollection := env.GetMapCda()
+		for key, value := range mapCollection {
+			if strings.Contains(arquivosDomain.Endereco, key) {
+				collection = value
+				break
+			}
+		}
+		return collection
+	}
+
+	return tipoArquivo
+}
+
 func enviarJSON(mapaJson []map[string]interface{}, jsonChan chan []byte) error {
 	jsonData, err := json.Marshal(mapaJson)
 	if err != nil {
@@ -116,7 +136,7 @@ func processaCsv(
 	linhaChan chan []string,
 ) {
 	nomeArquivo := strings.Replace(arquivosDomain.Endereco, ".zip", ".csv", 1)
-	arquivo, err := os.Open(env.GetPathArquivosCvm() + nomeArquivo)
+	arquivo, err := os.Open(nomeArquivo)
 	if err != nil {
 		logger.Error("Erro ao abrir arquivo CSV: ", err, "ProcessarCsv")
 	}
