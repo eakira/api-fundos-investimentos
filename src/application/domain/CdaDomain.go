@@ -96,7 +96,7 @@ type CdaBlc4Domain struct {
 	ValorVendas              string
 }
 
-type CdaBlc5Request struct {
+type CdaBlc5Domain struct {
 	NomeAgenciaClassificacaoRisco string
 	CodigoIndexadorPosFixados     string
 	CnpjEmissor                   string
@@ -128,7 +128,7 @@ type CdaBlc5Request struct {
 	ValorVendas                   float64
 }
 
-type CdaBlc6Request struct {
+type CdaBlc6Domain struct {
 	CodigoIndexadorPosFixados      string
 	CnpjFundo                      string
 	CnpjInstituicaoFinanceiraCoobr string
@@ -160,7 +160,7 @@ type CdaBlc6Request struct {
 	ValorVendas                    float64
 }
 
-type CdaBlc7Request struct {
+type CdaBlc7Domain struct {
 	AgenciaRisco                      string
 	BolsaMercado                      string
 	CodigoAtivoBolsaMercado           string
@@ -195,7 +195,7 @@ type CdaBlc7Request struct {
 	ValorVendas                       float64
 }
 
-type CdaBlc8Request struct {
+type CdaBlc8Domain struct {
 	CnpjFundo                   string
 	CpfCnpjEmissor              string
 	DenominacaoSocial           string
@@ -218,7 +218,7 @@ type CdaBlc8Request struct {
 	ValorVendas                 float64
 }
 
-type CdaConfidencial struct {
+type CdaConfidencialDomain struct {
 	CnpjFundo           string
 	DenominacaoSocial   string
 	DataCompetencia     time.Time
@@ -231,7 +231,7 @@ type CdaConfidencial struct {
 	ValorVendas         float64
 }
 
-type CdaFiim struct {
+type CdaFiimDomain struct {
 	BolsaMercado             string
 	CodigoAtivo              string
 	CodigoBolsaMercado       string
@@ -265,7 +265,7 @@ type CdaFiim struct {
 	ValorVendas              float64
 }
 
-type CdaFiimConfidencial struct {
+type CdaFiimConfidencialDomain struct {
 	CnpjFundo                string
 	DenominacaoSocial        string
 	DataCompetencia          time.Time
@@ -279,7 +279,7 @@ type CdaFiimConfidencial struct {
 	ValorVendas              float64
 }
 
-type CdaPatrimonioLiquido struct {
+type CdaPatrimonioLiquidoDomain struct {
 	CnpjFundo         string
 	DenominacaoSocial string
 	DataCompetencia   time.Time
