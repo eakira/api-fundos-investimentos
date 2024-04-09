@@ -73,6 +73,21 @@ func GetConfigCvmCdaHist() ArquivosCVM {
 	}
 }
 
+func GetMapCda() map[string]string {
+	return map[string]string{
+		"BLC_1": "CDA-BLC-1",
+		"BLC_2": "CDA-BLC-2",
+		"BLC_3": "CDA-BLC-3",
+		"BLC_4": "CDA-BLC-4",
+		"BLC_5": "CDA-BLC-5",
+		"BLC_6": "CDA-BLC-6",
+		"BLC_7": "CDA-BLC-7",
+		"BLC_8": "CDA-BLC-8",
+		"fiim":  "CDA-Fiim",
+		"fi_PL": "CDA-patrimonio-liquido",
+	}
+}
+
 func GetConfigCvmArquivosPerfilMensal() ArquivosCVM {
 	return ArquivosCVM{
 		Folder:      "FI/DOC/PERFIL_MENSAL/DADOS/perfil_mensal_fi",
