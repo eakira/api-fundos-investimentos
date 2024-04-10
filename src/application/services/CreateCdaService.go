@@ -60,3 +60,31 @@ func (fs *fundosDomainService) CreateCdaBlc8Service(domain []domain.CdaBlc8Domai
 	fs.repository.CreateManyCdaBlc8Repository(domain)
 	logger.Info("Finish CreateCdaBlc8Service", "sincronizarFundos")
 }
+
+func (fs *fundosDomainService) CreateCdaConfidencialService(domain []domain.CdaConfidencialDomain) {
+	logger.Info("Init CreateCdaConfidencialService", "sincronizarFundos")
+
+	fs.repository.CreateManyCdaConfidencialRepository(domain)
+	logger.Info("Finish CreateCdaConfidencialService", "sincronizarFundos")
+}
+
+func (fs *fundosDomainService) CreateCdaFiimService(domain []domain.CdaFiimDomain) {
+	logger.Info("Init CreateCdaFiimService", "sincronizarFundos")
+
+	fs.repository.CreateManyCdaFiimRepository(domain)
+	logger.Info("Finish CreateCdaFiimService", "sincronizarFundos")
+}
+
+func (fs *fundosDomainService) CreateCdaFiimConfidencialidade(domain []domain.CdaFiimConfidencialDomain) {
+	logger.Info("Init CreateCdaFiimConfidencialidade", "sincronizarFundos")
+
+	fs.repository.CreateManyCdaFiimConfidencialRepository(domain)
+	logger.Info("Finish CreateCdaFiimConfidencialidade", "sincronizarFundos")
+}
+
+func (fs *fundosDomainService) CreateCdaPatrominioLiquido(domain []domain.CdaPatrimonioLiquidoDomain) {
+	logger.Info("Init CreateCdaPatrominioLiquido", "sincronizarFundos")
+
+	fs.repository.CreateManyCdaPatrimonioLiquidoRepository(domain)
+	logger.Info("Finish CreateCdaPatrominioLiquido", "sincronizarFundos")
+}
