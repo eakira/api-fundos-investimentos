@@ -36,8 +36,61 @@ func CreateMany(
 		copier.Copy(domain, dados)
 		fs.CreateBalanceteService(*domain)
 
-	case "cda":
-		//		São vários arquivos precisa verificar quais arquivos vou usar
+	case "cda-blc-1":
+		dados := []request.CdaBlc1Request{}
+		json.Unmarshal(data, &dados)
+		domain := &[]domain.CdaBlc1Domain{}
+		copier.Copy(domain, dados)
+		fs.CreateCdaBlc1Service(*domain)
+
+	case "cda-blc-2":
+		dados := []request.CdaBlc2Request{}
+		json.Unmarshal(data, &dados)
+		domain := &[]domain.CdaBlc2Domain{}
+		copier.Copy(domain, dados)
+		fs.CreateCdaBlc2Service(*domain)
+
+	case "cda-blc-3":
+		dados := []request.CdaBlc3Request{}
+		json.Unmarshal(data, &dados)
+		domain := &[]domain.CdaBlc3Domain{}
+		copier.Copy(domain, dados)
+		fs.CreateCdaBlc3Service(*domain)
+
+	case "cda-blc-4":
+		dados := []request.CdaBlc4Request{}
+		json.Unmarshal(data, &dados)
+		domain := &[]domain.CdaBlc4Domain{}
+		copier.Copy(domain, dados)
+		fs.CreateCdaBlc4Service(*domain)
+
+	case "cda-blc-5":
+		dados := []request.CdaBlc5Request{}
+		json.Unmarshal(data, &dados)
+		domain := &[]domain.CdaBlc5Domain{}
+		copier.Copy(domain, dados)
+		fs.CreateCdaBlc5Service(*domain)
+
+	case "cda-blc-6":
+		dados := []request.CdaBlc6Request{}
+		json.Unmarshal(data, &dados)
+		domain := &[]domain.CdaBlc6Domain{}
+		copier.Copy(domain, dados)
+		fs.CreateCdaBlc6Service(*domain)
+
+	case "cda-blc-7":
+		dados := []request.CdaBlc7Request{}
+		json.Unmarshal(data, &dados)
+		domain := &[]domain.CdaBlc7Domain{}
+		copier.Copy(domain, dados)
+		fs.CreateCdaBlc7Service(*domain)
+
+	case "cda-blc-8":
+		dados := []request.CdaBlc8Request{}
+		json.Unmarshal(data, &dados)
+		domain := &[]domain.CdaBlc8Domain{}
+		copier.Copy(domain, dados)
+		fs.CreateCdaBlc8Service(*domain)
 
 	case "informacoes-complementares":
 		//		São vários arquivos precisa verificar quais arquivos vou usar
