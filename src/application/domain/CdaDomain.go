@@ -1,7 +1,5 @@
 package domain
 
-import "time"
-
 type CdaBlc1Domain struct {
 	CodigoConta              string
 	FundoCnpj                string
@@ -79,9 +77,9 @@ type CdaBlc4Domain struct {
 	DenominacaoSocial        string
 	DescricaoAtivo           string
 	DataCompetencia          string
-	PrazoConfidencialidade   time.Time
-	DataFimVigencia          time.Time
-	DataInicioVigencia       time.Time
+	PrazoConfidencialidade   string
+	DataFimVigencia          string
+	DataInicioVigencia       string
 	EmissorLigado            string
 	QuantidadeAquisicoes     string
 	QuantidadePosicaoFinal   string
@@ -104,28 +102,28 @@ type CdaBlc5Domain struct {
 	DenominacaoSocial             string
 	DescricaoIndexadorPosFixados  string
 	DataCompetencia               string
-	PrazoConfidencialidade        time.Time
-	DataClassificacaoRisco        time.Time
-	DataVencimento                time.Time
+	PrazoConfidencialidade        string
+	DataClassificacaoRisco        string
+	DataVencimento                string
 	NomeEmissor                   string
 	EmissorLigado                 string
 	GrauRisco                     string
-	PercentualCupomPosFixados     float64
-	PercentualIndexadorPosFixados float64
-	PercentualTaxaPrefixada       float64
-	QuantidadeAquisicoes          float64
-	QuantidadePosicaoFinal        float64
-	QuantidadeVendas              float64
+	PercentualCupomPosFixados     string
+	PercentualIndexadorPosFixados string
+	PercentualTaxaPrefixada       string
+	QuantidadeAquisicoes          string
+	QuantidadePosicaoFinal        string
+	QuantidadeVendas              string
 	RiscoEmissor                  string
 	TituloPosFixado               string
 	TipoAplicacao                 string
 	TipoAtivo                     string
 	TipoFundo                     string
 	TipoNegociacao                string
-	ValorAquisicoes               float64
-	ValorCustoPosicaoFinal        float64
-	ValorMercadoPosicaoFinal      float64
-	ValorVendas                   float64
+	ValorAquisicoes               string
+	ValorCustoPosicaoFinal        string
+	ValorMercadoPosicaoFinal      string
+	ValorVendas                   string
 }
 
 type CdaBlc6Domain struct {
@@ -136,17 +134,17 @@ type CdaBlc6Domain struct {
 	DenominacaoSocial              string
 	DescricaoIndexadorPosFixados   string
 	DataCompetencia                string
-	PrazoConfidencialidade         time.Time
-	DataVencimento                 time.Time
+	PrazoConfidencialidade         string
+	DataVencimento                 string
 	NomeEmissor                    string
 	EmissorLigado                  string
 	PessoaFisicaJuridicaEmissor    string
-	PercentualCupomPosFixados      float64
-	PercentualIndexadorPosFixados  float64
-	PercentualTaxaPrefixada        float64
-	QuantidadeAquisicoes           float64
-	QuantidadePosicaoFinal         float64
-	QuantidadeVendas               float64
+	PercentualCupomPosFixados      string
+	PercentualIndexadorPosFixados  string
+	PercentualTaxaPrefixada        string
+	QuantidadeAquisicoes           string
+	QuantidadePosicaoFinal         string
+	QuantidadeVendas               string
 	TituloRegistradoCetip          string
 	TituloPossuiGarantia           string
 	TituloPosFixado                string
@@ -154,10 +152,10 @@ type CdaBlc6Domain struct {
 	TipoAtivo                      string
 	TipoFundo                      string
 	TipoNegociacao                 string
-	ValorAquisicoes                float64
-	ValorCustoPosicaoFinal         float64
-	ValorMercadoPosicaoFinal       float64
-	ValorVendas                    float64
+	ValorAquisicoes                string
+	ValorCustoPosicaoFinal         string
+	ValorMercadoPosicaoFinal       string
+	ValorVendas                    string
 }
 
 type CdaBlc7Domain struct {
@@ -169,30 +167,30 @@ type CdaBlc7Domain struct {
 	CnpjFundo                         string
 	DenominacaoSocial                 string
 	DescricaoAtivoExterior            string
-	DataCompetencia                   time.Time
-	PrazoConfidencialidade            time.Time
-	DataClassificacaoRisco            time.Time
-	DataVencimento                    time.Time
+	DataCompetencia                   string
+	PrazoConfidencialidade            string
+	DataClassificacaoRisco            string
+	DataVencimento                    string
 	NomeEmissor                       string
 	EmissorLigado                     string
 	GrauRisco                         string
 	InvestimentoColetivo              string
 	GestaoVeiculoInvestimentoColetivo string
 	Pais                              string
-	QuantidadeAquisicoes              float64
-	QuantidadeAtivosExterior          int
-	QuantidadePosicaoFinal            float64
-	QuantidadeVendas                  float64
+	QuantidadeAquisicoes              string
+	QuantidadeAtivosExterior          string
+	QuantidadePosicaoFinal            string
+	QuantidadeVendas                  string
 	RiscoEmissor                      string
 	TipoAplicacao                     string
 	TipoAtivo                         string
 	TipoFundo                         string
 	TipoNegociacao                    string
-	ValorAquisicoes                   float64
-	ValorAtivoExterior                float64
-	ValorCustoPosicaoFinal            float64
-	ValorMercadoPosicaoFinal          float64
-	ValorVendas                       float64
+	ValorAquisicoes                   string
+	ValorAtivoExterior                string
+	ValorCustoPosicaoFinal            string
+	ValorMercadoPosicaoFinal          string
+	ValorVendas                       string
 }
 
 type CdaBlc8Domain struct {
@@ -200,89 +198,89 @@ type CdaBlc8Domain struct {
 	CpfCnpjEmissor              string
 	DenominacaoSocial           string
 	DescricaoAtivo              string
-	DataCompetencia             time.Time
-	PrazoConfidencialidade      time.Time
+	DataCompetencia             string
+	PrazoConfidencialidade      string
 	NomeEmissor                 string
 	EmissorLigado               string
 	PessoaFisicaJuridicaEmissor string
-	QuantidadeAquisicoes        float64
-	QuantidadePosicaoFinal      float64
-	QuantidadeVendas            float64
+	QuantidadeAquisicoes        string
+	QuantidadePosicaoFinal      string
+	QuantidadeVendas            string
 	TipoAplicacao               string
 	TipoAtivo                   string
 	TipoFundo                   string
 	TipoNegociacao              string
-	ValorAquisicoes             float64
-	ValorCustoPosicaoFinal      float64
-	ValorMercadoPosicaoFinal    float64
-	ValorVendas                 float64
+	ValorAquisicoes             string
+	ValorCustoPosicaoFinal      string
+	ValorMercadoPosicaoFinal    string
+	ValorVendas                 string
 }
 
 type CdaConfidencialDomain struct {
 	CnpjFundo           string
 	DenominacaoSocial   string
-	DataCompetencia     time.Time
-	PrazoConfidencial   time.Time
+	DataCompetencia     string
+	PrazoConfidencial   string
 	TipoAplicacao       string
 	TipoFundo           string
-	ValorAquisicoes     float64
-	ValorCustoPosicao   float64
-	ValorMercadoPosicao float64
-	ValorVendas         float64
+	ValorAquisicoes     string
+	ValorCustoPosicao   string
+	ValorMercadoPosicao string
+	ValorVendas         string
 }
 
 type CdaFiimDomain struct {
 	BolsaMercado             string
 	CodigoAtivo              string
 	CodigoBolsaMercado       string
-	CodigoPais               int
+	CodigoPais               string
 	CodigoSELIC              string
 	CnpjFundo                string
-	CpfCnpjEmissor           int
+	CpfCnpjEmissor           string
 	DenominacaoSocial        string
 	DescricaoAtivo           string
-	DataCompetencia          time.Time
-	PrazoConfidencial        time.Time
-	DataInicioVigencia       time.Time
-	DataVencimento           time.Time
+	DataCompetencia          string
+	PrazoConfidencial        string
+	DataInicioVigencia       string
+	DataVencimento           string
 	Emissor                  string
 	EmissorLigado            string
-	IDDocumento              int
+	IDDocumento              string
 	Pais                     string
 	PessoaFisicaJuridica     string
-	QuantidadeAquisicoes     float64
-	QuantidadePosicaoFinal   float64
-	QuantidadeVendas         float64
+	QuantidadeAquisicoes     string
+	QuantidadePosicaoFinal   string
+	QuantidadeVendas         string
 	RiscoEmissor             string
 	TipoAplicacao            string
 	TipoAtivo                string
 	TipoFundo                string
 	TipoNegociacao           string
-	ValorAquisicoes          float64
-	ValorCustoPosicaoFinal   float64
-	ValorMercadoPosicaoFinal float64
-	ValorPatrimonioLiquido   float64
-	ValorVendas              float64
+	ValorAquisicoes          string
+	ValorCustoPosicaoFinal   string
+	ValorMercadoPosicaoFinal string
+	ValorPatrimonioLiquido   string
+	ValorVendas              string
 }
 
 type CdaFiimConfidencialDomain struct {
 	CnpjFundo                string
 	DenominacaoSocial        string
-	DataCompetencia          time.Time
-	PrazoConfidencial        time.Time
-	IDDocumento              int
+	DataCompetencia          string
+	PrazoConfidencial        string
+	IDDocumento              string
 	TipoAplicacao            string
 	TipoFundo                string
-	ValorAquisicoes          float64
-	ValorCustoPosicaoFinal   float64
-	ValorMercadoPosicaoFinal float64
-	ValorVendas              float64
+	ValorAquisicoes          string
+	ValorCustoPosicaoFinal   string
+	ValorMercadoPosicaoFinal string
+	ValorVendas              string
 }
 
 type CdaPatrimonioLiquidoDomain struct {
 	CnpjFundo         string
 	DenominacaoSocial string
-	DataCompetencia   time.Time
+	DataCompetencia   string
 	TipoFundo         string
-	ValorPatrimonio   float64
+	ValorPatrimonio   string
 }
