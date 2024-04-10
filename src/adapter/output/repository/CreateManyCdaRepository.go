@@ -19,7 +19,7 @@ func (ur *fundosRepository) CreateManyCdaBlc1Repository(
 
 	collection := ur.databaseConnection.Collection(env.GetCollectionCdaBcl1())
 
-	entity := []entity.BalacenteEntity{}
+	entity := []entity.CdaBlc1Entity{}
 	copier.Copy(&entity, &cdaDomain)
 
 	dados := make([]interface{}, len(entity))
@@ -44,7 +44,7 @@ func (ur *fundosRepository) CreateManyCdaBlc2Repository(
 
 	collection := ur.databaseConnection.Collection(env.GetCollectionCdaBcl2())
 
-	entity := []entity.BalacenteEntity{}
+	entity := []entity.CdaBlc2Entity{}
 	copier.Copy(&entity, &cdaDomain)
 
 	dados := make([]interface{}, len(entity))
@@ -69,7 +69,7 @@ func (ur *fundosRepository) CreateManyCdaBlc3Repository(
 
 	collection := ur.databaseConnection.Collection(env.GetCollectionCdaBcl3())
 
-	entity := []entity.BalacenteEntity{}
+	entity := []entity.CdaBlc3Entity{}
 	copier.Copy(&entity, &cdaDomain)
 
 	dados := make([]interface{}, len(entity))
@@ -94,7 +94,7 @@ func (ur *fundosRepository) CreateManyCdaBlc4Repository(
 
 	collection := ur.databaseConnection.Collection(env.GetCollectionCdaBcl4())
 
-	entity := []entity.BalacenteEntity{}
+	entity := []entity.CdaBlc4Entity{}
 	copier.Copy(&entity, &cdaDomain)
 
 	dados := make([]interface{}, len(entity))
@@ -119,7 +119,7 @@ func (ur *fundosRepository) CreateManyCdaBlc5Repository(
 
 	collection := ur.databaseConnection.Collection(env.GetCollectionCdaBcl5())
 
-	entity := []entity.BalacenteEntity{}
+	entity := []entity.CdaBlc5Entity{}
 	copier.Copy(&entity, &cdaDomain)
 
 	dados := make([]interface{}, len(entity))
@@ -144,7 +144,7 @@ func (ur *fundosRepository) CreateManyCdaBlc6Repository(
 
 	collection := ur.databaseConnection.Collection(env.GetCollectionCdaBcl6())
 
-	entity := []entity.BalacenteEntity{}
+	entity := []entity.CdaBlc6Entity{}
 	copier.Copy(&entity, &cdaDomain)
 
 	dados := make([]interface{}, len(entity))
@@ -169,7 +169,7 @@ func (ur *fundosRepository) CreateManyCdaBlc7Repository(
 
 	collection := ur.databaseConnection.Collection(env.GetCollectionCdaBcl7())
 
-	entity := []entity.BalacenteEntity{}
+	entity := []entity.CdaBlc7Entity{}
 	copier.Copy(&entity, &cdaDomain)
 
 	dados := make([]interface{}, len(entity))
@@ -194,7 +194,7 @@ func (ur *fundosRepository) CreateManyCdaBlc8Repository(
 
 	collection := ur.databaseConnection.Collection(env.GetCollectionCdaBcl8())
 
-	entity := []entity.BalacenteEntity{}
+	entity := []entity.CdaBlc8Entity{}
 	copier.Copy(&entity, &cdaDomain)
 
 	dados := make([]interface{}, len(entity))
@@ -219,7 +219,7 @@ func (ur *fundosRepository) CreateManyCdaConfidencialRepository(
 
 	collection := ur.databaseConnection.Collection(env.GetCollectionCdaConfidencialidade())
 
-	entity := []entity.BalacenteEntity{}
+	entity := []entity.CdaConfidencialEntity{}
 	copier.Copy(&entity, &cdaDomain)
 
 	dados := make([]interface{}, len(entity))
@@ -244,7 +244,7 @@ func (ur *fundosRepository) CreateManyCdaFiimRepository(
 
 	collection := ur.databaseConnection.Collection(env.GetCollectionCdaFiim())
 
-	entity := []entity.BalacenteEntity{}
+	entity := []entity.CdaFiimEntity{}
 	copier.Copy(&entity, &cdaDomain)
 
 	dados := make([]interface{}, len(entity))
@@ -269,7 +269,7 @@ func (ur *fundosRepository) CreateManyCdaFiimConfidencialRepository(
 
 	collection := ur.databaseConnection.Collection(env.GetCollectionCdaFiimConfidencialidade())
 
-	entity := []entity.BalacenteEntity{}
+	entity := []entity.CdaFiimConfidencialEntity{}
 	copier.Copy(&entity, &cdaDomain)
 
 	dados := make([]interface{}, len(entity))
@@ -294,7 +294,7 @@ func (ur *fundosRepository) CreateManyCdaPatrimonioLiquidoRepository(
 
 	collection := ur.databaseConnection.Collection(env.GetCollectionCdaPatrominioLiquido())
 
-	entity := []entity.BalacenteEntity{}
+	entity := []entity.CdaPatrimonioLiquidoEntity{}
 	copier.Copy(&entity, &cdaDomain)
 
 	dados := make([]interface{}, len(entity))
