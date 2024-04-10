@@ -210,3 +210,103 @@ func (ur *fundosRepository) CreateManyCdaBlc8Repository(
 
 	return nil
 }
+
+func (ur *fundosRepository) CreateManyCdaConfidencialRepository(
+	cdaDomain []domain.CdaConfidencialDomain,
+) *resterrors.RestErr {
+
+	logger.Info("Init CreateManyCdaConfidencialRepository", "createBalacente")
+
+	collection := ur.databaseConnection.Collection(env.GetCollectionCdaConfidencialidade())
+
+	entity := []entity.BalacenteEntity{}
+	copier.Copy(&entity, &cdaDomain)
+
+	dados := make([]interface{}, len(entity))
+	copier.Copy(&dados, &entity)
+
+	_, err := collection.InsertMany(context.Background(), dados)
+	if err != nil {
+		logger.Error("Error trying to CreateManyCdaConfidencialRepository", err, "createBalacente")
+		return resterrors.NewInternalServerError(err.Error())
+	}
+
+	logger.Info("CreateManyCdaConfidencialRepository executed successfully", "createBalacente")
+
+	return nil
+}
+
+func (ur *fundosRepository) CreateManyCdaFiimRepository(
+	cdaDomain []domain.CdaFiimDomain,
+) *resterrors.RestErr {
+
+	logger.Info("Init CreateManyBalecenteRepository", "createBalacente")
+
+	collection := ur.databaseConnection.Collection(env.GetCollectionCdaFiim())
+
+	entity := []entity.BalacenteEntity{}
+	copier.Copy(&entity, &cdaDomain)
+
+	dados := make([]interface{}, len(entity))
+	copier.Copy(&dados, &entity)
+
+	_, err := collection.InsertMany(context.Background(), dados)
+	if err != nil {
+		logger.Error("Error trying to CreateManyBalecenteRepository", err, "createBalacente")
+		return resterrors.NewInternalServerError(err.Error())
+	}
+
+	logger.Info("CreateManyBalecenteRepository executed successfully", "createBalacente")
+
+	return nil
+}
+
+func (ur *fundosRepository) CreateManyCdaFiimConfidencialRepository(
+	cdaDomain []domain.CdaFiimConfidencialDomain,
+) *resterrors.RestErr {
+
+	logger.Info("Init CreateManyBalecenteRepository", "createBalacente")
+
+	collection := ur.databaseConnection.Collection(env.GetCollectionCdaFiimConfidencialidade())
+
+	entity := []entity.BalacenteEntity{}
+	copier.Copy(&entity, &cdaDomain)
+
+	dados := make([]interface{}, len(entity))
+	copier.Copy(&dados, &entity)
+
+	_, err := collection.InsertMany(context.Background(), dados)
+	if err != nil {
+		logger.Error("Error trying to CreateManyBalecenteRepository", err, "createBalacente")
+		return resterrors.NewInternalServerError(err.Error())
+	}
+
+	logger.Info("CreateManyBalecenteRepository executed successfully", "createBalacente")
+
+	return nil
+}
+
+func (ur *fundosRepository) CreateManyCdaPatrimonioLiquidoRepository(
+	cdaDomain []domain.CdaPatrimonioLiquidoDomain,
+) *resterrors.RestErr {
+
+	logger.Info("Init CreateManyCdaPatrimonioLiquidoRepository", "createBalacente")
+
+	collection := ur.databaseConnection.Collection(env.GetCollectionCdaPatrominioLiquido())
+
+	entity := []entity.BalacenteEntity{}
+	copier.Copy(&entity, &cdaDomain)
+
+	dados := make([]interface{}, len(entity))
+	copier.Copy(&dados, &entity)
+
+	_, err := collection.InsertMany(context.Background(), dados)
+	if err != nil {
+		logger.Error("Error trying to CreateManyCdaPatrimonioLiquidoRepository", err, "createBalacente")
+		return resterrors.NewInternalServerError(err.Error())
+	}
+
+	logger.Info("CreateManyCdaPatrimonioLiquidoRepository executed successfully", "createBalacente")
+
+	return nil
+}
