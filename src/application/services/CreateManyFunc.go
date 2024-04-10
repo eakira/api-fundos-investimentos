@@ -92,6 +92,34 @@ func CreateMany(
 		copier.Copy(domain, dados)
 		fs.CreateCdaBlc8Service(*domain)
 
+	case "cda-confidencial":
+		dados := []request.CdaConfidencial{}
+		json.Unmarshal(data, &dados)
+		domain := &[]domain.CdaConfidencialDomain{}
+		copier.Copy(domain, dados)
+		fs.CreateCdaConfidencialService(*domain)
+
+	case "cda-fiim":
+		dados := []request.CdaFiim{}
+		json.Unmarshal(data, &dados)
+		domain := &[]domain.CdaFiimDomain{}
+		copier.Copy(domain, dados)
+		fs.CreateCdaFiimService(*domain)
+
+	case "cda-fiim-confidencial":
+		dados := []request.CdaFiimConfidencial{}
+		json.Unmarshal(data, &dados)
+		domain := &[]domain.CdaFiimConfidencialDomain{}
+		copier.Copy(domain, dados)
+		fs.CreateCdaFiimConfidencialidade(*domain)
+
+	case "cda-patrimonio-liquido":
+		dados := []request.CdaPatrimonioLiquido{}
+		json.Unmarshal(data, &dados)
+		domain := &[]domain.CdaPatrimonioLiquidoDomain{}
+		copier.Copy(domain, dados)
+		fs.CreateCdaPatrominioLiquido(*domain)
+
 	case "informacoes-complementares":
 		//		São vários arquivos precisa verificar quais arquivos vou usar
 
