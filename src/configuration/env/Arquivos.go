@@ -75,16 +75,18 @@ func GetConfigCvmCdaHist() ArquivosCVM {
 
 func GetMapCda() map[string]string {
 	return map[string]string{
-		"BLC_1": "cda-blc-1",
-		"BLC_2": "cda-blc-2",
-		"BLC_3": "cda-blc-3",
-		"BLC_4": "cda-blc-4",
-		"BLC_5": "cda-blc-5",
-		"BLC_6": "cda-blc-6",
-		"BLC_7": "cda-blc-7",
-		"BLC_8": "cda-blc-8",
-		"fiim":  "cda-Fiim",
-		"fi_PL": "cda-patrimonio-liquido",
+		"BLC_1":       "cda-blc-1",
+		"BLC_2":       "cda-blc-2",
+		"BLC_3":       "cda-blc-3",
+		"BLC_4":       "cda-blc-4",
+		"BLC_5":       "cda-blc-5",
+		"BLC_6":       "cda-blc-6",
+		"BLC_7":       "cda-blc-7",
+		"BLC_8":       "cda-blc-8",
+		"fi_CONFID_":  "cda-confidencial",
+		"fiim":        "cda-fiim",
+		"fiim_CONFID": "cda-fiim-confidencial",
+		"fi_PL":       "cda-patrimonio-liquido",
 	}
 }
 
