@@ -79,3 +79,19 @@ func GetCollectionCdaFiimConfidencialidade() string {
 func GetCollectionCdaPatrominioLiquido() string {
 	return "cda-patrimonio-liquido"
 }
+
+func GetCollectionInformacaooComplementarFundo() string {
+	return "informacao-complementar-fundo"
+}
+
+func GetCollectionInformacaoComplementarDivulgacao() string {
+	return "informacao-complementar-divulgacao"
+}
+
+func GetCollectionInformacaoComplementarCotista() string {
+	return "informacao-complementar-cotista"
+}
+
+func GetCollectionInformacaoComplementarServicoPrestado() string {
+	return "informacao-complementar-servico-prestado"
+}
