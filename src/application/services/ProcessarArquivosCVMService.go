@@ -106,17 +106,22 @@ func definirCollection(
 ) string {
 	tipoArquivo := arquivosDomain.TipoArquivo
 
-	if tipoArquivo == "cda" {
+	switch tipoArquivo {
+	case "cda":
 		mapCollection := env.GetMapCda()
 		return mapeandoCollection(arquivosDomain, mapCollection)
-	}
 
-	if tipoArquivo == "informacoes-complementares" {
+	case "informacoes-complementares":
 		mapCollection := env.GetMapInformacaoComplementar()
 		return mapeandoCollection(arquivosDomain, mapCollection)
-	}
 
-	return tipoArquivo
+	case "lamina":
+		mapCollection := env.GetMapLamina()
+		return mapeandoCollection(arquivosDomain, mapCollection)
+
+	default:
+		return tipoArquivo
+	}
 }
 
 func mapeandoCollection(arquivosDomain domain.ArquivosDomain, mapCollection map[string]string) string {
