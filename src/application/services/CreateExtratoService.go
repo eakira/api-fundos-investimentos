@@ -6,10 +6,10 @@ import (
 	"api-fundos-investimentos/configuration/resterrors"
 )
 
-func (fs *fundosDomainService) CreateExtratoService(extratos []domain.ExtratoDomain) *resterrors.RestErr {
+func (fs *fundosDomainService) CreateExtratoService(extrato []domain.ExtratoDomain) *resterrors.RestErr {
 	logger.Info("Init CreateFundosService", "sincronizarFundos")
 
-	if err := fs.repository.CreateManyExtratoRepository(extratos); err != nil {
+	if err := fs.repository.CreateManyExtratoRepository(extrato); err != nil {
 		logger.Error("Error calling CreateManyExtratoRepository", err, "sincronizarFundos")
 		return err
 	}

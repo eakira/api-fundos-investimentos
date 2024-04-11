@@ -6,10 +6,10 @@ import (
 	"api-fundos-investimentos/configuration/resterrors"
 )
 
-func (fs *fundosDomainService) CreateCdaDepositoAPrazoOutrosAtivosService(domain []domain.CdaDepositoAPrazoOutrosAtivosDomain) *resterrors.RestErr {
+func (fs *fundosDomainService) CreateCdaDepositoAPrazoOutrosAtivosService(depositoPrazo []domain.CdaDepositoAPrazoOutrosAtivosDomain) *resterrors.RestErr {
 	logger.Info("Init CreateCdaDepositoAPrazoOutrosAtivosService", "sincronizarFundos")
 
-	if err := fs.repository.CreateManyCdaDepositoAPrazoOutrosAtivosRepository(domain); err != nil {
+	if err := fs.repository.CreateManyCdaDepositoAPrazoOutrosAtivosRepository(depositoPrazo); err != nil {
 		logger.Error("Error calling CreateManyCdaSwapRepository", err, "sincronizarFundos")
 		return err
 	}

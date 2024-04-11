@@ -6,10 +6,10 @@ import (
 	"api-fundos-investimentos/configuration/resterrors"
 )
 
-func (fs *fundosDomainService) CreateCdaFiimConfidencialidade(domain []domain.CdaFiimConfidencialDomain) *resterrors.RestErr {
+func (fs *fundosDomainService) CreateCdaFiimConfidencialidade(confidencialidade []domain.CdaFiimConfidencialDomain) *resterrors.RestErr {
 	logger.Info("Init CreateCdaFiimConfidencialidade", "sincronizarFundos")
 
-	if err := fs.repository.CreateManyCdaFiimConfidencialRepository(domain); err != nil {
+	if err := fs.repository.CreateManyCdaFiimConfidencialRepository(confidencialidade); err != nil {
 		logger.Error("Error calling CreateManyCdaConfidencialRepository", err, "sincronizarFundos")
 		return err
 	}
