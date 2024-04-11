@@ -28,7 +28,7 @@ type CdaSelicRequest struct {
 	ValorVendas              string `json:"VL_VENDA_NEGOC,omitempty"`     // Valor das vendas dos negócios realizados no mês
 }
 
-type CdaBlc2Request struct {
+type CdaFundosInvestimentosRequest struct {
 	CnpjFundo                string `json:"CNPJ_FUNDO,omitempty"`         // CNPJ do fundo (20 caracteres)
 	CnpjFundoCota            string `json:"CNPJ_FUNDO_COTA,omitempty"`    // CNPJ do fundo investido (20 caracteres)
 	DenominacaoSocial        string `json:"DENOM_SOCIAL,omitempty"`       // Denominação Social (100 caracteres)
@@ -49,7 +49,7 @@ type CdaBlc2Request struct {
 	ValorVendas              string `json:"VL_VENDA_NEGOC,omitempty"`     // Valor das vendas dos negócios realizados no mês
 }
 
-type CdaBlc3Request struct {
+type CdaSwapRequest struct {
 	CodigoSwap               string `json:"CD_SWAP,omitempty"`            // Código SWAP (50 caracteres)
 	CnpjFundo                string `json:"CNPJ_FUNDO,omitempty"`         // CNPJ do fundo (20 caracteres)
 	DenominacaoSocial        string `json:"DENOM_SOCIAL,omitempty"`       // Denominação Social (100 caracteres)
@@ -70,7 +70,7 @@ type CdaBlc3Request struct {
 	ValorVendas              string `json:"VL_VENDA_NEGOC,omitempty"`     // Valor das vendas dos negócios realizados no mês
 }
 
-type CdaBlc4Request struct {
+type CdaDemaisAtivosRequest struct {
 	CodigoAtivo              string `json:"CD_ATIVO,omitempty"`           // Código do ativo (100 caracteres)
 	CodigoISIN               string `json:"CD_ISIN,omitempty"`            // Código ISIN (International Securities Identification Number) (12 caracteres)
 	CnpjFundo                string `json:"CNPJ_FUNDO,omitempty"`         // CNPJ do fundo (20 caracteres)
@@ -94,7 +94,7 @@ type CdaBlc4Request struct {
 	ValorVendas              string `json:"VL_VENDA_NEGOC,omitempty"`     // Valor das vendas dos negócios realizados no mês
 }
 
-type CdaBlc5Request struct {
+type CdaDepositoAPrazoOutrosAtivosRequest struct {
 	NomeAgenciaClassificacaoRisco string `json:"AG_RISCO,omitempty"`           // Nome da agência de classificação de risco (200 caracteres)
 	CodigoIndexadorPosFixados     string `json:"CD_INDEXADOR_POSFX,omitempty"` // Código do indexador (somente pós-fixados) (50 caracteres)
 	CnpjEmissor                   string `json:"CNPJ_EMISSOR,omitempty"`       // CNPJ do emissor (20 caracteres)
@@ -126,7 +126,7 @@ type CdaBlc5Request struct {
 	ValorVendas                   string `json:"VL_VENDA_NEGOC,omitempty"`     // Valor das vendas dos negócios realizados no mês
 }
 
-type CdaBlc6Request struct {
+type CdaAgroCreditoPrivadoRequest struct {
 	CodigoIndexadorPosFixados      string `json:"CD_INDEXADOR_POSFX,omitempty"`            // Código do indexador (somente pós-fixados) (50 caracteres)
 	CnpjFundo                      string `json:"CNPJ_FUNDO,omitempty"`                    // CNPJ do fundo (20 caracteres)
 	CnpjInstituicaoFinanceiraCoobr string `json:"CNPJ_INSTITUICAO_FINANC_COOBR,omitempty"` // CNPJ da instituição financeira com coobrigação (20 caracteres)
@@ -158,7 +158,7 @@ type CdaBlc6Request struct {
 	ValorVendas                    string `json:"VL_VENDA_NEGOC,omitempty"`                // Valor das vendas dos negócios realizados no mês
 }
 
-type CdaBlc7Request struct {
+type CdaInvestimentosExteriorRequest struct {
 	AgenciaRisco                      string `json:"AG_RISCO,omitempty"`               // Nome da agência de classificação de risco (200 caracteres)
 	BolsaMercado                      string `json:"BV_MERC,omitempty"`                // Bolsa ou Mercado de balcão (100 caracteres)
 	CodigoAtivoBolsaMercado           string `json:"CD_ATIVO_BV_MERC,omitempty"`       // Código do ativo na Bolsa ou Mercado de balcão onde foi adquirido (12 caracteres)
@@ -194,7 +194,7 @@ type CdaBlc7Request struct {
 }
 
 // DetalhesInvestimento representa informações detalhadas sobre um investimento.
-type CdaBlc8Request struct {
+type CdaDemaisAtivosNaoCodificadosRequest struct {
 	CnpjFundo                   string `json:"CNPJ_FUNDO,omitempty"`         // CNPJ do fundo (20 caracteres)
 	CpfCnpjEmissor              string `json:"CPF_CNPJ_EMISSOR,omitempty"`   // Código de identificação do emissor, pessoa física ou jurídica (20 caracteres)
 	DenominacaoSocial           string `json:"DENOM_SOCIAL,omitempty"`       // Denominação Social (100 caracteres)

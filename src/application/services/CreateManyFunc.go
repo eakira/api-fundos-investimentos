@@ -44,53 +44,53 @@ func CreateMany(
 		fs.CreateCdaSelicService(*domain)
 
 	case "cda-blc-2":
-		dados := []request.CdaBlc2Request{}
+		dados := []request.CdaFundosInvestimentosRequest{}
 		json.Unmarshal(data, &dados)
-		domain := &[]domain.CdaBlc2Domain{}
+		domain := &[]domain.CdaFundosInvestimentosDomain{}
 		copier.Copy(domain, dados)
-		fs.CreateCdaBlc2Service(*domain)
+		fs.CreateCdaFundosInvestimentosService(*domain)
 
 	case "cda-blc-3":
-		dados := []request.CdaBlc3Request{}
+		dados := []request.CdaSwapRequest{}
 		json.Unmarshal(data, &dados)
-		domain := &[]domain.CdaBlc3Domain{}
+		domain := &[]domain.CdaSwapDomain{}
 		copier.Copy(domain, dados)
-		fs.CreateCdaBlc3Service(*domain)
+		fs.CreateCdaSwapService(*domain)
 
 	case "cda-blc-4":
-		dados := []request.CdaBlc4Request{}
+		dados := []request.CdaDemaisAtivosRequest{}
 		json.Unmarshal(data, &dados)
-		domain := &[]domain.CdaBlc4Domain{}
+		domain := &[]domain.CdaDemaisAtivosDomain{}
 		copier.Copy(domain, dados)
-		fs.CreateCdaBlc4Service(*domain)
+		fs.CreateCdaDemaisAtivosService(*domain)
 
 	case "cda-blc-5":
-		dados := []request.CdaBlc5Request{}
+		dados := []request.CdaDepositoAPrazoOutrosAtivosRequest{}
 		json.Unmarshal(data, &dados)
-		domain := &[]domain.CdaBlc5Domain{}
+		domain := &[]domain.CdaDepositoAPrazoOutrosAtivosDomain{}
 		copier.Copy(domain, dados)
-		fs.CreateCdaBlc5Service(*domain)
+		fs.CreateCdaDepositoAPrazoOutrosAtivosService(*domain)
 
 	case "cda-blc-6":
-		dados := []request.CdaBlc6Request{}
+		dados := []request.CdaAgroCreditoPrivadoRequest{}
 		json.Unmarshal(data, &dados)
-		domain := &[]domain.CdaBlc6Domain{}
+		domain := &[]domain.CdaAgroCreditoPrivadoDomain{}
 		copier.Copy(domain, dados)
-		fs.CreateCdaBlc6Service(*domain)
+		fs.CreateCdaAgroCreditoPrivadoService(*domain)
 
 	case "cda-blc-7":
-		dados := []request.CdaBlc7Request{}
+		dados := []request.CdaInvestimentosExteriorRequest{}
 		json.Unmarshal(data, &dados)
-		domain := &[]domain.CdaBlc7Domain{}
+		domain := &[]domain.CdaInvestimentosExteriorDomain{}
 		copier.Copy(domain, dados)
-		fs.CreateCdaBlc7Service(*domain)
+		fs.CreateCdaInvestimentosExteriorService(*domain)
 
 	case "cda-blc-8":
-		dados := []request.CdaBlc8Request{}
+		dados := []request.CdaDemaisAtivosNaoCodificadosRequest{}
 		json.Unmarshal(data, &dados)
-		domain := &[]domain.CdaBlc8Domain{}
+		domain := &[]domain.CdaDemaisAtivosNaoCodificadosDomain{}
 		copier.Copy(domain, dados)
-		fs.CreateCdaBlc8Service(*domain)
+		fs.CreateCdaDemaisAtivosNaoCodificadosService(*domain)
 
 	case "cda-confidencial":
 		dados := []request.CdaConfidencial{}

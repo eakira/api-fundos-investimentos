@@ -33,7 +33,7 @@ type CdaSelicEntity struct {
 	ValorVendas              string             `bson:"valor_vendas"`
 }
 
-type CdaBlc2Entity struct {
+type CdaFundosInvestimentosEntity struct {
 	ID                       primitive.ObjectID `bson:"_id,omitempty"`
 	CnpjFundo                string             `bson:"cnpj_fundo"`
 	CnpjFundoCota            string             `bson:"cnpj_fundo_cota"`
@@ -55,7 +55,7 @@ type CdaBlc2Entity struct {
 	ValorVendas              string             `bson:"valor_vendas"`
 }
 
-type CdaBlc3Entity struct {
+type CdaSwapEntity struct {
 	ID                       primitive.ObjectID `bson:"_id,omitempty"`
 	CodigoSwap               string             `bson:"codigo_swap"`
 	CnpjFundo                string             `bson:"cnpj_fundo"`
@@ -77,7 +77,7 @@ type CdaBlc3Entity struct {
 	ValorVendas              string             `bson:"valor_vendas"`
 }
 
-type CdaBlc4Entity struct {
+type CdaDemaisAtivosEntity struct {
 	ID                       primitive.ObjectID `bson:"_id,omitempty"`
 	CodigoAtivo              string             `bson:"codigo_ativo"`
 	CodigoISIN               string             `bson:"codigo_isin"`
@@ -102,7 +102,7 @@ type CdaBlc4Entity struct {
 	ValorVendas              string             `bson:"valor_vendas"`
 }
 
-type CdaBlc5Entity struct {
+type CdaDepositoAPrazoOutrosAtivosEntity struct {
 	ID                            primitive.ObjectID `bson:"_id,omitempty"`
 	NomeAgenciaClassificacaoRisco string             `bson:"nome_agencia_classificacao_risco"`
 	CodigoIndexadorPosFixados     string             `bson:"codigo_indexador_pos_fixados"`
@@ -134,7 +134,7 @@ type CdaBlc5Entity struct {
 	ValorMercadoPosicaoFinal      string             `bson:"valor_mercado_posicao_final"`
 }
 
-type CdaBlc6Entity struct {
+type CdaAgroCreditoPrivadoEntity struct {
 	ID                             primitive.ObjectID `bson:"_id,omitempty"`
 	CodigoIndexadorPosFixados      string             `bson:"codigo_indexador_pos_fixados"`
 	CnpjFundo                      string             `bson:"cnpj_fundo"`
@@ -167,7 +167,7 @@ type CdaBlc6Entity struct {
 	ValorVendas                    string             `bson:"valor_vendas"`
 }
 
-type CdaBlc7Entity struct {
+type CdaInvestimentosExteriorEntity struct {
 	ID                                primitive.ObjectID `bson:"_id,omitempty"`
 	AgenciaRisco                      string             `bson:"agencia_risco"`
 	BolsaMercado                      string             `bson:"bolsa_mercado"`
@@ -203,7 +203,7 @@ type CdaBlc7Entity struct {
 	ValorVendas                       string             `bson:"valor_vendas"`
 }
 
-type CdaBlc8Entity struct {
+type CdaDemaisAtivosNaoCodificadosEntity struct {
 	ID                          primitive.ObjectID `bson:"_id,omitempty"`
 	CnpjFundo                   string             `bson:"cnpj_fundo"`
 	CpfCnpjEmissor              string             `bson:"cpf_cnpj_emissor"`

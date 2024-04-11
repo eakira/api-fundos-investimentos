@@ -44,32 +44,32 @@ type FundosPort interface {
 		[]domain.CdaSelicDomain,
 	) *resterrors.RestErr
 
-	CreateManyCdaBlc2Repository(
-		[]domain.CdaBlc2Domain,
+	CreateManyCdaFundosInvestimentosRepository(
+		[]domain.CdaFundosInvestimentosDomain,
 	) *resterrors.RestErr
 
-	CreateManyCdaBlc3Repository(
-		[]domain.CdaBlc3Domain,
+	CreateManyCdaSwapRepository(
+		[]domain.CdaSwapDomain,
 	) *resterrors.RestErr
 
-	CreateManyCdaBlc4Repository(
-		[]domain.CdaBlc4Domain,
+	CreateManyCdaDemaisAtivosRepository(
+		[]domain.CdaDemaisAtivosDomain,
 	) *resterrors.RestErr
 
-	CreateManyCdaBlc5Repository(
-		[]domain.CdaBlc5Domain,
+	CreateManyCdaDepositoAPrazoOutrosAtivosRepository(
+		[]domain.CdaDepositoAPrazoOutrosAtivosDomain,
 	) *resterrors.RestErr
 
-	CreateManyCdaBlc6Repository(
-		[]domain.CdaBlc6Domain,
+	CreateManyCdaAgroCreditoPrivadoRepository(
+		[]domain.CdaAgroCreditoPrivadoDomain,
 	) *resterrors.RestErr
 
-	CreateManyCdaBlc7Repository(
-		[]domain.CdaBlc7Domain,
+	CreateManyCdaInvestimentosExteriorRepository(
+		[]domain.CdaInvestimentosExteriorDomain,
 	) *resterrors.RestErr
 
-	CreateManyCdaBlc8Repository(
-		[]domain.CdaBlc8Domain,
+	CreateManyCdaDemaisAtivosNaoCodificadosRepository(
+		[]domain.CdaDemaisAtivosNaoCodificadosDomain,
 	) *resterrors.RestErr
 
 	CreateManyCdaConfidencialRepository(

@@ -28,7 +28,7 @@ type CdaSelicDomain struct {
 	ValorVendas              string
 }
 
-type CdaBlc2Domain struct {
+type CdaFundosInvestimentosDomain struct {
 	CnpjFundo                string
 	CnpjFundoCota            string
 	DenominacaoSocial        string
@@ -49,7 +49,7 @@ type CdaBlc2Domain struct {
 	ValorVendas              string
 }
 
-type CdaBlc3Domain struct {
+type CdaSwapDomain struct {
 	CodigoSwap               string
 	CnpjFundo                string
 	DenominacaoSocial        string
@@ -70,7 +70,7 @@ type CdaBlc3Domain struct {
 	ValorVendas              string
 }
 
-type CdaBlc4Domain struct {
+type CdaDemaisAtivosDomain struct {
 	CodigoAtivo              string
 	CodigoISIN               string
 	CnpjFundo                string
@@ -94,7 +94,7 @@ type CdaBlc4Domain struct {
 	ValorVendas              string
 }
 
-type CdaBlc5Domain struct {
+type CdaDepositoAPrazoOutrosAtivosDomain struct {
 	NomeAgenciaClassificacaoRisco string
 	CodigoIndexadorPosFixados     string
 	CnpjEmissor                   string
@@ -126,7 +126,7 @@ type CdaBlc5Domain struct {
 	ValorVendas                   string
 }
 
-type CdaBlc6Domain struct {
+type CdaAgroCreditoPrivadoDomain struct {
 	CodigoIndexadorPosFixados      string
 	CnpjFundo                      string
 	CnpjInstituicaoFinanceiraCoobr string
@@ -158,7 +158,7 @@ type CdaBlc6Domain struct {
 	ValorVendas                    string
 }
 
-type CdaBlc7Domain struct {
+type CdaInvestimentosExteriorDomain struct {
 	AgenciaRisco                      string
 	BolsaMercado                      string
 	CodigoAtivoBolsaMercado           string
@@ -193,7 +193,7 @@ type CdaBlc7Domain struct {
 	ValorVendas                       string
 }
 
-type CdaBlc8Domain struct {
+type CdaDemaisAtivosNaoCodificadosDomain struct {
 	CnpjFundo                   string
 	CpfCnpjEmissor              string
 	DenominacaoSocial           string

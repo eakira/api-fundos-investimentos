@@ -17,7 +17,7 @@ func (ur *fundosRepository) CreateManyCdaSelicRepository(
 
 	logger.Info("Init CreateManyBalecenteRepository", "createBalacente")
 
-	collection := ur.databaseConnection.Collection(env.GetCollectionCdaBcl1())
+	collection := ur.databaseConnection.Collection(env.GetCollectionCdaSelic())
 
 	entity := []entity.CdaSelicEntity{}
 	copier.Copy(&entity, &cdaDomain)
@@ -36,15 +36,15 @@ func (ur *fundosRepository) CreateManyCdaSelicRepository(
 	return nil
 }
 
-func (ur *fundosRepository) CreateManyCdaBlc2Repository(
-	cdaDomain []domain.CdaBlc2Domain,
+func (ur *fundosRepository) CreateManyCdaFundosInvestimentosRepository(
+	cdaDomain []domain.CdaFundosInvestimentosDomain,
 ) *resterrors.RestErr {
 
 	logger.Info("Init CreateManyBalecenteRepository", "createBalacente")
 
-	collection := ur.databaseConnection.Collection(env.GetCollectionCdaBcl2())
+	collection := ur.databaseConnection.Collection(env.GetCollectionCdaFundosInvestimentos())
 
-	entity := []entity.CdaBlc2Entity{}
+	entity := []entity.CdaFundosInvestimentosEntity{}
 	copier.Copy(&entity, &cdaDomain)
 
 	dados := make([]interface{}, len(entity))
@@ -61,15 +61,15 @@ func (ur *fundosRepository) CreateManyCdaBlc2Repository(
 	return nil
 }
 
-func (ur *fundosRepository) CreateManyCdaBlc3Repository(
-	cdaDomain []domain.CdaBlc3Domain,
+func (ur *fundosRepository) CreateManyCdaSwapRepository(
+	cdaDomain []domain.CdaSwapDomain,
 ) *resterrors.RestErr {
 
 	logger.Info("Init CreateManyBalecenteRepository", "createBalacente")
 
-	collection := ur.databaseConnection.Collection(env.GetCollectionCdaBcl3())
+	collection := ur.databaseConnection.Collection(env.GetCollectionCdaSwap())
 
-	entity := []entity.CdaBlc3Entity{}
+	entity := []entity.CdaSwapEntity{}
 	copier.Copy(&entity, &cdaDomain)
 
 	dados := make([]interface{}, len(entity))
@@ -86,15 +86,15 @@ func (ur *fundosRepository) CreateManyCdaBlc3Repository(
 	return nil
 }
 
-func (ur *fundosRepository) CreateManyCdaBlc4Repository(
-	cdaDomain []domain.CdaBlc4Domain,
+func (ur *fundosRepository) CreateManyCdaDemaisAtivosRepository(
+	cdaDomain []domain.CdaDemaisAtivosDomain,
 ) *resterrors.RestErr {
 
 	logger.Info("Init CreateManyBalecenteRepository", "createBalacente")
 
-	collection := ur.databaseConnection.Collection(env.GetCollectionCdaBcl4())
+	collection := ur.databaseConnection.Collection(env.GetCollectionCdaDemaisAtivos())
 
-	entity := []entity.CdaBlc4Entity{}
+	entity := []entity.CdaDemaisAtivosEntity{}
 	copier.Copy(&entity, &cdaDomain)
 
 	dados := make([]interface{}, len(entity))
@@ -111,15 +111,15 @@ func (ur *fundosRepository) CreateManyCdaBlc4Repository(
 	return nil
 }
 
-func (ur *fundosRepository) CreateManyCdaBlc5Repository(
-	cdaDomain []domain.CdaBlc5Domain,
+func (ur *fundosRepository) CreateManyCdaDepositoAPrazoOutrosAtivosRepository(
+	cdaDomain []domain.CdaDepositoAPrazoOutrosAtivosDomain,
 ) *resterrors.RestErr {
 
 	logger.Info("Init CreateManyBalecenteRepository", "createBalacente")
 
-	collection := ur.databaseConnection.Collection(env.GetCollectionCdaBcl5())
+	collection := ur.databaseConnection.Collection(env.GetCollectionCdaDepositoAPrazoOutrosAtivos())
 
-	entity := []entity.CdaBlc5Entity{}
+	entity := []entity.CdaDepositoAPrazoOutrosAtivosEntity{}
 	copier.Copy(&entity, &cdaDomain)
 
 	dados := make([]interface{}, len(entity))
@@ -136,15 +136,15 @@ func (ur *fundosRepository) CreateManyCdaBlc5Repository(
 	return nil
 }
 
-func (ur *fundosRepository) CreateManyCdaBlc6Repository(
-	cdaDomain []domain.CdaBlc6Domain,
+func (ur *fundosRepository) CreateManyCdaAgroCreditoPrivadoRepository(
+	cdaDomain []domain.CdaAgroCreditoPrivadoDomain,
 ) *resterrors.RestErr {
 
 	logger.Info("Init CreateManyBalecenteRepository", "createBalacente")
 
-	collection := ur.databaseConnection.Collection(env.GetCollectionCdaBcl6())
+	collection := ur.databaseConnection.Collection(env.GetCollectionCdaAgroCreditoPrivado())
 
-	entity := []entity.CdaBlc6Entity{}
+	entity := []entity.CdaAgroCreditoPrivadoEntity{}
 	copier.Copy(&entity, &cdaDomain)
 
 	dados := make([]interface{}, len(entity))
@@ -161,15 +161,15 @@ func (ur *fundosRepository) CreateManyCdaBlc6Repository(
 	return nil
 }
 
-func (ur *fundosRepository) CreateManyCdaBlc7Repository(
-	cdaDomain []domain.CdaBlc7Domain,
+func (ur *fundosRepository) CreateManyCdaInvestimentosExteriorRepository(
+	cdaDomain []domain.CdaInvestimentosExteriorDomain,
 ) *resterrors.RestErr {
 
 	logger.Info("Init CreateManyBalecenteRepository", "createBalacente")
 
-	collection := ur.databaseConnection.Collection(env.GetCollectionCdaBcl7())
+	collection := ur.databaseConnection.Collection(env.GetCollectionCdaInvestimentosExterior())
 
-	entity := []entity.CdaBlc7Entity{}
+	entity := []entity.CdaInvestimentosExteriorEntity{}
 	copier.Copy(&entity, &cdaDomain)
 
 	dados := make([]interface{}, len(entity))
@@ -186,15 +186,15 @@ func (ur *fundosRepository) CreateManyCdaBlc7Repository(
 	return nil
 }
 
-func (ur *fundosRepository) CreateManyCdaBlc8Repository(
-	cdaDomain []domain.CdaBlc8Domain,
+func (ur *fundosRepository) CreateManyCdaDemaisAtivosNaoCodificadosRepository(
+	cdaDomain []domain.CdaDemaisAtivosNaoCodificadosDomain,
 ) *resterrors.RestErr {
 
 	logger.Info("Init CreateManyBalecenteRepository", "createBalacente")
 
-	collection := ur.databaseConnection.Collection(env.GetCollectionCdaBcl8())
+	collection := ur.databaseConnection.Collection(env.GetCollectionCdaDemaisAtivosNaoCodificados())
 
-	entity := []entity.CdaBlc8Entity{}
+	entity := []entity.CdaDemaisAtivosNaoCodificadosEntity{}
 	copier.Copy(&entity, &cdaDomain)
 
 	dados := make([]interface{}, len(entity))

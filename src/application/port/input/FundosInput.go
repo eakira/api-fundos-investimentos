@@ -16,13 +16,13 @@ type FundosDomainService interface {
 	CreateInformacaoDiariaService([]domain.InformacaoDiariaDomain) *resterrors.RestErr
 	CreatePerfilMensalService([]domain.PerfilMensalDomain) *resterrors.RestErr
 	CreateCdaSelicService([]domain.CdaSelicDomain) *resterrors.RestErr
-	CreateCdaBlc2Service([]domain.CdaBlc2Domain) *resterrors.RestErr
-	CreateCdaBlc3Service([]domain.CdaBlc3Domain) *resterrors.RestErr
-	CreateCdaBlc4Service([]domain.CdaBlc4Domain) *resterrors.RestErr
-	CreateCdaBlc5Service([]domain.CdaBlc5Domain) *resterrors.RestErr
-	CreateCdaBlc6Service([]domain.CdaBlc6Domain) *resterrors.RestErr
-	CreateCdaBlc7Service([]domain.CdaBlc7Domain) *resterrors.RestErr
-	CreateCdaBlc8Service([]domain.CdaBlc8Domain) *resterrors.RestErr
+	CreateCdaFundosInvestimentosService([]domain.CdaFundosInvestimentosDomain) *resterrors.RestErr
+	CreateCdaSwapService([]domain.CdaSwapDomain) *resterrors.RestErr
+	CreateCdaDemaisAtivosService([]domain.CdaDemaisAtivosDomain) *resterrors.RestErr
+	CreateCdaDepositoAPrazoOutrosAtivosService([]domain.CdaDepositoAPrazoOutrosAtivosDomain) *resterrors.RestErr
+	CreateCdaAgroCreditoPrivadoService([]domain.CdaAgroCreditoPrivadoDomain) *resterrors.RestErr
+	CreateCdaInvestimentosExteriorService([]domain.CdaInvestimentosExteriorDomain) *resterrors.RestErr
+	CreateCdaDemaisAtivosNaoCodificadosService([]domain.CdaDemaisAtivosNaoCodificadosDomain) *resterrors.RestErr
 	CreateInformacaoComplementarFundoService([]domain.InformacoesFundoDomain) *resterrors.RestErr
 	CreateInformacaoComplementarDivulgacaoService([]domain.InformacoesDivulgacaoDomain) *resterrors.RestErr
 	CreateInformacaoComplementarCotistaService([]domain.InformacoesCotistaDomain) *resterrors.RestErr

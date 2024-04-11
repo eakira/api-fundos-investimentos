@@ -28,35 +28,35 @@ func GetCollectionPerfilMensal() string {
 	return "perfil-mensal"
 }
 
-func GetCollectionCdaBcl1() string {
+func GetCollectionCdaSelic() string {
 	return "cda-selic"
 }
 
-func GetCollectionCdaBcl2() string {
+func GetCollectionCdaFundosInvestimentos() string {
 	return "cda-cotas-fundos-investimentos"
 }
 
-func GetCollectionCdaBcl3() string {
+func GetCollectionCdaSwap() string {
 	return "cda-swap"
 }
 
-func GetCollectionCdaBcl4() string {
+func GetCollectionCdaDemaisAtivos() string {
 	return "cda-demais-ativos"
 }
 
-func GetCollectionCdaBcl5() string {
+func GetCollectionCdaDepositoAPrazoOutrosAtivos() string {
 	return "cda-deposito-a-prazo-outros-titulos"
 }
 
-func GetCollectionCdaBcl6() string {
+func GetCollectionCdaAgroCreditoPrivado() string {
 	return "cda-agro-credito-privado"
 }
 
-func GetCollectionCdaBcl7() string {
+func GetCollectionCdaInvestimentosExterior() string {
 	return "cda-investimentos-exterior"
 }
 
-func GetCollectionCdaBcl8() string {
+func GetCollectionCdaDemaisAtivosNaoCodificados() string {
 	return "cda-demais-ativos-nao-codificados"
 }
 
