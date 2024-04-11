@@ -120,8 +120,33 @@ func CreateMany(
 		copier.Copy(domain, dados)
 		fs.CreateCdaPatrominioLiquido(*domain)
 
-	case "informacoes-complementares":
-		//		São vários arquivos precisa verificar quais arquivos vou usar
+	case "informacao-complementar":
+		dados := []request.InformacoesFundoResquest{}
+		json.Unmarshal(data, &dados)
+		domain := &[]domain.InformacoesFundoDomain{}
+		copier.Copy(domain, dados)
+		fs.CreateInformaComplementarFundoService(*domain)
+
+	case "informacao-complementar-divulgacao":
+		dados := []request.InformacoesDivulgacaoRequest{}
+		json.Unmarshal(data, &dados)
+		domain := &[]domain.InformacoesDivulgacaoDomain{}
+		copier.Copy(domain, dados)
+		fs.CreateInformaComplementarDivulgacaoService(*domain)
+
+	case "informacao-complementar-cotista":
+		dados := []request.InformacoesCotistaResquest{}
+		json.Unmarshal(data, &dados)
+		domain := &[]domain.InformacoesCotistaDomain{}
+		copier.Copy(domain, dados)
+		fs.CreateInformaComplementarCotistaService(*domain)
+
+	case "informacao-complementar-servico-prestado":
+		dados := []request.ServicoPrestadoResquest{}
+		json.Unmarshal(data, &dados)
+		domain := &[]domain.ServicoPrestadoDomain{}
+		copier.Copy(domain, dados)
+		fs.CreateInformaComplementarServicoPrestadoService(*domain)
 
 	case "extrato":
 		dados := []request.ExtratoRequest{}
