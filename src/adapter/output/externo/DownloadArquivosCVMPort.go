@@ -26,12 +26,12 @@ func (fc *fundosClient) DownloadArquivosCVMPort(file string) []string {
 	}
 
 	localFilePath := filepath.Join(storagePath, filepath.Base(file))
-	/* 	err = downloadArquivo(env.GetCvmUrl()+file, localFilePath)
-	   	if err != nil {
-	   		logger.Error("Erro ao baixar o arquivo:", err, "sincronizar")
-	   		return nil
-	   	}
-	*/
+	err = downloadArquivo(env.GetCvmUrl()+file, localFilePath)
+	if err != nil {
+		logger.Error("Erro ao baixar o arquivo:", err, "sincronizar")
+		return nil
+	}
+
 	var nomes []string
 	if filepath.Ext(file) == ".zip" {
 		nomes = unzip(localFilePath)
