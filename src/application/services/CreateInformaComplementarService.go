@@ -5,30 +5,30 @@ import (
 	"api-fundos-investimentos/configuration/logger"
 )
 
-func (fs *fundosDomainService) CreateInformaComplementarFundoService(domain []domain.InformacoesFundoDomain) {
-	logger.Info("Init CreateInformaComplementarFundo", "sincronizarFundos")
+func (fs *fundosDomainService) CreateInformacaoComplementarFundoService(domain []domain.InformacoesFundoDomain) {
+	logger.Info("Init CreateInformacaoComplementarFundo", "sincronizarFundos")
 
-	fs.repository.CreateInformaComplementarFundoRepository(domain)
-	logger.Info("Finish CreateInformaComplementarFundo", "sincronizarFundos")
+	fs.repository.CreateManyInformacaoComplementarFundoRepository(domain)
+	logger.Info("Finish CreateInformacaoComplementarFundo", "sincronizarFundos")
 }
 
-func (fs *fundosDomainService) CreateInformaComplementarDivulgacaoService(domain []domain.InformacoesDivulgacaoDomain) {
-	logger.Info("Init CreateInformaComplementarDivulgacao", "sincronizarFundos")
+func (fs *fundosDomainService) CreateInformacaoComplementarDivulgacaoService(domain []domain.InformacoesDivulgacaoDomain) {
+	logger.Info("Init CreateInformacaoComplementarDivulgacao", "sincronizarFundos")
 
-	fs.repository.CreateInformaComplementarDivulgacaoRepository(domain)
-	logger.Info("Finish CreateInformaComplementarDivulgacao", "sincronizarFundos")
+	fs.repository.CreateManyInformacaoComplementarDivulgacaoRepository(domain)
+	logger.Info("Finish CreateInformacaoComplementarDivulgacao", "sincronizarFundos")
 }
 
-func (fs *fundosDomainService) CreateInformaComplementarCotistaService(domain []domain.InformacoesCotistaDomain) {
-	logger.Info("Init CreateInformaComplementarCotista", "sincronizarFundos")
+func (fs *fundosDomainService) CreateInformacaoComplementarCotistaService(domain []domain.InformacoesCotistaDomain) {
+	logger.Info("Init CreateInformacaoComplementarCotista", "sincronizarFundos")
 
-	fs.repository.CreateInformaComplementarCotistaRepository(domain)
-	logger.Info("Finish CreateInformaComplementarCotista", "sincronizarFundos")
+	fs.repository.CreateManyInformacaoComplementarCotistaRepository(domain)
+	logger.Info("Finish CreateInformacaoComplementarCotista", "sincronizarFundos")
 }
 
-func (fs *fundosDomainService) CreateInformaComplementarServicoPrestadoService(domain []domain.ServicoPrestadoDomain) {
-	logger.Info("Init CreateInformaComplementarServicoPrestado", "sincronizarFundos")
+func (fs *fundosDomainService) CreateInformacaoComplementarServicoPrestadoService(domain []domain.ServicoPrestadoDomain) {
+	logger.Info("Init CreateInformacaoComplementarServicoPrestado", "sincronizarFundos")
 
-	fs.repository.CreateInformaComplementarServicoPrestadoRepository(domain)
-	logger.Info("Finish CreateInformaComplementarServicoPrestado", "sincronizarFundos")
+	fs.repository.CreateManyInformacaoComplementarServicoPrestadoRepository(domain)
+	logger.Info("Finish CreateInformacaoComplementarServicoPrestado", "sincronizarFundos")
 }

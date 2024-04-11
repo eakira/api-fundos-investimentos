@@ -84,19 +84,19 @@ type FundosPort interface {
 		[]domain.CdaPatrimonioLiquidoDomain,
 	) *resterrors.RestErr
 
-	CreateManyInformaComplementarFundoRepository(
+	CreateManyInformacaoComplementarFundoRepository(
 		[]domain.InformacoesFundoDomain,
 	) *resterrors.RestErr
 
-	CreateManyInformaComplementarDivulgacaoRepository(
+	CreateManyInformacaoComplementarDivulgacaoRepository(
 		[]domain.InformacoesDivulgacaoDomain,
 	) *resterrors.RestErr
 
-	CreateManyInformaComplementarCotistaRepository(
+	CreateManyInformacaoComplementarCotistaRepository(
 		[]domain.InformacoesCotistaDomain,
 	) *resterrors.RestErr
 
-	CreateManyInformaComplementarServicoPrestadoRepository(
+	CreateManyInformacaoComplementarServicoPrestadoRepository(
 		[]domain.ServicoPrestadoDomain,
 	) *resterrors.RestErr
 }
