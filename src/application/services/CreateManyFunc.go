@@ -148,6 +148,34 @@ func CreateMany(
 		copier.Copy(domain, dados)
 		fs.CreateInformacaoComplementarServicoPrestadoService(*domain)
 
+	case "lamina":
+		dados := []request.LaminaRequest{}
+		json.Unmarshal(data, &dados)
+		domain := &[]domain.LaminaDomain{}
+		copier.Copy(domain, dados)
+		fs.CreateLaminaService(*domain)
+
+	case "lamina-carteira":
+		dados := []request.LaminaCarteiraRequest{}
+		json.Unmarshal(data, &dados)
+		domain := &[]domain.LaminaCarteiraDomain{}
+		copier.Copy(domain, dados)
+		fs.CreateLaminaCarteiraService(*domain)
+
+	case "lamina-rentabilidade-ano":
+		dados := []request.LaminaRentabilidadeAnoRequest{}
+		json.Unmarshal(data, &dados)
+		domain := &[]domain.LaminaRentabilidadeAnoDomain{}
+		copier.Copy(domain, dados)
+		fs.CreateLaminaRentabilidadeAnoService(*domain)
+
+	case "lamina-rentabilidade-mes":
+		dados := []request.LaminaRentabilidadeMesRequest{}
+		json.Unmarshal(data, &dados)
+		domain := &[]domain.LaminaRentabilidadeMesDomain{}
+		copier.Copy(domain, dados)
+		fs.CreateLaminaRentabilidadeMesService(*domain)
+
 	case "extrato":
 		dados := []request.ExtratoRequest{}
 		json.Unmarshal(data, &dados)
@@ -161,9 +189,6 @@ func CreateMany(
 		domain := &[]domain.InformacaoDiariaDomain{}
 		copier.Copy(domain, dados)
 		fs.CreateInformacaoDiariaService(*domain)
-
-	case "lamina":
-		//		São vários arquivos precisa verificar quais arquivos vou usar
 
 	case "perfil-mensal":
 		//		files = getFilesName(env.GetConfigCvmArquivosPerfilMensal())
