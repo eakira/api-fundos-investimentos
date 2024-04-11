@@ -40,8 +40,8 @@ type FundosPort interface {
 		[]domain.PerfilMensalDomain,
 	) *resterrors.RestErr
 
-	CreateManyCdaBlc1Repository(
-		[]domain.CdaBlc1Domain,
+	CreateManyCdaSelicRepository(
+		[]domain.CdaSelicDomain,
 	) *resterrors.RestErr
 
 	CreateManyCdaBlc2Repository(

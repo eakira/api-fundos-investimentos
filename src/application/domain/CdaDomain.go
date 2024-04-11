@@ -1,6 +1,6 @@
 package domain
 
-type CdaBlc1Domain struct {
+type CdaSelicDomain struct {
 	CodigoConta              string
 	FundoCnpj                string
 	DataCompetencia          string

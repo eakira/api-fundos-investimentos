@@ -4,7 +4,7 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
-type CdaBlc1Entity struct {
+type CdaSelicEntity struct {
 	ID                       primitive.ObjectID `bson:"_id,omitempty"`
 	CodigoConta              string             `bson:"codigo_conta"`
 	FundoCnpj                string             `bson:"fundo_cnpj"`

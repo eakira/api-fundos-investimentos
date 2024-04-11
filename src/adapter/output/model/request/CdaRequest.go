@@ -1,6 +1,6 @@
 package request
 
-type CdaBlc1Request struct {
+type CdaSelicRequest struct {
 	CodigoConta              string `json:"CD_CONTA_BALCTE,omitempty"`    // Código da conta balancete
 	FundoCnpj                string `json:"CNPJ_FUNDO,omitempty"`         // CNPJ do fundo
 	DataCompetencia          string `json:"DT_COMPTC,omitempty"`          // Data de competência

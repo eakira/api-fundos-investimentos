@@ -11,15 +11,15 @@ import (
 	"github.com/jinzhu/copier"
 )
 
-func (ur *fundosRepository) CreateManyCdaBlc1Repository(
-	cdaDomain []domain.CdaBlc1Domain,
+func (ur *fundosRepository) CreateManyCdaSelicRepository(
+	cdaDomain []domain.CdaSelicDomain,
 ) *resterrors.RestErr {
 
 	logger.Info("Init CreateManyBalecenteRepository", "createBalacente")
 
 	collection := ur.databaseConnection.Collection(env.GetCollectionCdaBcl1())
 
-	entity := []entity.CdaBlc1Entity{}
+	entity := []entity.CdaSelicEntity{}
 	copier.Copy(&entity, &cdaDomain)
 
 	dados := make([]interface{}, len(entity))

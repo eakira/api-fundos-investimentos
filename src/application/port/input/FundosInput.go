@@ -15,7 +15,7 @@ type FundosDomainService interface {
 	CreateExtratoService([]domain.ExtratoDomain) *resterrors.RestErr
 	CreateInformacaoDiariaService([]domain.InformacaoDiariaDomain) *resterrors.RestErr
 	CreatePerfilMensalService([]domain.PerfilMensalDomain) *resterrors.RestErr
-	CreateCdaBlc1Service([]domain.CdaBlc1Domain) *resterrors.RestErr
+	CreateCdaSelicService([]domain.CdaSelicDomain) *resterrors.RestErr
 	CreateCdaBlc2Service([]domain.CdaBlc2Domain) *resterrors.RestErr
 	CreateCdaBlc3Service([]domain.CdaBlc3Domain) *resterrors.RestErr
 	CreateCdaBlc4Service([]domain.CdaBlc4Domain) *resterrors.RestErr

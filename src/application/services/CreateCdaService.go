@@ -5,11 +5,11 @@ import (
 	"api-fundos-investimentos/configuration/logger"
 )
 
-func (fs *fundosDomainService) CreateCdaBlc1Service(domain []domain.CdaBlc1Domain) {
-	logger.Info("Init CreateCdaBlc1Service", "sincronizarFundos")
+func (fs *fundosDomainService) CreateCdaSelicService(domain []domain.CdaSelicDomain) {
+	logger.Info("Init CreateCdaSelicService", "sincronizarFundos")
 
-	fs.repository.CreateManyCdaBlc1Repository(domain)
-	logger.Info("Finish CreateCdaBlc1Service", "sincronizarFundos")
+	fs.repository.CreateManyCdaSelicRepository(domain)
+	logger.Info("Finish CreateCdaSelicService", "sincronizarFundos")
 }
 
 func (fs *fundosDomainService) CreateCdaBlc2Service(domain []domain.CdaBlc2Domain) {

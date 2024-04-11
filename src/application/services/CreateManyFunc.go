@@ -37,11 +37,11 @@ func CreateMany(
 		fs.CreateBalanceteService(*domain)
 
 	case "cda-blc-1":
-		dados := []request.CdaBlc1Request{}
+		dados := []request.CdaSelicRequest{}
 		json.Unmarshal(data, &dados)
-		domain := &[]domain.CdaBlc1Domain{}
+		domain := &[]domain.CdaSelicDomain{}
 		copier.Copy(domain, dados)
-		fs.CreateCdaBlc1Service(*domain)
+		fs.CreateCdaSelicService(*domain)
 
 	case "cda-blc-2":
 		dados := []request.CdaBlc2Request{}
