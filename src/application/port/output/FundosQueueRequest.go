@@ -9,95 +9,95 @@ import (
 
 type FundosPort interface {
 	CreateArquivosRepository(
-		arquivosDomain domain.ArquivosDomain,
+		domain.ArquivosDomain,
 	) (*domain.ArquivosDomain, *resterrors.RestErr)
 
 	UpdateArquivosRepository(
-		arquivosDomain domain.ArquivosDomain,
+		domain.ArquivosDomain,
 	) *resterrors.RestErr
 
 	CreateFundosRepository(
-		fundosDomain domain.FundosDomain,
+		domain.FundosDomain,
 	) (*domain.FundosDomain, *resterrors.RestErr)
 
 	CreateManyFundosRepository(
-		fundosDomain []domain.FundosDomain,
+		[]domain.FundosDomain,
 	) *resterrors.RestErr
 
 	CreateManyBalecenteRepository(
-		balanceteDomain []domain.BalanceteDomain,
+		[]domain.BalanceteDomain,
 	) *resterrors.RestErr
 
 	CreateManyExtratoRepository(
-		extratoDomain []domain.ExtratoDomain,
+		[]domain.ExtratoDomain,
 	) *resterrors.RestErr
 
 	CreateManyInformacaoDiariaRepository(
-		informacaoDiariaDomain []domain.InformacaoDiariaDomain,
+		[]domain.InformacaoDiariaDomain,
 	) *resterrors.RestErr
 
 	CreateManyCdaBlc1Repository(
-		cdaDomain []domain.CdaBlc1Domain,
+		[]domain.CdaBlc1Domain,
 	) *resterrors.RestErr
 
 	CreateManyCdaBlc2Repository(
-		cdaDomain []domain.CdaBlc2Domain,
+		[]domain.CdaBlc2Domain,
 	) *resterrors.RestErr
 
 	CreateManyCdaBlc3Repository(
-		cdaDomain []domain.CdaBlc3Domain,
+		[]domain.CdaBlc3Domain,
 	) *resterrors.RestErr
 
 	CreateManyCdaBlc4Repository(
-		cdaDomain []domain.CdaBlc4Domain,
+		[]domain.CdaBlc4Domain,
 	) *resterrors.RestErr
 
 	CreateManyCdaBlc5Repository(
-		cdaDomain []domain.CdaBlc5Domain,
+		[]domain.CdaBlc5Domain,
 	) *resterrors.RestErr
 
 	CreateManyCdaBlc6Repository(
-		cdaDomain []domain.CdaBlc6Domain,
+		[]domain.CdaBlc6Domain,
 	) *resterrors.RestErr
 
 	CreateManyCdaBlc7Repository(
-		cdaDomain []domain.CdaBlc7Domain,
+		[]domain.CdaBlc7Domain,
 	) *resterrors.RestErr
 
 	CreateManyCdaBlc8Repository(
-		cdaDomain []domain.CdaBlc8Domain,
+		[]domain.CdaBlc8Domain,
 	) *resterrors.RestErr
 
 	CreateManyCdaConfidencialRepository(
-		cdaDomain []domain.CdaConfidencialDomain,
+		[]domain.CdaConfidencialDomain,
 	) *resterrors.RestErr
 
 	CreateManyCdaFiimRepository(
-		cdaDomain []domain.CdaFiimDomain,
+		[]domain.CdaFiimDomain,
 	) *resterrors.RestErr
 
 	CreateManyCdaFiimConfidencialRepository(
-		cdaDomain []domain.CdaFiimConfidencialDomain,
+		[]domain.CdaFiimConfidencialDomain,
 	) *resterrors.RestErr
 
 	CreateManyCdaPatrimonioLiquidoRepository(
-		cdaDomain []domain.CdaPatrimonioLiquidoDomain,
+		[]domain.CdaPatrimonioLiquidoDomain,
 	) *resterrors.RestErr
 
-	CreateInformaComplementarFundoRepository(
-		cdaDomain []domain.InformacoesFundoDomain,
+	CreateManyInformaComplementarFundoRepository(
+		[]domain.InformacoesFundoDomain,
 	) *resterrors.RestErr
 
-	CreateInformaComplementarDivulgacaoRepository(
-		cdaDomain []domain.InformacoesDivulgacaoDomain,
+	CreateManyInformaComplementarDivulgacaoRepository(
+		[]domain.InformacoesDivulgacaoDomain,
 	) *resterrors.RestErr
 
-	CreateInformaComplementarCotistaRepository(
-		cdaDomain []domain.InformacoesCotistaDomain,
+	CreateManyInformaComplementarCotistaRepository(
+		[]domain.InformacoesCotistaDomain,
 	) *resterrors.RestErr
 
-	CreateInformaComplementarServicoPrestadoRepository(
-		cdaDomain []domain.ServicoPrestadoDomain,
+	CreateManyInformaComplementarServicoPrestadoRepository(
+		[]domain.ServicoPrestadoDomain,
 	) *resterrors.RestErr
 }
 
