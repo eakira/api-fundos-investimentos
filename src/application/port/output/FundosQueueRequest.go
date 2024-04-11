@@ -99,6 +99,22 @@ type FundosPort interface {
 	CreateManyInformacaoComplementarServicoPrestadoRepository(
 		[]domain.ServicoPrestadoDomain,
 	) *resterrors.RestErr
+
+	CreateManyLaminaRepository(
+		[]domain.LaminaDomain,
+	) *resterrors.RestErr
+
+	CreateManyLaminaCarteiraRepository(
+		[]domain.LaminaCarteiraDomain,
+	) *resterrors.RestErr
+
+	CreateManyLaminaRentabilidadeAnoRepository(
+		[]domain.LaminaRentabilidadeAnoDomain,
+	) *resterrors.RestErr
+
+	CreateManyLaminaRentabilidadeMesRepository(
+		[]domain.LaminaRentabilidadeMesDomain,
+	) *resterrors.RestErr
 }
 
 type FundosExternoPort interface {
