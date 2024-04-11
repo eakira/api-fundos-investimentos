@@ -1,23 +1,18 @@
 package mongodb
 
 import (
+	"api-fundos-investimentos/configuration/env"
 	"context"
-	"os"
 
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-var (
-	MONGODB_URL      = "MONGODB_URL"
-	MONGODB_DATABASE = "MONGODB_DATABASE"
-)
-
 func NewMongoDBConnection(
 	ctx context.Context,
 ) (*mongo.Database, error) {
-	mongodb_uri := os.Getenv(MONGODB_URL)
-	mongodb_database := os.Getenv(MONGODB_DATABASE)
+	mongodb_uri := env.GetMongoUrl()
+	mongodb_database := env.GetMongoDataBase()
 
 	client, err := mongo.Connect(
 		ctx,

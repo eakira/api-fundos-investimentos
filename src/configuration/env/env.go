@@ -5,8 +5,24 @@ import (
 	"strconv"
 )
 
+func GetPort() string {
+	return os.Getenv("PORT")
+}
+
 func GetAppName() string {
 	return os.Getenv("APP_NAME")
+}
+
+func GetTimeShutdown() string {
+	return os.Getenv("TIME_SHUTDOWN")
+}
+
+func GetMongoUrl() string {
+	return os.Getenv("MONGODB_URL")
+}
+
+func GetMongoDataBase() string {
+	return os.Getenv("MONGODB_DATABASE")
 }
 
 // Se a persistencia vai ser executado na hora ou se vai para fila

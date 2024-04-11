@@ -9,6 +9,7 @@ import (
 	"api-fundos-investimentos/adapter/output/repository"
 	"api-fundos-investimentos/application/services"
 	"api-fundos-investimentos/configuration/database/mongodb"
+	"api-fundos-investimentos/configuration/env"
 	"api-fundos-investimentos/configuration/logger"
 	"context"
 	"errors"
@@ -23,11 +24,6 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 	"go.mongodb.org/mongo-driver/mongo"
-)
-
-var (
-	TIME_SHUTDOWN = "TIME_SHUTDOWN"
-	PORT          = "PORT"
 )
 
 func main() {
@@ -51,7 +47,7 @@ func main() {
 	fundosController.CreateTopicController() // Carregando os topicos do kafka
 
 	router := gin.Default()
-	addr := os.Getenv(PORT)
+	addr := env.GetPort()
 	chanError := make(chan error)
 	chanShutdown := make(chan bool)
 
@@ -81,7 +77,7 @@ func GraceFullyShutdown(
 	go func() {
 		<-ctx.Done()
 		logger.Info("Recebido sinal para desligar...", "shutdown")
-		timeout, err := time.ParseDuration(os.Getenv(TIME_SHUTDOWN))
+		timeout, err := time.ParseDuration(env.GetTimeShutdown())
 		if err != nil {
 			logger.Error(
 				"Variavel de ambiente do TIME_SHUTDOWN não está configurada corretamente",
