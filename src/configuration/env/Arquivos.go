@@ -90,6 +90,15 @@ func GetMapCda() map[string]string {
 	}
 }
 
+func GetMapInformacaoComplementar() map[string]string {
+	return map[string]string{
+		"compl_fi_20":           "informacao-complementar",
+		"compl_fi_inf_20":       "informacao-complementar-divulgacao",
+		"compl_fi_inf_cotst_20": "informacao-complementar-cotista",
+		"compl_fi_prest_20":     "informacao-complementar-servico-prestado",
+	}
+}
+
 func GetConfigCvmArquivosPerfilMensal() ArquivosCVM {
 	return ArquivosCVM{
 		Folder:      "FI/DOC/PERFIL_MENSAL/DADOS/perfil_mensal_fi",
