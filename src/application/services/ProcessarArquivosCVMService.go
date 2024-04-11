@@ -107,18 +107,27 @@ func definirCollection(
 	tipoArquivo := arquivosDomain.TipoArquivo
 
 	if tipoArquivo == "cda" {
-		collection := ""
 		mapCollection := env.GetMapCda()
-		for key, value := range mapCollection {
-			if strings.Contains(arquivosDomain.Endereco, key) {
-				collection = value
-				break
-			}
-		}
-		return collection
+		return mapeandoCollection(arquivosDomain, mapCollection)
+	}
+
+	if tipoArquivo == "informacoes-complementares" {
+		mapCollection := env.GetMapInformacaoComplementar()
+		return mapeandoCollection(arquivosDomain, mapCollection)
 	}
 
 	return tipoArquivo
+}
+
+func mapeandoCollection(arquivosDomain domain.ArquivosDomain, mapCollection map[string]string) string {
+	collection := ""
+	for key, value := range mapCollection {
+		if strings.Contains(arquivosDomain.Endereco, key) {
+			collection = value
+			break
+		}
+	}
+	return collection
 }
 
 func enviarJSON(mapaJson []map[string]interface{}, jsonChan chan []byte) error {
