@@ -24,10 +24,6 @@ func GetCollectionInformacaoDiaria() string {
 	return "informacao-diaria"
 }
 
-func GetCollectionLamina() string {
-	return "lamina"
-}
-
 func GetCollectionPerfilMensal() string {
 	return "perfil-mensal"
 }
@@ -94,4 +90,20 @@ func GetCollectionInformacaoComplementarCotista() string {
 
 func GetCollectionInformacaoComplementarServicoPrestado() string {
 	return "informacao-complementar-servico-prestado"
+}
+
+func GetCollectionLamina() string {
+	return "lamina"
+}
+
+func GetCollectionLaminaCarteira() string {
+	return "lamina-carteira"
+}
+
+func GetCollectionLaminaRentabilidadeAno() string {
+	return "lamina-rentabilidade-ano"
+}
+
+func GetCollectionLaminaRentabilidadeMes() string {
+	return "lamina-rentabilidade-mes"
 }
