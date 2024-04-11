@@ -7,21 +7,23 @@ import (
 	"api-fundos-investimentos/application/domain"
 	"api-fundos-investimentos/configuration/env"
 	"api-fundos-investimentos/configuration/logger"
+	"api-fundos-investimentos/configuration/resterrors"
 	"encoding/json"
 	"time"
 
 	"github.com/jinzhu/copier"
 )
 
-func (fs *fundosDomainService) DownloadArquivosCVMService(arquivosDomain domain.ArquivosDomain) {
-	logger.Info("Init GetFundosExternoService", "sincronizarFundos")
+func (fs *fundosDomainService) DownloadArquivosCVMService(arquivosDomain domain.ArquivosDomain) *resterrors.RestErr {
+	logger.Info("Init DownloadArquivosCVMService", "sincronizarFundos")
 
 	arquivos := fs.externo.DownloadArquivosCVMPort(arquivosDomain.Endereco)
 
 	salvandoDownload(fs, arquivosDomain)
 	salvandoArquivos(fs, arquivosDomain, arquivos)
 
-	logger.Info("Finish GetFundosExternoService", "sincronizarFundos")
+	logger.Info("Finish DownloadArquivosCVMService", "sincronizarFundos")
+	return nil
 }
 
 func salvandoDownload(fs *fundosDomainService, arquivosDomain domain.ArquivosDomain) {

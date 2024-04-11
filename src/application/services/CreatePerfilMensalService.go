@@ -3,11 +3,17 @@ package services
 import (
 	"api-fundos-investimentos/application/domain"
 	"api-fundos-investimentos/configuration/logger"
+	"api-fundos-investimentos/configuration/resterrors"
 )
 
-func (fs *fundosDomainService) CreatePerfilMensalService(domain []domain.PerfilMensalDomain) {
+func (fs *fundosDomainService) CreatePerfilMensalService(domain []domain.PerfilMensalDomain) *resterrors.RestErr {
 	logger.Info("Init CreatePerfilMensalService", "sincronizarFundos")
 
-	fs.repository.CreateManyPerfilMensalRepository(domain)
+	if err := fs.repository.CreateManyPerfilMensalRepository(domain); err != nil {
+		logger.Error("Error calling CreateManyPerfilMensalRepository", err, "sincronizarFundos")
+		return err
+	}
+
 	logger.Info("Finish CreatePerfilMensalService", "sincronizarFundos")
+	return nil
 }

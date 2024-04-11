@@ -6,6 +6,7 @@ import (
 	"api-fundos-investimentos/application/domain"
 	"api-fundos-investimentos/configuration/env"
 	"api-fundos-investimentos/configuration/logger"
+	"api-fundos-investimentos/configuration/resterrors"
 	"encoding/json"
 	"strings"
 	"time"
@@ -13,7 +14,7 @@ import (
 	"github.com/jinzhu/copier"
 )
 
-func (fs *fundosDomainService) QueueFundosSincronizarService(tipo string) {
+func (fs *fundosDomainService) QueueFundosSincronizarService(tipo string) *resterrors.RestErr {
 	logger.Info("Init QueueFundosExternoService", "sincronizarFundos")
 
 	files := getFiles(tipo)
@@ -33,10 +34,10 @@ func (fs *fundosDomainService) QueueFundosSincronizarService(tipo string) {
 		value.Id = domain.Id
 
 		nextQueue(fs, value)
-
 	}
 
 	logger.Info("Finish QueueFundosExternoService", "sincronizarFundos")
+	return nil
 }
 
 func nextQueue(

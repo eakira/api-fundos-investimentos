@@ -6,6 +6,7 @@ import (
 	"api-fundos-investimentos/application/domain"
 	"api-fundos-investimentos/configuration/env"
 	"api-fundos-investimentos/configuration/logger"
+	"api-fundos-investimentos/configuration/resterrors"
 	"encoding/csv"
 	"encoding/json"
 	"io"
@@ -18,7 +19,7 @@ import (
 )
 
 // ProcessarArquivosCVMService processa arquivos CVM
-func (fs *fundosDomainService) ProcessarArquivosCVMService(arquivosDomain domain.ArquivosDomain) {
+func (fs *fundosDomainService) ProcessarArquivosCVMService(arquivosDomain domain.ArquivosDomain) *resterrors.RestErr {
 	logger.Info("Iniciando Processamento de Arquivos CVM", "ProcessarArquivosCVMService")
 
 	cabecalhoChan := make(chan []string, 1)
@@ -34,6 +35,7 @@ func (fs *fundosDomainService) ProcessarArquivosCVMService(arquivosDomain domain
 	wg.Wait()
 
 	logger.Info("Processamento de Arquivos CVM Concluído", "ProcessarArquivosCVMService")
+	return nil
 }
 
 func processaArquivo(

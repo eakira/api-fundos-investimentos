@@ -7,7 +7,6 @@ import (
 
 type FundosDomainService interface {
 	QueueFundosSincronizarService(string) *resterrors.RestErr
-	GetFundosExternoService() *resterrors.RestErr
 	DownloadArquivosCVMService(domain.ArquivosDomain) *resterrors.RestErr
 	ProcessarArquivosCVMService(domain.ArquivosDomain) *resterrors.RestErr
 	CreateFundosService([]domain.FundosDomain) *resterrors.RestErr
