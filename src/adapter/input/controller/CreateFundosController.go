@@ -11,9 +11,12 @@ import (
 func (fc *fundosControllerInterface) CreateFundosController(request []request.FundosCadastrosRequest) {
 	logger.Info("Init CreateFundosController", "sincronizarFundos")
 
-	domain := &[]domain.FundosDomain{}
-	copier.Copy(domain, request)
-	fc.service.CreateFundosService(*domain)
+	fundoDomain := make([]domain.FundosDomain, len(request))
+	copier.Copy(fundoDomain, request)
+
+	if err := fc.service.CreateFundosService(fundoDomain); err != nil {
+		logger.Error("Error calling CreateFundosService", err, "sincronizarFundos")
+	}
 
 	logger.Info("Finish CreateFundosController", "sincronizarFundos")
 }

@@ -11,9 +11,12 @@ import (
 func (fc *fundosControllerInterface) CreateExtratoController(request []request.ExtratoRequest) {
 	logger.Info("Init CreateExtratoController", "sincronizarFundos")
 
-	domain := &[]domain.ExtratoDomain{}
-	copier.Copy(domain, request)
-	fc.service.CreateExtratoService(*domain)
-	logger.Info("Finish CreateExtratoController", "sincronizarFundos")
+	extratoDomain := make([]domain.ExtratoDomain, len(request))
+	copier.Copy(extratoDomain, request)
 
+	if err := fc.service.CreateExtratoService(extratoDomain); err != nil {
+		logger.Error("Error calling CreateExtratoService", err, "sincronizarFundos")
+	}
+
+	logger.Info("Finish CreateExtratoController", "sincronizarFundos")
 }

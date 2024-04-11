@@ -13,9 +13,13 @@ func (fc *fundosControllerInterface) CreateInformacaoDiariaController(
 ) {
 	logger.Info("Init CreateInformacaoDiariaController", "sincronizarFundos")
 
-	domain := &[]domain.InformacaoDiariaDomain{}
-	copier.Copy(domain, request)
-	fc.service.CreateInformacaoDiariaService(*domain)
+	informacaoDiariaDomain := make([]domain.InformacaoDiariaDomain, len(request))
+	copier.Copy(informacaoDiariaDomain, request)
+
+	if err := fc.service.CreateInformacaoDiariaService(informacaoDiariaDomain); err != nil {
+		logger.Error("Error calling CreateInformacaoDiariaService", err, "sincronizarFundos")
+	}
+
 	logger.Info("Finish CreateInformacaoDiariaController", "sincronizarFundos")
 
 }

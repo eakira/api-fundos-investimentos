@@ -11,9 +11,12 @@ import (
 func (fc *fundosControllerInterface) CreateBalanceteController(request []request.BalanceteRequest) {
 	logger.Info("Init CreateBalanceteController", "sincronizarFundos")
 
-	domain := &[]domain.BalanceteDomain{}
-	copier.Copy(domain, request)
-	fc.service.CreateBalanceteService(*domain)
-	logger.Info("Finish CreateBalanceteController", "sincronizarFundos")
+	balanceteDomain := make([]domain.BalanceteDomain, len(request))
+	copier.Copy(balanceteDomain, request)
 
+	if err := fc.service.CreateBalanceteService(balanceteDomain); err != nil {
+		logger.Error("Error calling CreateBalanceteService", err, "sincronizarFundos")
+	}
+
+	logger.Info("Finish CreateBalanceteController", "sincronizarFundos")
 }
