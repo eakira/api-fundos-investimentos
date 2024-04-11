@@ -25,4 +25,8 @@ type FundosDomainService interface {
 	CreateInformacaoComplementarDivulgacaoService([]domain.InformacoesDivulgacaoDomain)
 	CreateInformacaoComplementarCotistaService([]domain.InformacoesCotistaDomain)
 	CreateInformacaoComplementarServicoPrestadoService([]domain.ServicoPrestadoDomain)
+	CreateLaminaService([]domain.LaminaDomain)
+	CreateLaminaCarteiraService([]domain.LaminaCarteiraDomain)
+	CreateLaminaRentabilidadeAnoService([]domain.LaminaRentabilidadeAnoDomain)
+	CreateLaminaRentabilidadeMesService([]domain.LaminaRentabilidadeMesDomain)
 }
