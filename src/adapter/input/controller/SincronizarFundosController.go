@@ -10,7 +10,6 @@ func (fc *fundosControllerInterface) SincronizarFundosController(c *gin.Context)
 	logger.Info("Init SincronizarFundos", "sincronizarFundos")
 
 	tipo := []string{
-
 		"cadastros",
 		"balancete",
 		"cda",
