@@ -191,7 +191,11 @@ func CreateMany(
 		fs.CreateInformacaoDiariaService(*domain)
 
 	case "perfil-mensal":
-		//		files = getFilesName(env.GetConfigCvmArquivosPerfilMensal())
+		dados := []request.PerfilMensalRequest{}
+		json.Unmarshal(data, &dados)
+		domain := &[]domain.PerfilMensalDomain{}
+		copier.Copy(domain, dados)
+		fs.CreatePerfilMensalService(*domain)
 
 	}
 }

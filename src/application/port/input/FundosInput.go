@@ -13,6 +13,7 @@ type FundosDomainService interface {
 	CreateBalanceteService([]domain.BalanceteDomain)
 	CreateExtratoService([]domain.ExtratoDomain)
 	CreateInformacaoDiariaService([]domain.InformacaoDiariaDomain)
+	CreatePerfilMensalService([]domain.PerfilMensalDomain)
 	CreateCdaBlc1Service([]domain.CdaBlc1Domain)
 	CreateCdaBlc2Service([]domain.CdaBlc2Domain)
 	CreateCdaBlc3Service([]domain.CdaBlc3Domain)

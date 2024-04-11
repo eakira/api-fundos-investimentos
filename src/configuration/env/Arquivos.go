@@ -99,9 +99,17 @@ func GetMapInformacaoComplementar() map[string]string {
 	}
 }
 
+func GetMapLamina() map[string]string {
+	return map[string]string{
+		"lamina_fi_20":         "lamina",
+		"lamina_fi_carteira":   "lamina-carteira",
+		"lamina_fi_rentab_ano": "lamina-rentabilidade-ano",
+		"lamina_fi_rentab_mes": "lamina-rentabilidade-mes",
+	}
+}
 func GetConfigCvmArquivosPerfilMensal() ArquivosCVM {
 	return ArquivosCVM{
-		Folder:      "FI/DOC/PERFIL_MENSAL/DADOS/perfil_mensal_fi",
+		Folder:      "FI/DOC/PERFIL_MENSAL/DADOS/perfil_mensal_fi_",
 		Extension:   ".csv",
 		DataInicial: "2019-01-01",
 		DataFinal:   time.Now().AddDate(0, -2, 0).Format("2006-01-02"),

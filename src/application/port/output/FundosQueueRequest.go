@@ -36,6 +36,10 @@ type FundosPort interface {
 		[]domain.InformacaoDiariaDomain,
 	) *resterrors.RestErr
 
+	CreateManyPerfilMensalRepository(
+		[]domain.PerfilMensalDomain,
+	) *resterrors.RestErr
+
 	CreateManyCdaBlc1Repository(
 		[]domain.CdaBlc1Domain,
 	) *resterrors.RestErr
