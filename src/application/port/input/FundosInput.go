@@ -2,32 +2,33 @@ package input
 
 import (
 	"api-fundos-investimentos/application/domain"
+	"api-fundos-investimentos/configuration/resterrors"
 )
 
 type FundosDomainService interface {
-	QueueFundosSincronizarService(string)
-	GetFundosExternoService()
-	DownloadArquivosCVMService(domain.ArquivosDomain)
-	ProcessarArquivosCVMService(domain.ArquivosDomain)
-	CreateFundosService([]domain.FundosDomain)
-	CreateBalanceteService([]domain.BalanceteDomain)
-	CreateExtratoService([]domain.ExtratoDomain)
-	CreateInformacaoDiariaService([]domain.InformacaoDiariaDomain)
-	CreatePerfilMensalService([]domain.PerfilMensalDomain)
-	CreateCdaBlc1Service([]domain.CdaBlc1Domain)
-	CreateCdaBlc2Service([]domain.CdaBlc2Domain)
-	CreateCdaBlc3Service([]domain.CdaBlc3Domain)
-	CreateCdaBlc4Service([]domain.CdaBlc4Domain)
-	CreateCdaBlc5Service([]domain.CdaBlc5Domain)
-	CreateCdaBlc6Service([]domain.CdaBlc6Domain)
-	CreateCdaBlc7Service([]domain.CdaBlc7Domain)
-	CreateCdaBlc8Service([]domain.CdaBlc8Domain)
-	CreateInformacaoComplementarFundoService([]domain.InformacoesFundoDomain)
-	CreateInformacaoComplementarDivulgacaoService([]domain.InformacoesDivulgacaoDomain)
-	CreateInformacaoComplementarCotistaService([]domain.InformacoesCotistaDomain)
-	CreateInformacaoComplementarServicoPrestadoService([]domain.ServicoPrestadoDomain)
-	CreateLaminaService([]domain.LaminaDomain)
-	CreateLaminaCarteiraService([]domain.LaminaCarteiraDomain)
-	CreateLaminaRentabilidadeAnoService([]domain.LaminaRentabilidadeAnoDomain)
-	CreateLaminaRentabilidadeMesService([]domain.LaminaRentabilidadeMesDomain)
+	QueueFundosSincronizarService(string) *resterrors.RestErr
+	GetFundosExternoService() *resterrors.RestErr
+	DownloadArquivosCVMService(domain.ArquivosDomain) *resterrors.RestErr
+	ProcessarArquivosCVMService(domain.ArquivosDomain) *resterrors.RestErr
+	CreateFundosService([]domain.FundosDomain) *resterrors.RestErr
+	CreateBalanceteService([]domain.BalanceteDomain) *resterrors.RestErr
+	CreateExtratoService([]domain.ExtratoDomain) *resterrors.RestErr
+	CreateInformacaoDiariaService([]domain.InformacaoDiariaDomain) *resterrors.RestErr
+	CreatePerfilMensalService([]domain.PerfilMensalDomain) *resterrors.RestErr
+	CreateCdaBlc1Service([]domain.CdaBlc1Domain) *resterrors.RestErr
+	CreateCdaBlc2Service([]domain.CdaBlc2Domain) *resterrors.RestErr
+	CreateCdaBlc3Service([]domain.CdaBlc3Domain) *resterrors.RestErr
+	CreateCdaBlc4Service([]domain.CdaBlc4Domain) *resterrors.RestErr
+	CreateCdaBlc5Service([]domain.CdaBlc5Domain) *resterrors.RestErr
+	CreateCdaBlc6Service([]domain.CdaBlc6Domain) *resterrors.RestErr
+	CreateCdaBlc7Service([]domain.CdaBlc7Domain) *resterrors.RestErr
+	CreateCdaBlc8Service([]domain.CdaBlc8Domain) *resterrors.RestErr
+	CreateInformacaoComplementarFundoService([]domain.InformacoesFundoDomain) *resterrors.RestErr
+	CreateInformacaoComplementarDivulgacaoService([]domain.InformacoesDivulgacaoDomain) *resterrors.RestErr
+	CreateInformacaoComplementarCotistaService([]domain.InformacoesCotistaDomain) *resterrors.RestErr
+	CreateInformacaoComplementarServicoPrestadoService([]domain.ServicoPrestadoDomain) *resterrors.RestErr
+	CreateLaminaService([]domain.LaminaDomain) *resterrors.RestErr
+	CreateLaminaCarteiraService([]domain.LaminaCarteiraDomain) *resterrors.RestErr
+	CreateLaminaRentabilidadeAnoService([]domain.LaminaRentabilidadeAnoDomain) *resterrors.RestErr
+	CreateLaminaRentabilidadeMesService([]domain.LaminaRentabilidadeMesDomain) *resterrors.RestErr
 }
