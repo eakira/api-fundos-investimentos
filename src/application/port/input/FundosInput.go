@@ -21,8 +21,8 @@ type FundosDomainService interface {
 	CreateCdaBlc6Service([]domain.CdaBlc6Domain)
 	CreateCdaBlc7Service([]domain.CdaBlc7Domain)
 	CreateCdaBlc8Service([]domain.CdaBlc8Domain)
-	CreateInformaComplementarFundo([]domain.InformacoesFundoDomain)
-	CreateInformaComplementarDivulgacao([]domain.InformacoesDivulgacaoDomain)
-	CreateInformaComplementarCotista([]domain.InformacoesCotistaDomain)
-	CreateInformaComplementarServicoPrestado([]domain.ServicoPrestadoDomain)
+	CreateInformaComplementarFundoService([]domain.InformacoesFundoDomain)
+	CreateInformaComplementarDivulgacaoService([]domain.InformacoesDivulgacaoDomain)
+	CreateInformaComplementarCotistaService([]domain.InformacoesCotistaDomain)
+	CreateInformaComplementarServicoPrestadoService([]domain.ServicoPrestadoDomain)
 }
