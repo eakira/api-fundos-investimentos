@@ -30,4 +30,6 @@ docker compose up --build
 
 # Primeiros passos
 
-Depois de subir o projeto precisa acessar a rota localhost:8080/api/v1/fundos/sincronizar como get
+Depois de subir o projeto precisa acessar a rota localhost:8080/api/v1/fundos/sincronizar como post
+
+Vai ser ser criado um banco no mongo db como api_fundos e lá vai trazer todos os arquivos
