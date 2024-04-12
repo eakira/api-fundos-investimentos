@@ -1,6 +1,5 @@
 # Para subir o projevo via make
 
-
 make new 
 
 make build
@@ -9,7 +8,8 @@ O make new vai criar os containers de kafka, mongodb e o elk
 
 O command make build vai criar 5 containers do projeto em go
 
-Se o projeto já foi criado e precisa apenas subir make start
+
+Se o projeto já foi criado e precisa apenas subir make start e um make build
 
 
 # Para subir o Docker
@@ -30,3 +30,4 @@ docker compose up --build
 
 # Primeiros passos
 
+Depois de subir o projeto precisa acessar a rota localhost:8080/api/v1/fundos/sincronizar como get

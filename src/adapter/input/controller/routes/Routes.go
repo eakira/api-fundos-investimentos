@@ -12,7 +12,7 @@ func InitRoutes(
 
 	v1 := r.Group("/api/v1/fundos")
 	{
-		v1.GET("sincronizar", fundosController.SincronizarFundosController)
+		v1.POST("sincronizar", fundosController.SincronizarFundosController)
 	}
 
 }
