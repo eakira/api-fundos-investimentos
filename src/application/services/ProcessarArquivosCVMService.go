@@ -28,12 +28,20 @@ func (fs *fundosDomainService) ProcessarArquivosCVMService(arquivosDomain domain
 	mensagemChan := make(chan response.FundosQueueResponse, 1000)
 
 	var wg sync.WaitGroup
+	defer close(cabecalhoChan)
+	defer close(linhaChan)
+	defer close(jsonChan)
+	defer close(mensagemChan)
+
 	wg.Add(1)
-
 	go processaArquivo(fs, arquivosDomain, cabecalhoChan, linhaChan, jsonChan, mensagemChan, &wg)
-	salvarProcessamento(fs, arquivosDomain)
-	wg.Wait()
 
+	if err := salvarProcessamento(fs, arquivosDomain); err != nil {
+		logger.Error("Erro ao salvar processamento: ", err, "ProcessarArquivosCVMService")
+		return resterrors.NewInternalServerError("Erro ao salvar processamento")
+	}
+
+	wg.Wait()
 	logger.Info("Processamento de Arquivos CVM Concluído", "ProcessarArquivosCVMService")
 	return nil
 }
@@ -47,27 +55,31 @@ func processaArquivo(
 	mensagemChan chan response.FundosQueueResponse,
 	wg *sync.WaitGroup,
 ) {
-	go processaCsv(arquivosDomain, cabecalhoChan, linhaChan)
-	go processarLinhas(arquivosDomain, cabecalhoChan, linhaChan, jsonChan)
+	defer wg.Done()
 
 	if env.GetPersistenciaLocal() {
 		// Envio para persistência local
-		enviaPersistencia(fs, jsonChan, mensagemChan, wg)
+		if err := processaLocal(fs, arquivosDomain, cabecalhoChan, linhaChan, jsonChan); err != nil {
+			logger.Error("Erro ao processar localmente: ", err, "processaArquivo")
+		}
 	} else {
 		// Envio para Kafka
-		proximoQueue(jsonChan, mensagemChan)
-		fs.queue.ProduceLote(mensagemChan, wg)
+		processaKafka(fs, jsonChan, mensagemChan)
 	}
-
 }
 
-func processarLinhas(
+func processaLocal(
+	fs *fundosDomainService,
 	arquivosDomain domain.ArquivosDomain,
 	cabecalhoChan chan []string,
 	linhaChan chan []string,
 	jsonChan chan []byte,
-) {
-	cabecalho := <-cabecalhoChan
+) *resterrors.RestErr {
+	defer close(jsonChan)
+
+	processaCsv(arquivosDomain, cabecalhoChan, linhaChan)
+
+	// Processar linhas e enviar JSON
 	tipoArquivo := definirCollection(arquivosDomain)
 	limit := env.GetLimitInsert()
 	mapaJson := make([]map[string]interface{}, 0, limit)
@@ -77,7 +89,7 @@ func processarLinhas(
 		mapa["collection"] = tipoArquivo
 		mapa["tipo-acao"] = "store"
 
-		for key, coluna := range cabecalho {
+		for key, coluna := range <-cabecalhoChan {
 			if key < len(linha) {
 				mapa[coluna] = linha[key]
 			}
@@ -87,7 +99,7 @@ func processarLinhas(
 
 		if len(mapaJson) == limit {
 			if err := enviarJSON(mapaJson, jsonChan); err != nil {
-				logger.Error("Erro ao serializar JSON: ", err, "ProcessarLinhas")
+				logger.Error("Erro ao serializar JSON: ", err, "processaLocal")
 			}
 			mapaJson = make([]map[string]interface{}, 0, limit)
 		}
@@ -96,11 +108,85 @@ func processarLinhas(
 	// Enviar o restante dos dados, se houver
 	if len(mapaJson) > 0 {
 		if err := enviarJSON(mapaJson, jsonChan); err != nil {
-			logger.Error("Erro ao serializar JSON: ", err, "ProcessarLinhas")
+			logger.Error("Erro ao serializar JSON: ", err, "processaLocal")
 		}
 	}
 
-	close(jsonChan)
+	return nil
+}
+
+func processaKafka(
+	fs *fundosDomainService,
+	jsonChan chan []byte,
+	mensagemChan chan response.FundosQueueResponse,
+) {
+	defer close(mensagemChan)
+
+	for data := range jsonChan {
+		response := response.FundosQueueResponse{
+			Topic: env.GetTopicPersistenciaDados(),
+			Queue: "update-all",
+			Data:  data,
+		}
+		mensagemChan <- response
+	}
+}
+
+func processaCsv(
+	arquivosDomain domain.ArquivosDomain,
+	cabecalhoChan chan []string,
+	linhaChan chan []string,
+) {
+	nomeArquivo := strings.Replace(arquivosDomain.Endereco, ".zip", ".csv", 1)
+	arquivo, err := os.Open(nomeArquivo)
+	if err != nil {
+		logger.Error("Erro ao abrir arquivo CSV: ", err, "ProcessarCsv")
+		return
+	}
+	defer arquivo.Close()
+
+	decoder := charmap.ISO8859_1.NewDecoder()
+	reader := csv.NewReader(decoder.Reader(arquivo))
+	reader.Comma = ';'
+	reader.FieldsPerRecord = -1
+	reader.LazyQuotes = true
+
+	cabecalho, err := reader.Read()
+	if err != nil {
+		logger.Error("Erro ao ler cabeçalho do CSV: ", err, "ProcessarCsv")
+		return
+	}
+	cabecalhoChan <- cabecalho
+
+	for {
+		linha, err := reader.Read()
+		if err == io.EOF {
+			break
+		}
+		if err != nil {
+			logger.Error("Erro ao ler linha do CSV: ", err, "ProcessarCsv")
+			break
+		}
+		linhaChan <- linha
+	}
+
+	close(linhaChan)
+}
+
+func salvarProcessamento(
+	fs *fundosDomainService,
+	arquivosDomain domain.ArquivosDomain,
+) *resterrors.RestErr {
+	arquivosDomain.UpdateAt = time.Now()
+	arquivosDomain.Processado = true
+	arquivosDomain.Status = constants.PROCESSANDO
+
+	if err := fs.repository.UpdateArquivosRepository(arquivosDomain); err != nil {
+		logger.Error("Erro ao salvar processamento: ", err, "SalvarProcessamento")
+		return resterrors.NewInternalServerError("Erro ao salvar processamento")
+	}
+
+	return nil
 }
 
 func definirCollection(
@@ -144,85 +230,4 @@ func enviarJSON(mapaJson []map[string]interface{}, jsonChan chan []byte) error {
 	}
 	jsonChan <- jsonData
 	return nil
-}
-
-func processaCsv(
-	arquivosDomain domain.ArquivosDomain,
-	cabecalhoChan chan []string,
-	linhaChan chan []string,
-) {
-	nomeArquivo := strings.Replace(arquivosDomain.Endereco, ".zip", ".csv", 1)
-	arquivo, err := os.Open(nomeArquivo)
-	if err != nil {
-		logger.Error("Erro ao abrir arquivo CSV: ", err, "ProcessarCsv")
-	}
-	defer arquivo.Close()
-
-	decoder := charmap.ISO8859_1.NewDecoder()
-	reader := csv.NewReader(decoder.Reader(arquivo))
-	reader.Comma = ';'
-	reader.FieldsPerRecord = -1
-	reader.LazyQuotes = true
-
-	cabecalho, err := reader.Read()
-	if err != nil {
-		logger.Error("Erro ao ler cabeçalho do CSV: ", err, "ProcessarCsv")
-	}
-	cabecalhoChan <- cabecalho
-
-	for {
-		linha, err := reader.Read()
-		if err == io.EOF {
-			break
-		}
-		if err != nil {
-			logger.Error("Erro ao ler linha do CSV: ", err, "ProcessarCsv")
-		}
-		linhaChan <- linha
-	}
-
-	close(linhaChan)
-	close(cabecalhoChan)
-}
-
-func salvarProcessamento(
-	fs *fundosDomainService,
-	arquivosDomain domain.ArquivosDomain,
-) {
-	arquivosDomain.UpdateAt = time.Now()
-	arquivosDomain.Processado = true
-	arquivosDomain.Status = constants.PROCESSANDO
-
-	err := fs.repository.UpdateArquivosRepository(arquivosDomain)
-	if err != nil {
-		logger.Error("Erro ao salvar processamento: ", err, "SalvarProcessamento")
-	}
-}
-
-func proximoQueue(
-	jsonChan chan []byte,
-	mensagemChan chan response.FundosQueueResponse,
-) {
-	for data := range jsonChan {
-		response := response.FundosQueueResponse{
-			Topic: env.GetTopicPersistenciaDados(),
-			Queue: "update-all",
-			Data:  data,
-		}
-		mensagemChan <- response
-	}
-	close(mensagemChan)
-}
-
-func enviaPersistencia(
-	fs *fundosDomainService,
-	jsonChan chan []byte,
-	mensagemChan chan response.FundosQueueResponse,
-	wg *sync.WaitGroup,
-) {
-	for data := range jsonChan {
-		CreateMany(fs, data)
-	}
-	close(mensagemChan)
-	wg.Done()
 }
