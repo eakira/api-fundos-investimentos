@@ -4,6 +4,7 @@ import (
 	"api-fundos-investimentos/adapter/output/model/request"
 	"api-fundos-investimentos/application/domain"
 	"api-fundos-investimentos/configuration/logger"
+	"api-fundos-investimentos/configuration/resterrors"
 	"encoding/json"
 
 	"github.com/jinzhu/copier"
@@ -12,7 +13,7 @@ import (
 func CreateMany(
 	fs *fundosDomainService,
 	data []byte,
-) {
+) *resterrors.RestErr {
 	logger.Info("Init FundosPersistenciaDadosListener", "sincronizar")
 	mapa := []map[string]string{}
 
@@ -198,4 +199,6 @@ func CreateMany(
 		fs.CreatePerfilMensalService(*domain)
 
 	}
+
+	return nil
 }
