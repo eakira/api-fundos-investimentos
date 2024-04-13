@@ -121,7 +121,6 @@ func initListener(
 	chanShutdown chan bool,
 ) {
 	listener.Consume(fundosController, chanShutdown)
-	chanShutdown <- true
 }
 
 func initDependenciesController(
