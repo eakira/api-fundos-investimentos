@@ -15,7 +15,7 @@ func (ur *fundosRepository) CreateManyCdaSelicRepository(
 	cdaDomain []domain.CdaSelicDomain,
 ) *resterrors.RestErr {
 
-	logger.Info("Init CreateManyBalecenteRepository", "createBalacente")
+	logger.Info("Init CreateManyBalecenteRepository", "sincronizarFundos")
 
 	collection := ur.databaseConnection.Collection(env.GetCollectionCdaSelic())
 
@@ -27,11 +27,11 @@ func (ur *fundosRepository) CreateManyCdaSelicRepository(
 
 	_, err := collection.InsertMany(context.Background(), dados)
 	if err != nil {
-		logger.Error("Error trying to CreateManyBalecenteRepository", err, "createBalacente")
+		logger.Error("Error trying to CreateManyBalecenteRepository", err, "sincronizarFundos")
 		return resterrors.NewInternalServerError(err.Error())
 	}
 
-	logger.Info("CreateManyBalecenteRepository executed successfully", "createBalacente")
+	logger.Info("CreateManyBalecenteRepository executed successfully", "sincronizarFundos")
 
 	return nil
 }
@@ -40,7 +40,7 @@ func (ur *fundosRepository) CreateManyCdaFundosInvestimentosRepository(
 	cdaDomain []domain.CdaFundosInvestimentosDomain,
 ) *resterrors.RestErr {
 
-	logger.Info("Init CreateManyBalecenteRepository", "createBalacente")
+	logger.Info("Init CreateManyBalecenteRepository", "sincronizarFundos")
 
 	collection := ur.databaseConnection.Collection(env.GetCollectionCdaFundosInvestimentos())
 
@@ -52,11 +52,11 @@ func (ur *fundosRepository) CreateManyCdaFundosInvestimentosRepository(
 
 	_, err := collection.InsertMany(context.Background(), dados)
 	if err != nil {
-		logger.Error("Error trying to CreateManyBalecenteRepository", err, "createBalacente")
+		logger.Error("Error trying to CreateManyBalecenteRepository", err, "sincronizarFundos")
 		return resterrors.NewInternalServerError(err.Error())
 	}
 
-	logger.Info("CreateManyBalecenteRepository executed successfully", "createBalacente")
+	logger.Info("CreateManyBalecenteRepository executed successfully", "sincronizarFundos")
 
 	return nil
 }
@@ -65,7 +65,7 @@ func (ur *fundosRepository) CreateManyCdaSwapRepository(
 	cdaDomain []domain.CdaSwapDomain,
 ) *resterrors.RestErr {
 
-	logger.Info("Init CreateManyBalecenteRepository", "createBalacente")
+	logger.Info("Init CreateManyBalecenteRepository", "sincronizarFundos")
 
 	collection := ur.databaseConnection.Collection(env.GetCollectionCdaSwap())
 
@@ -77,11 +77,11 @@ func (ur *fundosRepository) CreateManyCdaSwapRepository(
 
 	_, err := collection.InsertMany(context.Background(), dados)
 	if err != nil {
-		logger.Error("Error trying to CreateManyBalecenteRepository", err, "createBalacente")
+		logger.Error("Error trying to CreateManyBalecenteRepository", err, "sincronizarFundos")
 		return resterrors.NewInternalServerError(err.Error())
 	}
 
-	logger.Info("CreateManyBalecenteRepository executed successfully", "createBalacente")
+	logger.Info("CreateManyBalecenteRepository executed successfully", "sincronizarFundos")
 
 	return nil
 }
@@ -90,7 +90,7 @@ func (ur *fundosRepository) CreateManyCdaDemaisAtivosRepository(
 	cdaDomain []domain.CdaDemaisAtivosDomain,
 ) *resterrors.RestErr {
 
-	logger.Info("Init CreateManyBalecenteRepository", "createBalacente")
+	logger.Info("Init CreateManyBalecenteRepository", "sincronizarFundos")
 
 	collection := ur.databaseConnection.Collection(env.GetCollectionCdaDemaisAtivos())
 
@@ -102,11 +102,11 @@ func (ur *fundosRepository) CreateManyCdaDemaisAtivosRepository(
 
 	_, err := collection.InsertMany(context.Background(), dados)
 	if err != nil {
-		logger.Error("Error trying to CreateManyBalecenteRepository", err, "createBalacente")
+		logger.Error("Error trying to CreateManyBalecenteRepository", err, "sincronizarFundos")
 		return resterrors.NewInternalServerError(err.Error())
 	}
 
-	logger.Info("CreateManyBalecenteRepository executed successfully", "createBalacente")
+	logger.Info("CreateManyBalecenteRepository executed successfully", "sincronizarFundos")
 
 	return nil
 }
@@ -115,7 +115,7 @@ func (ur *fundosRepository) CreateManyCdaDepositoAPrazoOutrosAtivosRepository(
 	cdaDomain []domain.CdaDepositoAPrazoOutrosAtivosDomain,
 ) *resterrors.RestErr {
 
-	logger.Info("Init CreateManyBalecenteRepository", "createBalacente")
+	logger.Info("Init CreateManyBalecenteRepository", "sincronizarFundos")
 
 	collection := ur.databaseConnection.Collection(env.GetCollectionCdaDepositoAPrazoOutrosAtivos())
 
@@ -127,11 +127,11 @@ func (ur *fundosRepository) CreateManyCdaDepositoAPrazoOutrosAtivosRepository(
 
 	_, err := collection.InsertMany(context.Background(), dados)
 	if err != nil {
-		logger.Error("Error trying to CreateManyBalecenteRepository", err, "createBalacente")
+		logger.Error("Error trying to CreateManyBalecenteRepository", err, "sincronizarFundos")
 		return resterrors.NewInternalServerError(err.Error())
 	}
 
-	logger.Info("CreateManyBalecenteRepository executed successfully", "createBalacente")
+	logger.Info("CreateManyBalecenteRepository executed successfully", "sincronizarFundos")
 
 	return nil
 }
@@ -140,7 +140,7 @@ func (ur *fundosRepository) CreateManyCdaAgroCreditoPrivadoRepository(
 	cdaDomain []domain.CdaAgroCreditoPrivadoDomain,
 ) *resterrors.RestErr {
 
-	logger.Info("Init CreateManyBalecenteRepository", "createBalacente")
+	logger.Info("Init CreateManyBalecenteRepository", "sincronizarFundos")
 
 	collection := ur.databaseConnection.Collection(env.GetCollectionCdaAgroCreditoPrivado())
 
@@ -152,11 +152,11 @@ func (ur *fundosRepository) CreateManyCdaAgroCreditoPrivadoRepository(
 
 	_, err := collection.InsertMany(context.Background(), dados)
 	if err != nil {
-		logger.Error("Error trying to CreateManyBalecenteRepository", err, "createBalacente")
+		logger.Error("Error trying to CreateManyBalecenteRepository", err, "sincronizarFundos")
 		return resterrors.NewInternalServerError(err.Error())
 	}
 
-	logger.Info("CreateManyBalecenteRepository executed successfully", "createBalacente")
+	logger.Info("CreateManyBalecenteRepository executed successfully", "sincronizarFundos")
 
 	return nil
 }
@@ -165,7 +165,7 @@ func (ur *fundosRepository) CreateManyCdaInvestimentosExteriorRepository(
 	cdaDomain []domain.CdaInvestimentosExteriorDomain,
 ) *resterrors.RestErr {
 
-	logger.Info("Init CreateManyBalecenteRepository", "createBalacente")
+	logger.Info("Init CreateManyBalecenteRepository", "sincronizarFundos")
 
 	collection := ur.databaseConnection.Collection(env.GetCollectionCdaInvestimentosExterior())
 
@@ -177,11 +177,11 @@ func (ur *fundosRepository) CreateManyCdaInvestimentosExteriorRepository(
 
 	_, err := collection.InsertMany(context.Background(), dados)
 	if err != nil {
-		logger.Error("Error trying to CreateManyBalecenteRepository", err, "createBalacente")
+		logger.Error("Error trying to CreateManyBalecenteRepository", err, "sincronizarFundos")
 		return resterrors.NewInternalServerError(err.Error())
 	}
 
-	logger.Info("CreateManyBalecenteRepository executed successfully", "createBalacente")
+	logger.Info("CreateManyBalecenteRepository executed successfully", "sincronizarFundos")
 
 	return nil
 }
@@ -190,7 +190,7 @@ func (ur *fundosRepository) CreateManyCdaDemaisAtivosNaoCodificadosRepository(
 	cdaDomain []domain.CdaDemaisAtivosNaoCodificadosDomain,
 ) *resterrors.RestErr {
 
-	logger.Info("Init CreateManyBalecenteRepository", "createBalacente")
+	logger.Info("Init CreateManyBalecenteRepository", "sincronizarFundos")
 
 	collection := ur.databaseConnection.Collection(env.GetCollectionCdaDemaisAtivosNaoCodificados())
 
@@ -202,11 +202,11 @@ func (ur *fundosRepository) CreateManyCdaDemaisAtivosNaoCodificadosRepository(
 
 	_, err := collection.InsertMany(context.Background(), dados)
 	if err != nil {
-		logger.Error("Error trying to CreateManyBalecenteRepository", err, "createBalacente")
+		logger.Error("Error trying to CreateManyBalecenteRepository", err, "sincronizarFundos")
 		return resterrors.NewInternalServerError(err.Error())
 	}
 
-	logger.Info("CreateManyBalecenteRepository executed successfully", "createBalacente")
+	logger.Info("CreateManyBalecenteRepository executed successfully", "sincronizarFundos")
 
 	return nil
 }
@@ -215,7 +215,7 @@ func (ur *fundosRepository) CreateManyCdaConfidencialRepository(
 	cdaDomain []domain.CdaConfidencialDomain,
 ) *resterrors.RestErr {
 
-	logger.Info("Init CreateManyCdaConfidencialRepository", "createBalacente")
+	logger.Info("Init CreateManyCdaConfidencialRepository", "sincronizarFundos")
 
 	collection := ur.databaseConnection.Collection(env.GetCollectionCdaConfidencialidade())
 
@@ -227,11 +227,11 @@ func (ur *fundosRepository) CreateManyCdaConfidencialRepository(
 
 	_, err := collection.InsertMany(context.Background(), dados)
 	if err != nil {
-		logger.Error("Error trying to CreateManyCdaConfidencialRepository", err, "createBalacente")
+		logger.Error("Error trying to CreateManyCdaConfidencialRepository", err, "sincronizarFundos")
 		return resterrors.NewInternalServerError(err.Error())
 	}
 
-	logger.Info("CreateManyCdaConfidencialRepository executed successfully", "createBalacente")
+	logger.Info("CreateManyCdaConfidencialRepository executed successfully", "sincronizarFundos")
 
 	return nil
 }
@@ -240,7 +240,7 @@ func (ur *fundosRepository) CreateManyCdaFiimRepository(
 	cdaDomain []domain.CdaFiimDomain,
 ) *resterrors.RestErr {
 
-	logger.Info("Init CreateManyBalecenteRepository", "createBalacente")
+	logger.Info("Init CreateManyBalecenteRepository", "sincronizarFundos")
 
 	collection := ur.databaseConnection.Collection(env.GetCollectionCdaFiim())
 
@@ -252,11 +252,11 @@ func (ur *fundosRepository) CreateManyCdaFiimRepository(
 
 	_, err := collection.InsertMany(context.Background(), dados)
 	if err != nil {
-		logger.Error("Error trying to CreateManyBalecenteRepository", err, "createBalacente")
+		logger.Error("Error trying to CreateManyBalecenteRepository", err, "sincronizarFundos")
 		return resterrors.NewInternalServerError(err.Error())
 	}
 
-	logger.Info("CreateManyBalecenteRepository executed successfully", "createBalacente")
+	logger.Info("CreateManyBalecenteRepository executed successfully", "sincronizarFundos")
 
 	return nil
 }
@@ -265,7 +265,7 @@ func (ur *fundosRepository) CreateManyCdaFiimConfidencialRepository(
 	cdaDomain []domain.CdaFiimConfidencialDomain,
 ) *resterrors.RestErr {
 
-	logger.Info("Init CreateManyBalecenteRepository", "createBalacente")
+	logger.Info("Init CreateManyBalecenteRepository", "sincronizarFundos")
 
 	collection := ur.databaseConnection.Collection(env.GetCollectionCdaFiimConfidencialidade())
 
@@ -277,11 +277,11 @@ func (ur *fundosRepository) CreateManyCdaFiimConfidencialRepository(
 
 	_, err := collection.InsertMany(context.Background(), dados)
 	if err != nil {
-		logger.Error("Error trying to CreateManyBalecenteRepository", err, "createBalacente")
+		logger.Error("Error trying to CreateManyBalecenteRepository", err, "sincronizarFundos")
 		return resterrors.NewInternalServerError(err.Error())
 	}
 
-	logger.Info("CreateManyBalecenteRepository executed successfully", "createBalacente")
+	logger.Info("CreateManyBalecenteRepository executed successfully", "sincronizarFundos")
 
 	return nil
 }
@@ -290,7 +290,7 @@ func (ur *fundosRepository) CreateManyCdaPatrimonioLiquidoRepository(
 	cdaDomain []domain.CdaPatrimonioLiquidoDomain,
 ) *resterrors.RestErr {
 
-	logger.Info("Init CreateManyCdaPatrimonioLiquidoRepository", "createBalacente")
+	logger.Info("Init CreateManyCdaPatrimonioLiquidoRepository", "sincronizarFundos")
 
 	collection := ur.databaseConnection.Collection(env.GetCollectionCdaPatrominioLiquido())
 
@@ -302,11 +302,11 @@ func (ur *fundosRepository) CreateManyCdaPatrimonioLiquidoRepository(
 
 	_, err := collection.InsertMany(context.Background(), dados)
 	if err != nil {
-		logger.Error("Error trying to CreateManyCdaPatrimonioLiquidoRepository", err, "createBalacente")
+		logger.Error("Error trying to CreateManyCdaPatrimonioLiquidoRepository", err, "sincronizarFundos")
 		return resterrors.NewInternalServerError(err.Error())
 	}
 
-	logger.Info("CreateManyCdaPatrimonioLiquidoRepository executed successfully", "createBalacente")
+	logger.Info("CreateManyCdaPatrimonioLiquidoRepository executed successfully", "sincronizarFundos")
 
 	return nil
 }

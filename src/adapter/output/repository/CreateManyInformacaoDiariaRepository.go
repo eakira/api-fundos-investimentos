@@ -15,7 +15,7 @@ func (ur *fundosRepository) CreateManyInformacaoDiariaRepository(
 	domain []domain.InformacaoDiariaDomain,
 ) *resterrors.RestErr {
 
-	logger.Info("Init CreateBalecenteRepository", "createBalacente")
+	logger.Info("Init CreateBalecenteRepository", "sincronizarFundos")
 
 	collection := ur.databaseConnection.Collection(env.GetCollectionInformacaoDiaria())
 
@@ -27,11 +27,11 @@ func (ur *fundosRepository) CreateManyInformacaoDiariaRepository(
 
 	_, err := collection.InsertMany(context.Background(), dados)
 	if err != nil {
-		logger.Error("Error trying to CreateBalecenteRepository", err, "createBalacente")
+		logger.Error("Error trying to CreateBalecenteRepository", err, "sincronizarFundos")
 		return resterrors.NewInternalServerError(err.Error())
 	}
 
-	logger.Info("CreateBalecenteRepository executed successfully", "createBalacente")
+	logger.Info("CreateBalecenteRepository executed successfully", "sincronizarFundos")
 
 	return nil
 }

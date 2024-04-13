@@ -15,7 +15,7 @@ func (ur *fundosRepository) CreateManyLaminaRepository(
 	domain []domain.LaminaDomain,
 ) *resterrors.RestErr {
 
-	logger.Info("Init CreateManyLaminaRepository", "createBalacente")
+	logger.Info("Init CreateManyLaminaRepository", "sincronizarFundos")
 
 	collection := ur.databaseConnection.Collection(env.GetCollectionLamina())
 
@@ -27,11 +27,11 @@ func (ur *fundosRepository) CreateManyLaminaRepository(
 
 	_, err := collection.InsertMany(context.Background(), dados)
 	if err != nil {
-		logger.Error("Error trying to CreateManyLaminaRepository", err, "createBalacente")
+		logger.Error("Error trying to CreateManyLaminaRepository", err, "sincronizarFundos")
 		return resterrors.NewInternalServerError(err.Error())
 	}
 
-	logger.Info("CreateManyLaminaRepository executed successfully", "createBalacente")
+	logger.Info("CreateManyLaminaRepository executed successfully", "sincronizarFundos")
 
 	return nil
 }
@@ -40,7 +40,7 @@ func (ur *fundosRepository) CreateManyLaminaCarteiraRepository(
 	domain []domain.LaminaCarteiraDomain,
 ) *resterrors.RestErr {
 
-	logger.Info("Init CreateManyLaminaCarteiraRepository", "createBalacente")
+	logger.Info("Init CreateManyLaminaCarteiraRepository", "sincronizarFundos")
 
 	collection := ur.databaseConnection.Collection(env.GetCollectionLaminaCarteira())
 
@@ -52,11 +52,11 @@ func (ur *fundosRepository) CreateManyLaminaCarteiraRepository(
 
 	_, err := collection.InsertMany(context.Background(), dados)
 	if err != nil {
-		logger.Error("Error trying to CreateManyLaminaCarteiraRepository", err, "createBalacente")
+		logger.Error("Error trying to CreateManyLaminaCarteiraRepository", err, "sincronizarFundos")
 		return resterrors.NewInternalServerError(err.Error())
 	}
 
-	logger.Info("CreateManyLaminaCarteiraRepository executed successfully", "createBalacente")
+	logger.Info("CreateManyLaminaCarteiraRepository executed successfully", "sincronizarFundos")
 
 	return nil
 }
@@ -65,7 +65,7 @@ func (ur *fundosRepository) CreateManyLaminaRentabilidadeAnoRepository(
 	domain []domain.LaminaRentabilidadeAnoDomain,
 ) *resterrors.RestErr {
 
-	logger.Info("Init CreateManyLaminaRentabilidadeAnoRepository", "createBalacente")
+	logger.Info("Init CreateManyLaminaRentabilidadeAnoRepository", "sincronizarFundos")
 
 	collection := ur.databaseConnection.Collection(env.GetCollectionLaminaRentabilidadeAno())
 
@@ -77,11 +77,11 @@ func (ur *fundosRepository) CreateManyLaminaRentabilidadeAnoRepository(
 
 	_, err := collection.InsertMany(context.Background(), dados)
 	if err != nil {
-		logger.Error("Error trying to CreateManyLaminaRentabilidadeAnoRepository", err, "createBalacente")
+		logger.Error("Error trying to CreateManyLaminaRentabilidadeAnoRepository", err, "sincronizarFundos")
 		return resterrors.NewInternalServerError(err.Error())
 	}
 
-	logger.Info("CreateManyLaminaRentabilidadeAnoRepository executed successfully", "createBalacente")
+	logger.Info("CreateManyLaminaRentabilidadeAnoRepository executed successfully", "sincronizarFundos")
 
 	return nil
 }
@@ -90,7 +90,7 @@ func (ur *fundosRepository) CreateManyLaminaRentabilidadeMesRepository(
 	domain []domain.LaminaRentabilidadeMesDomain,
 ) *resterrors.RestErr {
 
-	logger.Info("Init CreateManyLaminaRentabilidadeMesRepository", "createBalacente")
+	logger.Info("Init CreateManyLaminaRentabilidadeMesRepository", "sincronizarFundos")
 
 	collection := ur.databaseConnection.Collection(env.GetCollectionLaminaRentabilidadeMes())
 
@@ -102,11 +102,11 @@ func (ur *fundosRepository) CreateManyLaminaRentabilidadeMesRepository(
 
 	_, err := collection.InsertMany(context.Background(), dados)
 	if err != nil {
-		logger.Error("Error trying to CreateManyLaminaRentabilidadeMesRepository", err, "createBalacente")
+		logger.Error("Error trying to CreateManyLaminaRentabilidadeMesRepository", err, "sincronizarFundos")
 		return resterrors.NewInternalServerError(err.Error())
 	}
 
-	logger.Info("CreateManyLaminaRentabilidadeMesRepository executed successfully", "createBalacente")
+	logger.Info("CreateManyLaminaRentabilidadeMesRepository executed successfully", "sincronizarFundos")
 
 	return nil
 }

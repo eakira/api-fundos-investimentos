@@ -16,7 +16,7 @@ import (
 func (ur *fundosRepository) CreateArquivosRepository(
 	arquivosDomain domain.ArquivosDomain,
 ) (*domain.ArquivosDomain, *resterrors.RestErr) {
-	logger.Info("Init CreateArquivosRepository", "createArquivos")
+	logger.Info("Init CreateArquivosRepository", "sincronizarFundos")
 
 	collection := ur.databaseConnection.Collection(env.GetCollectionArquivos())
 
@@ -30,16 +30,16 @@ func (ur *fundosRepository) CreateArquivosRepository(
 
 	logger.Info(
 		fmt.Sprintf("Domain: %v", arquivosDomain),
-		"createArquivos")
+		"sincronizarFundos")
 
 	if err != nil {
-		logger.Error("Error trying to CreateArquivosRepository", err, "createArquivos")
+		logger.Error("Error trying to CreateArquivosRepository", err, "sincronizarFundos")
 		return nil, resterrors.NewInternalServerError(err.Error())
 	}
 
 	arquivosEntity.ID = result.InsertedID.(primitive.ObjectID)
 
-	logger.Info("CreateArquivosRepository executed successfully", "createArquivos")
+	logger.Info("CreateArquivosRepository executed successfully", "sincronizarFundos")
 
 	arquivosDomainReturn := &domain.ArquivosDomain{}
 	copier.Copy(arquivosDomainReturn, arquivosEntity)

@@ -15,7 +15,7 @@ func (ur *fundosRepository) CreateManyExtratoRepository(
 	domain []domain.ExtratoDomain,
 ) *resterrors.RestErr {
 
-	logger.Info("Init CreateExtratoRepository repository", "createExtrato")
+	logger.Info("Init CreateExtratoRepository repository", "sincronizarFundos")
 
 	collection := ur.databaseConnection.Collection(env.GetCollectionExtrato())
 
@@ -27,11 +27,11 @@ func (ur *fundosRepository) CreateManyExtratoRepository(
 
 	_, err := collection.InsertMany(context.Background(), dados)
 	if err != nil {
-		logger.Error("Error trying to create CreateExtratoRepository", err, "createExtrato")
+		logger.Error("Error trying to create CreateExtratoRepository", err, "sincronizarFundos")
 		return resterrors.NewInternalServerError(err.Error())
 	}
 
-	logger.Info("CreateExtratoRepository executed successfully", "createExtrato")
+	logger.Info("CreateExtratoRepository executed successfully", "sincronizarFundos")
 
 	return nil
 }

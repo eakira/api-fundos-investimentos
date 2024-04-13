@@ -15,7 +15,7 @@ func (ur *fundosRepository) CreateManyBalecenteRepository(
 	balanceteDomain []domain.BalanceteDomain,
 ) *resterrors.RestErr {
 
-	logger.Info("Init CreateManyBalecenteRepository", "createBalacente")
+	logger.Info("Init CreateManyBalecenteRepository", "sincronizarFundos")
 
 	collection := ur.databaseConnection.Collection(env.GetCollectionBalancete())
 
@@ -27,11 +27,11 @@ func (ur *fundosRepository) CreateManyBalecenteRepository(
 
 	_, err := collection.InsertMany(context.Background(), dados)
 	if err != nil {
-		logger.Error("Error trying to CreateManyBalecenteRepository", err, "createBalacente")
+		logger.Error("Error trying to CreateManyBalecenteRepository", err, "sincronizarFundos")
 		return resterrors.NewInternalServerError(err.Error())
 	}
 
-	logger.Info("CreateManyBalecenteRepository executed successfully", "createBalacente")
+	logger.Info("CreateManyBalecenteRepository executed successfully", "sincronizarFundos")
 
 	return nil
 }

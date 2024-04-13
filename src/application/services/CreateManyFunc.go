@@ -14,7 +14,7 @@ func CreateMany(
 	fs *fundosDomainService,
 	data []byte,
 ) *resterrors.RestErr {
-	logger.Info("Init FundosPersistenciaDadosListener", "sincronizar")
+	logger.Info("Init FundosPersistenciaDadosListener", "sincronizarFundos")
 	mapa := []map[string]string{}
 
 	err := json.Unmarshal(data, &mapa)

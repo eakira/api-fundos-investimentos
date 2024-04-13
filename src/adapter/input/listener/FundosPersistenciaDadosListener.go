@@ -12,12 +12,12 @@ func FundosPersistenciaDadosListener(
 	message []byte,
 	controller controller.FundosControllerInterface,
 ) *resterrors.RestErr {
-	logger.Info("Init FundosPersistenciaDadosListener", "sincronizar")
+	logger.Info("Init FundosPersistenciaDadosListener", "sincronizarFundos")
 	mapa := []map[string]string{}
 
 	err := json.Unmarshal(message, &mapa)
 	if err != nil {
-		logger.Error("json Unmarshal error", err, "listener")
+		logger.Error("json Unmarshal error", err, "sincronizarFundos")
 	}
 
 	switch mapa[0]["collection"] {
@@ -55,7 +55,7 @@ func FundosPersistenciaDadosListener(
 
 	}
 
-	logger.Info("Finish FundosProcessarArquivosListener", "sincronizar")
+	logger.Info("Finish FundosProcessarArquivosListener", "sincronizarFundos")
 
 	return nil
 }

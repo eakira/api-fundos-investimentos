@@ -15,7 +15,7 @@ func (ur *fundosRepository) CreateManyInformacaoComplementarFundoRepository(
 	domain []domain.InformacoesFundoDomain,
 ) *resterrors.RestErr {
 
-	logger.Info("Init CreateManyInformacaoComplementarFundoRepository", "InformacaoComplementar")
+	logger.Info("Init CreateManyInformacaoComplementarFundoRepository", "sincronizarFundos")
 
 	collection := ur.databaseConnection.Collection(env.GetCollectionInformacaooComplementarFundo())
 
@@ -27,11 +27,11 @@ func (ur *fundosRepository) CreateManyInformacaoComplementarFundoRepository(
 
 	_, err := collection.InsertMany(context.Background(), dados)
 	if err != nil {
-		logger.Error("Error trying to CreateManyInformacaoComplementarFundoRepository", err, "InformacaoComplementar")
+		logger.Error("Error trying to CreateManyInformacaoComplementarFundoRepository", err, "sincronizarFundos")
 		return resterrors.NewInternalServerError(err.Error())
 	}
 
-	logger.Info("CreateManyInformacaoComplementarFundoRepository executed successfully", "InformacaoComplementar")
+	logger.Info("CreateManyInformacaoComplementarFundoRepository executed successfully", "sincronizarFundos")
 
 	return nil
 }
@@ -40,7 +40,7 @@ func (ur *fundosRepository) CreateManyInformacaoComplementarDivulgacaoRepository
 	domain []domain.InformacoesDivulgacaoDomain,
 ) *resterrors.RestErr {
 
-	logger.Info("Init CreateManyInformacaoComplementarDivulgacaoRepository", "InformacaoComplementar")
+	logger.Info("Init CreateManyInformacaoComplementarDivulgacaoRepository", "sincronizarFundos")
 
 	collection := ur.databaseConnection.Collection(env.GetCollectionInformacaoComplementarDivulgacao())
 
@@ -52,11 +52,11 @@ func (ur *fundosRepository) CreateManyInformacaoComplementarDivulgacaoRepository
 
 	_, err := collection.InsertMany(context.Background(), dados)
 	if err != nil {
-		logger.Error("Error trying to CreateManyInformacaoComplementarDivulgacaoRepository", err, "InformacaoComplementar")
+		logger.Error("Error trying to CreateManyInformacaoComplementarDivulgacaoRepository", err, "sincronizarFundos")
 		return resterrors.NewInternalServerError(err.Error())
 	}
 
-	logger.Info("CreateManyInformacaoComplementarDivulgacaoRepository executed successfully", "InformacaoComplementar")
+	logger.Info("CreateManyInformacaoComplementarDivulgacaoRepository executed successfully", "sincronizarFundos")
 
 	return nil
 }
@@ -65,7 +65,7 @@ func (ur *fundosRepository) CreateManyInformacaoComplementarCotistaRepository(
 	domain []domain.InformacoesCotistaDomain,
 ) *resterrors.RestErr {
 
-	logger.Info("Init CreateManyInformacaoComplementarCotistaRepository", "InformacaoComplementar")
+	logger.Info("Init CreateManyInformacaoComplementarCotistaRepository", "sincronizarFundos")
 
 	collection := ur.databaseConnection.Collection(env.GetCollectionInformacaoComplementarCotista())
 
@@ -77,11 +77,11 @@ func (ur *fundosRepository) CreateManyInformacaoComplementarCotistaRepository(
 
 	_, err := collection.InsertMany(context.Background(), dados)
 	if err != nil {
-		logger.Error("Error trying to CreateManyInformacaoComplementarCotistaRepository", err, "InformacaoComplementar")
+		logger.Error("Error trying to CreateManyInformacaoComplementarCotistaRepository", err, "sincronizarFundos")
 		return resterrors.NewInternalServerError(err.Error())
 	}
 
-	logger.Info("CreateManyInformacaoComplementarCotistaRepository executed successfully", "InformacaoComplementar")
+	logger.Info("CreateManyInformacaoComplementarCotistaRepository executed successfully", "sincronizarFundos")
 
 	return nil
 }
@@ -90,7 +90,7 @@ func (ur *fundosRepository) CreateManyInformacaoComplementarServicoPrestadoRepos
 	domain []domain.ServicoPrestadoDomain,
 ) *resterrors.RestErr {
 
-	logger.Info("Init CreateManyInformacaoComplementarServicoPrestadoRepository", "InformacaoComplementar")
+	logger.Info("Init CreateManyInformacaoComplementarServicoPrestadoRepository", "sincronizarFundos")
 
 	collection := ur.databaseConnection.Collection(env.GetCollectionInformacaoComplementarServicoPrestado())
 
@@ -102,11 +102,11 @@ func (ur *fundosRepository) CreateManyInformacaoComplementarServicoPrestadoRepos
 
 	_, err := collection.InsertMany(context.Background(), dados)
 	if err != nil {
-		logger.Error("Error trying to CreateManyInformacaoComplementarServicoPrestadoRepository", err, "InformacaoComplementar")
+		logger.Error("Error trying to CreateManyInformacaoComplementarServicoPrestadoRepository", err, "sincronizarFundos")
 		return resterrors.NewInternalServerError(err.Error())
 	}
 
-	logger.Info("CreateManyInformacaoComplementarServicoPrestadoRepository executed successfully", "InformacaoComplementar")
+	logger.Info("CreateManyInformacaoComplementarServicoPrestadoRepository executed successfully", "sincronizarFundos")
 
 	return nil
 }

@@ -13,20 +13,20 @@ func FundosSincronizarListener(
 	message []byte,
 	controller controller.FundosControllerInterface,
 ) *resterrors.RestErr {
-	logger.Info("Init FundosSincronizarListener", "sincronizar")
+	logger.Info("Init FundosSincronizarListener", "sincronizarFundos")
 	dados := request.FundosCvmArquivosQueueRequest{}
 
 	err := json.Unmarshal(message, &dados)
 	if err != nil {
-		logger.Error("json Unmarshal error", err, "listener")
+		logger.Error("json Unmarshal error", err, "sincronizarFundos")
 	}
 	logger.Info(
 		fmt.Sprintf("json %s", dados),
-		"sincronizar")
+		"sincronizarFundos")
 
 	controller.DownloadArquivosCVMController(dados)
 
-	logger.Info("Finish FundosSincronizarListener", "sincronizar")
+	logger.Info("Finish FundosSincronizarListener", "sincronizarFundos")
 
 	return nil
 }

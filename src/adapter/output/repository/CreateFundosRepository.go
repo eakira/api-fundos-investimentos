@@ -15,7 +15,7 @@ func (ur *fundosRepository) CreateFundosRepository(
 	fundosDomain domain.FundosDomain,
 ) (*domain.FundosDomain, *resterrors.RestErr) {
 
-	logger.Info("Init CreateFundosRepository", "createFundos")
+	logger.Info("Init CreateFundosRepository", "sincronizarFundos")
 
 	collection := ur.databaseConnection.Collection(env.GetCollectionFundos())
 
@@ -25,11 +25,11 @@ func (ur *fundosRepository) CreateFundosRepository(
 	_, err := collection.InsertOne(context.Background(), entity)
 
 	if err != nil {
-		logger.Error("Error trying to CreateFundosRepository", err, "createFundos")
+		logger.Error("Error trying to CreateFundosRepository", err, "sincronizarFundos")
 		return nil, resterrors.NewInternalServerError(err.Error())
 	}
 
-	logger.Info("CreateFundosRepository executed successfully", "createFundos")
+	logger.Info("CreateFundosRepository executed successfully", "sincronizarFundos")
 
 	return &fundosDomain, nil
 }

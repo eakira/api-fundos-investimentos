@@ -17,7 +17,7 @@ import (
 func (ur *fundosRepository) UpdateArquivosRepository(
 	arquivosDomain domain.ArquivosDomain,
 ) *resterrors.RestErr {
-	logger.Info("Init UpdateArquivosRepository", "updateArquivos")
+	logger.Info("Init UpdateArquivosRepository", "sincronizarFundos")
 
 	collection := ur.databaseConnection.Collection(env.GetCollectionArquivos())
 
@@ -31,14 +31,14 @@ func (ur *fundosRepository) UpdateArquivosRepository(
 	_, err := collection.UpdateOne(context.Background(), filter, update)
 	logger.Info(
 		fmt.Sprintf("Domain: %v", arquivosDomain),
-		"createArquivos")
+		"sincronizarFundos")
 
 	if err != nil {
-		logger.Error("Error trying to create user", err, "createArquivos")
+		logger.Error("Error trying to create user", err, "sincronizarFundos")
 		return resterrors.NewInternalServerError(err.Error())
 	}
 
-	logger.Info("UpdateArquivosRepository executed successfully", "createArquivos")
+	logger.Info("UpdateArquivosRepository executed successfully", "sincronizarFundos")
 
 	return nil
 }

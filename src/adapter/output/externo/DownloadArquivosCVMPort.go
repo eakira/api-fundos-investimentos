@@ -16,23 +16,23 @@ const (
 )
 
 func (fc *fundosClient) DownloadArquivosCVMPort(file string) []string {
-	logger.Info("Iniciando DownloadArquivosCVMPort", "sincronizar")
+	logger.Info("Iniciando DownloadArquivosCVMPort", "sincronizarFundos")
 
 	storagePath := filepath.Join(env.GetPathArquivosCvm(), filepath.Dir(file))
 	err := os.MkdirAll(storagePath, permissions)
 	if err != nil {
-		logger.Error("Erro ao tentar criar a pasta do arquivo:", err, "sincronizar")
+		logger.Error("Erro ao tentar criar a pasta do arquivo:", err, "sincronizarFundos")
 		return nil
 	}
 
 	localFilePath := filepath.Join(storagePath, filepath.Base(file))
-	/*
-		err = downloadArquivo(env.GetCvmUrl()+file, localFilePath)
-		if err != nil {
-			logger.Error("Erro ao baixar o arquivo:", err, "sincronizar")
-			return nil
-		}
-	*/
+
+	err = downloadArquivo(env.GetCvmUrl()+file, localFilePath)
+	if err != nil {
+		logger.Error("Erro ao baixar o arquivo:", err, "sincronizarFundos")
+		return nil
+	}
+
 	var nomes []string
 	if filepath.Ext(file) == ".zip" {
 		nomes = unzip(localFilePath)
@@ -40,7 +40,7 @@ func (fc *fundosClient) DownloadArquivosCVMPort(file string) []string {
 		nomes = append(nomes, localFilePath)
 	}
 
-	logger.Info("Download de arquivo concluído com sucesso.", "sincronizar")
+	logger.Info("Download de arquivo concluído com sucesso.", "sincronizarFundos")
 	return nomes
 }
 
@@ -68,7 +68,7 @@ func downloadArquivo(url, localFilePath string) error {
 func unzip(filename string) []string {
 	reader, err := zip.OpenReader(filename)
 	if err != nil {
-		logger.Error(fmt.Sprintf("Erro ao abrir arquivo ZIP: %s", filename), err, "sincronizar")
+		logger.Error(fmt.Sprintf("Erro ao abrir arquivo ZIP: %s", filename), err, "sincronizarFundos")
 		return nil
 	}
 	defer reader.Close()
@@ -78,7 +78,7 @@ func unzip(filename string) []string {
 	for _, file := range reader.File {
 		in, err := file.Open()
 		if err != nil {
-			logger.Error("Erro ao abrir arquivo dentro do ZIP:", err, "sincronizar")
+			logger.Error("Erro ao abrir arquivo dentro do ZIP:", err, "sincronizarFundos")
 			continue
 		}
 		defer in.Close()
@@ -86,20 +86,20 @@ func unzip(filename string) []string {
 		relname := filepath.Join(filepath.Dir(filename), file.Name)
 		err = os.MkdirAll(filepath.Dir(relname), permissions)
 		if err != nil {
-			logger.Error("Erro ao criar diretório para o arquivo ZIP:", err, "sincronizar")
+			logger.Error("Erro ao criar diretório para o arquivo ZIP:", err, "sincronizarFundos")
 			continue
 		}
 
 		out, err := os.Create(relname)
 		if err != nil {
-			logger.Error("Erro ao criar arquivo dentro do ZIP:", err, "sincronizar")
+			logger.Error("Erro ao criar arquivo dentro do ZIP:", err, "sincronizarFundos")
 			continue
 		}
 		defer out.Close()
 
 		_, err = io.Copy(out, in)
 		if err != nil {
-			logger.Error("Erro ao copiar conteúdo do arquivo dentro do ZIP:", err, "sincronizar")
+			logger.Error("Erro ao copiar conteúdo do arquivo dentro do ZIP:", err, "sincronizarFundos")
 			continue
 		}
 

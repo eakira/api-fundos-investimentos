@@ -20,7 +20,7 @@ func initConsume() (sarama.Consumer, *resterrors.RestErr) {
 
 	consumer, err := sarama.NewConsumer([]string{env.GetKafkaHost()}, config)
 	if err != nil {
-		logger.Error("NewConsumer err: ", err, "listener")
+		logger.Error("NewConsumer err: ", err, "kafka")
 		return nil, resterrors.NewInternalServerError("Failed to create Kafka consumer")
 	}
 	logger.Info("Finish Init Consume", "kafka")
@@ -51,35 +51,35 @@ func Consume(fundosController controller.FundosControllerInterface, shutdown cha
 func consumeTopic(topic string, partition int32, fundosController controller.FundosControllerInterface, shutdown chan bool, wg *sync.WaitGroup) {
 	defer wg.Done()
 
-	logger.Info(fmt.Sprintf("Init Listener: %s", topic), "listener")
+	logger.Info(fmt.Sprintf("Init Listener: %s", topic), "kafka")
 
 	consumer, err := initConsume()
 	if err != nil {
-		logger.Error("Failed to initialize Kafka consumer: ", err, "listener")
+		logger.Error("Failed to initialize Kafka consumer: ", err, "kafka")
 		return
 	}
 	defer consumer.Close()
 
 	partitionConsumer, err2 := consumer.ConsumePartition(topic, partition, sarama.OffsetNewest)
 	if err2 != nil {
-		logger.Error("Failed to consume partition: ", err, "listener")
+		logger.Error("Failed to consume partition: ", err, "kafka")
 		return
 	}
 	defer partitionConsumer.Close()
 
-	logger.Info(fmt.Sprintf("Init Read Message: %s %d", topic, partition), "listener")
+	logger.Info(fmt.Sprintf("Init Read Message: %s %d", topic, partition), "kafka")
 
 	for {
 		select {
 		case <-shutdown:
-			logger.Info(fmt.Sprintf("Shutting down listener for topic %s partition %d", topic, partition), "listener")
+			logger.Info(fmt.Sprintf("Shutting down listener for topic %s partition %d", topic, partition), "kafka")
 			return
 		case message := <-partitionConsumer.Messages():
 			err := switchCaseTopic(topic, message.Value, fundosController)
 			if err != nil {
-				logger.Error("Error processing message: ", err, "listener")
+				logger.Error("Error processing message: ", err, "kafka")
 			}
-			logger.Info(fmt.Sprintf("[Consumer] partitionid: %d; offset:%d, value: %s\n", message.Partition, message.Offset, string(message.Value)), "sincronizarFundos")
+			logger.Info(fmt.Sprintf("[Consumer] partitionid: %d; offset:%d, value: %s\n", message.Partition, message.Offset, string(message.Value)), "listener")
 		}
 	}
 }

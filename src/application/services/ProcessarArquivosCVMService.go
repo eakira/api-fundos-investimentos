@@ -20,7 +20,7 @@ import (
 
 // ProcessarArquivosCVMService processa arquivos CVM
 func (fs *fundosDomainService) ProcessarArquivosCVMService(arquivosDomain domain.ArquivosDomain) *resterrors.RestErr {
-	logger.Info("Iniciando Processamento de Arquivos CVM", "ProcessarArquivosCVMService")
+	logger.Info("Iniciando Processamento de Arquivos CVM", "sincronizarFundos")
 
 	cabecalhoChan := make(chan []string, 1)
 	linhaChan := make(chan []string, 100000)
@@ -34,7 +34,7 @@ func (fs *fundosDomainService) ProcessarArquivosCVMService(arquivosDomain domain
 	salvarProcessamento(fs, arquivosDomain)
 	wg.Wait()
 
-	logger.Info("Processamento de Arquivos CVM Concluído", "ProcessarArquivosCVMService")
+	logger.Info("Processamento de Arquivos CVM Concluído", "sincronizarFundos")
 	return nil
 }
 
@@ -87,7 +87,7 @@ func processarLinhas(
 
 		if len(mapaJson) == limit {
 			if err := enviarJSON(mapaJson, jsonChan); err != nil {
-				logger.Error("Erro ao serializar JSON: ", err, "ProcessarLinhas")
+				logger.Error("Erro ao serializar JSON: ", err, "sincronizarFundos")
 			}
 			mapaJson = make([]map[string]interface{}, 0, limit)
 		}
@@ -96,7 +96,7 @@ func processarLinhas(
 	// Enviar o restante dos dados, se houver
 	if len(mapaJson) > 0 {
 		if err := enviarJSON(mapaJson, jsonChan); err != nil {
-			logger.Error("Erro ao serializar JSON: ", err, "ProcessarLinhas")
+			logger.Error("Erro ao serializar JSON: ", err, "sincronizarFundos")
 		}
 	}
 
@@ -154,7 +154,7 @@ func processaCsv(
 	nomeArquivo := strings.Replace(arquivosDomain.Endereco, ".zip", ".csv", 1)
 	arquivo, err := os.Open(nomeArquivo)
 	if err != nil {
-		logger.Error("Erro ao abrir arquivo CSV: ", err, "ProcessarCsv")
+		logger.Error("Erro ao abrir arquivo CSV: ", err, "sincronizarFundos")
 	}
 	defer arquivo.Close()
 
@@ -166,7 +166,7 @@ func processaCsv(
 
 	cabecalho, err := reader.Read()
 	if err != nil {
-		logger.Error("Erro ao ler cabeçalho do CSV: ", err, "ProcessarCsv")
+		logger.Error("Erro ao ler cabeçalho do CSV: ", err, "sincronizarFundos")
 	}
 	cabecalhoChan <- cabecalho
 
@@ -176,7 +176,7 @@ func processaCsv(
 			break
 		}
 		if err != nil {
-			logger.Error("Erro ao ler linha do CSV: ", err, "ProcessarCsv")
+			logger.Error("Erro ao ler linha do CSV: ", err, "sincronizarFundos")
 		}
 		linhaChan <- linha
 	}
@@ -195,7 +195,7 @@ func salvarProcessamento(
 
 	err := fs.repository.UpdateArquivosRepository(arquivosDomain)
 	if err != nil {
-		logger.Error("Erro ao salvar processamento: ", err, "SalvarProcessamento")
+		logger.Error("Erro ao salvar processamento: ", err, "sincronizarFundos")
 	}
 }
 

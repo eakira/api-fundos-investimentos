@@ -13,20 +13,20 @@ func FundosProcessarArquivosListener(
 	message []byte,
 	controller controller.FundosControllerInterface,
 ) *resterrors.RestErr {
-	logger.Info("Init FundosProcessarArquivosListener", "sincronizar")
+	logger.Info("Init FundosProcessarArquivosListener", "sincronizarFundos")
 	dados := request.FundosCvmArquivosQueueRequest{}
 
 	err := json.Unmarshal(message, &dados)
 	if err != nil {
-		logger.Error("json Unmarshal error", err, "listener")
+		logger.Error("json Unmarshal error", err, "sincronizarFundos")
 	}
 	logger.Info(
 		fmt.Sprintf("json %s", dados),
-		"sincronizar")
+		"sincronizarFundos")
 
 	controller.ProcessarArquivosCVMController(dados)
 
-	logger.Info("Finish FundosProcessarArquivosListener", "sincronizar")
+	logger.Info("Finish FundosProcessarArquivosListener", "sincronizarFundos")
 
 	return nil
 }

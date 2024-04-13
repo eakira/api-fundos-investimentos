@@ -15,7 +15,7 @@ func (ur *fundosRepository) CreateManyPerfilMensalRepository(
 	domain []domain.PerfilMensalDomain,
 ) *resterrors.RestErr {
 
-	logger.Info("Init CreateManyPerfilMensalRepository", "createPerfilMensal")
+	logger.Info("Init CreateManyPerfilMensalRepository", "sincronizarFundos")
 
 	collection := ur.databaseConnection.Collection(env.GetCollectionPerfilMensal())
 
@@ -27,11 +27,11 @@ func (ur *fundosRepository) CreateManyPerfilMensalRepository(
 
 	_, err := collection.InsertMany(context.Background(), dados)
 	if err != nil {
-		logger.Error("Error trying to CreateManyPerfilMensalRepository", err, "createPerfilMensal")
+		logger.Error("Error trying to CreateManyPerfilMensalRepository", err, "sincronizarFundos")
 		return resterrors.NewInternalServerError(err.Error())
 	}
 
-	logger.Info("CreateManyPerfilMensalRepository executed successfully", "createPerfilMensal")
+	logger.Info("CreateManyPerfilMensalRepository executed successfully", "sincronizarFundos")
 
 	return nil
 }
