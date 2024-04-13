@@ -44,7 +44,11 @@ func (fc *fundosClient) DownloadArquivosCVMPort(file string) []string {
 	return nomes
 }
 
-func downloadArquivo(url, localFilePath string) error {
+func downloadArquivo(
+	url,
+	localFilePath string,
+) error {
+
 	resp, err := http.Get(url)
 	if err != nil {
 		return fmt.Errorf("erro ao tentar baixar o arquivo: %v", err)
