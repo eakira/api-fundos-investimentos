@@ -3,7 +3,7 @@ package request
 type FundosRequest struct {
 	AdministradorNome     string  `json:"ADMIN,omitempty"`
 	AuditorNome           string  `json:"AUDITOR,omitempty"`
-	CodigoCVM             int     `json:"CD_CVM,omitempty"`
+	CodigoCVM             Integer `json:"CD_CVM,omitempty"`
 	Classe                string  `json:"CLASSE,omitempty"`
 	ClasseAnbima          string  `json:"CLASSE_ANBIMA,omitempty"`
 	AdministradorCNPJ     Cnpj    `json:"CNPJ_ADMIN,omitempty"`

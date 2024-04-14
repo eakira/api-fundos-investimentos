@@ -1,7 +1,7 @@
 package request
 
 type BalanceteRequest struct {
-	CodigoConta     int     `json:"CD_CONTA_BALCTE,omitempty"`
+	CodigoConta     Integer `json:"CD_CONTA_BALCTE,omitempty"`
 	FundoCnpj       Cnpj    `json:"CNPJ_FUNDO,omitempty"`
 	DataCompetencia Date    `json:"DT_COMPTC,omitempty"`
 	PlanoContabil   string  `json:"PLANO_CONTA_BALCTE,omitempty"`
