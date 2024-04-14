@@ -8,10 +8,10 @@ import (
 
 type ExtratoEntity struct {
 	ID                             primitive.ObjectID `json:"id" bson:"_id,omitempty"`
-	LimMaxCreditoPrivado           string             `bson:"lim_max_credito_privado,omitempty"`
-	LimMaxAtivosExterior           string             `bson:"lim_max_ativos_exterior,omitempty"`
-	LimMaxMesmoGestor              string             `bson:"lim_max_mesmo_gestor,omitempty"`
-	AplicacaoMinima                string             `bson:"aplicacao_minima,omitempty"`
+	LimMaxCreditoPrivado           float64            `bson:"lim_max_credito_privado,omitempty"`
+	LimMaxAtivosExterior           float64            `bson:"lim_max_ativos_exterior,omitempty"`
+	LimMaxMesmoGestor              float64            `bson:"lim_max_mesmo_gestor,omitempty"`
+	AplicacaoMinima                float64            `bson:"aplicacao_minima,omitempty"`
 	PodeCreditoprivado             string             `bson:"pode_creditoprivado,omitempty"`
 	CotaDiaria                     string             `bson:"cota_diaria,omitempty"`
 	MetodoCalculoPerformance       string             `bson:"metodo_calculo_performance,omitempty"`
@@ -23,11 +23,11 @@ type ExtratoEntity struct {
 	CotaPatriminioLiquido          string             `bson:"cota_patriminio_liquido,omitempty"`
 	DenominacaoSocial              string             `bson:"denominacao_social,omitempty"`
 	FormaDistribuicao              string             `bson:"forma_distribuicao,omitempty"`
-	DataCompetenciaDocumento       string             `bson:"data_competencia_documento,omitempty"`
+	DataCompetenciaDocumento       time.Time          `bson:"data_competencia_documento,omitempty"`
 	TaxaDeIngresso                 string             `bson:"taxa_de_ingresso,omitempty"`
 	TaxaDePerformance              string             `bson:"taxa_de_performance,omitempty"`
 	TaxaDeSaida                    string             `bson:"taxa_de_saida,omitempty"`
-	FatorLimiteOperacoes           string             `bson:"fator_limite_operacoes,omitempty"`
+	FatorLimiteOperacoes           float64            `bson:"fator_limite_operacoes,omitempty"`
 	FinalidadeOperacoesDerivativos string             `bson:"finalidade_operacoes_derivativos,omitempty"`
 	FundoCotas                     string             `bson:"fundo_cotas,omitempty"`
 	FundoEspelho                   string             `bson:"fundo_espelho,omitempty"`
@@ -39,91 +39,89 @@ type ExtratoEntity struct {
 	PodeOperacoesSuperiorPl        string             `bson:"pode_operacoes_superior_pl,omitempty"`
 	ParametroTaxaPerformance       string             `bson:"parametro_taxa_performance,omitempty"`
 	PoliticaInvistimento           string             `bson:"politica_invistimento,omitempty"`
-	PrAcaoMax                      string             `bson:"pr_acao_max,omitempty"`
-	PrAcaoMin                      string             `bson:"pr_acao_min,omitempty"`
-	PrAdminGestorMax               string             `bson:"pr_admin_gestor_max,omitempty"`
-	PrAdminGestorMin               string             `bson:"pr_admin_gestor_min,omitempty"`
-	PrAtivoOutroMax                string             `bson:"pr_ativo_outro_max,omitempty"`
-	PrAtivoOutroMin                string             `bson:"pr_ativo_outro_min,omitempty"`
-	PrCiaMax                       string             `bson:"pr_cia_max,omitempty"`
-	PrCiaMin                       string             `bson:"pr_cia_min,omitempty"`
-	PrCompromMax                   string             `bson:"pr_comprom_max,omitempty"`
-	PrCompromMin                   string             `bson:"pr_comprom_min,omitempty"`
-	PrCotaEtfMax                   string             `bson:"pr_cota_etf_max,omitempty"`
-	PrCotaEtfMin                   string             `bson:"pr_cota_etf_min,omitempty"`
-	PrCotaFiMax                    string             `bson:"pr_cota_fi_max,omitempty"`
-	PrCotaFiMin                    string             `bson:"pr_cota_fi_min,omitempty"`
-	PrCotaFiProfMax                string             `bson:"pr_cota_fi_prof_max,omitempty"`
-	PrCotaFiProfMin                string             `bson:"pr_cota_fi_prof_min,omitempty"`
-	PrCotaFiQualifMax              string             `bson:"pr_cota_fi_qualif_max,omitempty"`
-	PrCotaFiQualifMin              string             `bson:"pr_cota_fi_qualif_min,omitempty"`
-	PrCotaFicMax                   string             `bson:"pr_cota_fic_max,omitempty"`
-	PrCotaFicMin                   string             `bson:"pr_cota_fic_min,omitempty"`
-	PrCotaFicProfMax               string             `bson:"pr_cota_fic_prof_max,omitempty"`
-	PrCotaFicProfMin               string             `bson:"pr_cota_fic_prof_min,omitempty"`
-	PrCotaFicQualifMax             string             `bson:"pr_cota_fic_qualif_max,omitempty"`
-	PrCotaFicQualifMin             string             `bson:"pr_cota_fic_qualif_min,omitempty"`
-	PrCotaFicfidcMax               string             `bson:"pr_cota_ficfidc_max,omitempty"`
-	PrCotaFicfidcMin               string             `bson:"pr_cota_ficfidc_min,omitempty"`
-	PrCotaFicfidcNpMax             string             `bson:"pr_cota_ficfidc_np_max,omitempty"`
-	PrCotaFicfidcNpMin             string             `bson:"pr_cota_ficfidc_np_min,omitempty"`
-	PrCotaFicfipMax                string             `bson:"pr_cota_ficfip_max,omitempty"`
-	PrCotaFicfipMin                string             `bson:"pr_cota_ficfip_min,omitempty"`
-	PrCotaFidcMax                  string             `bson:"pr_cota_fidc_max,omitempty"`
-	PrCotaFidcMin                  string             `bson:"pr_cota_fidc_min,omitempty"`
-	PrCotaFidcNpMax                string             `bson:"pr_cota_fidc_np_max,omitempty"`
-	PrCotaFidcNpMin                string             `bson:"pr_cota_fidc_np_min,omitempty"`
-	PrCotaFiiMax                   string             `bson:"pr_cota_fii_max,omitempty"`
-	PrCotaFiiMin                   string             `bson:"pr_cota_fii_min,omitempty"`
-	PrCotaFipMax                   string             `bson:"pr_cota_fip_max,omitempty"`
-	PrCotaFipMin                   string             `bson:"pr_cota_fip_min,omitempty"`
-	PrCotaFmieeMax                 string             `bson:"pr_cota_fmiee_max,omitempty"`
-	PrCotaFmieeMin                 string             `bson:"pr_cota_fmiee_min,omitempty"`
-	PrCriMax                       string             `bson:"pr_cri_max,omitempty"`
-	PrCriMin                       string             `bson:"pr_cri_min,omitempty"`
-	PrDebentureMax                 string             `bson:"pr_debenture_max,omitempty"`
-	PrDebentureMin                 string             `bson:"pr_debenture_min,omitempty"`
-	PrDerivMax                     string             `bson:"pr_deriv_max,omitempty"`
-	PrDerivMin                     string             `bson:"pr_deriv_min,omitempty"`
-	PrEmissorOutroMax              string             `bson:"pr_emissor_outro_max,omitempty"`
-	PrEmissorOutroMin              string             `bson:"pr_emissor_outro_min,omitempty"`
-	PrFiMax                        string             `bson:"pr_fi_max,omitempty"`
-	PrFiMin                        string             `bson:"pr_fi_min,omitempty"`
-	PrIndiceReferTaxaPerfm         string             `bson:"pr_indice_refer_taxa_perfm,omitempty"`
-	PrInstituicaoFinancMax         string             `bson:"pr_instituicao_financ_max,omitempty"`
-	PrInstituicaoFinancMin         string             `bson:"pr_instituicao_financ_min,omitempty"`
-	PrNpMax                        string             `bson:"pr_np_max,omitempty"`
-	PrNpMin                        string             `bson:"pr_np_min,omitempty"`
-	PrOuroMax                      string             `bson:"pr_ouro_max,omitempty"`
-	PrOuroMin                      string             `bson:"pr_ouro_min,omitempty"`
-	PrTitInstituicaoFinancBacenMax string             `bson:"pr_tit_instituicao_financ_bacen_max,omitempty"`
-	PrTitInstituicaoFinancBacenMin string             `bson:"pr_tit_instituicao_financ_bacen_min,omitempty"`
-	PrTitpubMax                    string             `bson:"pr_titpub_max,omitempty"`
-	PrTitpubMin                    string             `bson:"pr_titpub_min,omitempty"`
-	PrUniaoMax                     string             `bson:"pr_uniao_max,omitempty"`
-	PrUniaoMin                     string             `bson:"pr_uniao_min,omitempty"`
-	PrVlmobMax                     string             `bson:"pr_vlmob_max,omitempty"`
-	PrVlmobMin                     string             `bson:"pr_vlmob_min,omitempty"`
+	PrAcaoMax                      float64            `bson:"pr_acao_max,omitempty"`
+	PrAcaoMin                      float64            `bson:"pr_acao_min,omitempty"`
+	PrAdminGestorMax               float64            `bson:"pr_admin_gestor_max,omitempty"`
+	PrAdminGestorMin               float64            `bson:"pr_admin_gestor_min,omitempty"`
+	PrAtivoOutroMax                float64            `bson:"pr_ativo_outro_max,omitempty"`
+	PrAtivoOutroMin                float64            `bson:"pr_ativo_outro_min,omitempty"`
+	PrCiaMax                       float64            `bson:"pr_cia_max,omitempty"`
+	PrCiaMin                       float64            `bson:"pr_cia_min,omitempty"`
+	PrCompromMax                   float64            `bson:"pr_comprom_max,omitempty"`
+	PrCompromMin                   float64            `bson:"pr_comprom_min,omitempty"`
+	PrCotaEtfMax                   float64            `bson:"pr_cota_etf_max,omitempty"`
+	PrCotaEtfMin                   float64            `bson:"pr_cota_etf_min,omitempty"`
+	PrCotaFiMax                    float64            `bson:"pr_cota_fi_max,omitempty"`
+	PrCotaFiMin                    float64            `bson:"pr_cota_fi_min,omitempty"`
+	PrCotaFiProfMax                float64            `bson:"pr_cota_fi_prof_max,omitempty"`
+	PrCotaFiProfMin                float64            `bson:"pr_cota_fi_prof_min,omitempty"`
+	PrCotaFiQualifMax              float64            `bson:"pr_cota_fi_qualif_max,omitempty"`
+	PrCotaFiQualifMin              float64            `bson:"pr_cota_fi_qualif_min,omitempty"`
+	PrCotaFicMax                   float64            `bson:"pr_cota_fic_max,omitempty"`
+	PrCotaFicMin                   float64            `bson:"pr_cota_fic_min,omitempty"`
+	PrCotaFicProfMax               float64            `bson:"pr_cota_fic_prof_max,omitempty"`
+	PrCotaFicProfMin               float64            `bson:"pr_cota_fic_prof_min,omitempty"`
+	PrCotaFicQualifMax             float64            `bson:"pr_cota_fic_qualif_max,omitempty"`
+	PrCotaFicQualifMin             float64            `bson:"pr_cota_fic_qualif_min,omitempty"`
+	PrCotaFicfidcMax               float64            `bson:"pr_cota_ficfidc_max,omitempty"`
+	PrCotaFicfidcMin               float64            `bson:"pr_cota_ficfidc_min,omitempty"`
+	PrCotaFicfidcNpMax             float64            `bson:"pr_cota_ficfidc_np_max,omitempty"`
+	PrCotaFicfidcNpMin             float64            `bson:"pr_cota_ficfidc_np_min,omitempty"`
+	PrCotaFicfipMax                float64            `bson:"pr_cota_ficfip_max,omitempty"`
+	PrCotaFicfipMin                float64            `bson:"pr_cota_ficfip_min,omitempty"`
+	PrCotaFidcMax                  float64            `bson:"pr_cota_fidc_max,omitempty"`
+	PrCotaFidcMin                  float64            `bson:"pr_cota_fidc_min,omitempty"`
+	PrCotaFidcNpMax                float64            `bson:"pr_cota_fidc_np_max,omitempty"`
+	PrCotaFidcNpMin                float64            `bson:"pr_cota_fidc_np_min,omitempty"`
+	PrCotaFiiMax                   float64            `bson:"pr_cota_fii_max,omitempty"`
+	PrCotaFiiMin                   float64            `bson:"pr_cota_fii_min,omitempty"`
+	PrCotaFipMax                   float64            `bson:"pr_cota_fip_max,omitempty"`
+	PrCotaFipMin                   float64            `bson:"pr_cota_fip_min,omitempty"`
+	PrCotaFmieeMax                 float64            `bson:"pr_cota_fmiee_max,omitempty"`
+	PrCotaFmieeMin                 float64            `bson:"pr_cota_fmiee_min,omitempty"`
+	PrCriMax                       float64            `bson:"pr_cri_max,omitempty"`
+	PrCriMin                       float64            `bson:"pr_cri_min,omitempty"`
+	PrDebentureMax                 float64            `bson:"pr_debenture_max,omitempty"`
+	PrDebentureMin                 float64            `bson:"pr_debenture_min,omitempty"`
+	PrDerivMax                     float64            `bson:"pr_deriv_max,omitempty"`
+	PrDerivMin                     float64            `bson:"pr_deriv_min,omitempty"`
+	PrEmissorOutroMax              float64            `bson:"pr_emissor_outro_max,omitempty"`
+	PrEmissorOutroMin              float64            `bson:"pr_emissor_outro_min,omitempty"`
+	PrFiMax                        float64            `bson:"pr_fi_max,omitempty"`
+	PrFiMin                        float64            `bson:"pr_fi_min,omitempty"`
+	PrIndiceReferTaxaPerfm         float64            `bson:"pr_indice_refer_taxa_perfm,omitempty"`
+	PrInstituicaoFinancMax         float64            `bson:"pr_instituicao_financ_max,omitempty"`
+	PrInstituicaoFinancMin         float64            `bson:"pr_instituicao_financ_min,omitempty"`
+	PrNpMax                        float64            `bson:"pr_np_max,omitempty"`
+	PrNpMin                        float64            `bson:"pr_np_min,omitempty"`
+	PrOuroMax                      float64            `bson:"pr_ouro_max,omitempty"`
+	PrOuroMin                      float64            `bson:"pr_ouro_min,omitempty"`
+	PrTitInstituicaoFinancBacenMax float64            `bson:"pr_tit_instituicao_financ_bacen_max,omitempty"`
+	PrTitInstituicaoFinancBacenMin float64            `bson:"pr_tit_instituicao_financ_bacen_min,omitempty"`
+	PrTitpubMax                    float64            `bson:"pr_titpub_max,omitempty"`
+	PrTitpubMin                    float64            `bson:"pr_titpub_min,omitempty"`
+	PrUniaoMax                     float64            `bson:"pr_uniao_max,omitempty"`
+	PrUniaoMin                     float64            `bson:"pr_uniao_min,omitempty"`
+	PrVlmobMax                     float64            `bson:"pr_vlmob_max,omitempty"`
+	PrVlmobMin                     float64            `bson:"pr_vlmob_min,omitempty"`
 	Prazo                          string             `bson:"prazo,omitempty"`
 	PrazoAtualizCota               string             `bson:"prazo_atualiz_cota,omitempty"`
 	PublicoAlvo                    string             `bson:"publico_alvo,omitempty"`
-	QtDiaConversaoCota             string             `bson:"qt_dia_conversao_cota,omitempty"`
-	PrUniaoMaxQtDiaPagtoCota       string             `bson:"pr_uniao_max_qt_dia_pagto_cota,omitempty"`
-	PrUniaoMaxQtDiaPagtoResgate    string             `bson:"pr_uniao_max_qt_dia_pagto_resgate,omitempty"`
-	PrUniaoMaxQtDiaResgateCotas    string             `bson:"pr_uniao_max_qt_dia_resgate_cotas,omitempty"`
+	QtDiaConversaoCota             int                `bson:"qt_dia_conversao_cota,omitempty"`
+	PrUniaoMaxQtDiaPagtoCota       int                `bson:"pr_uniao_max_qt_dia_pagto_cota,omitempty"`
+	PrUniaoMaxQtDiaPagtoResgate    int                `bson:"pr_uniao_max_qt_dia_pagto_resgate,omitempty"`
+	PrUniaoMaxQtDiaResgateCotas    int                `bson:"pr_uniao_max_qt_dia_resgate_cotas,omitempty"`
 	RegAnbima                      string             `bson:"reg_anbima,omitempty"`
 	ResultCartIncorpPl             string             `bson:"result_cart_incorp_pl,omitempty"`
-	TaxaAdm                        string             `bson:"taxa_adm,omitempty"`
-	TaxaCustodiaMax                string             `bson:"taxa_custodia_max,omitempty"`
-	TaxaIngressoPr                 string             `bson:"taxa_ingresso_pr,omitempty"`
-	TaxaIngressoReal               string             `bson:"taxa_ingresso_real,omitempty"`
-	TaxaPerfm                      string             `bson:"taxa_perfm,omitempty"`
+	TaxaAdm                        float64            `bson:"taxa_adm,omitempty"`
+	TaxaCustodiaMax                float64            `bson:"taxa_custodia_max,omitempty"`
+	TaxaIngressoPr                 float64            `bson:"taxa_ingresso_pr,omitempty"`
+	TaxaIngressoReal               float64            `bson:"taxa_ingresso_real,omitempty"`
+	TaxaPerfm                      float64            `bson:"taxa_perfm,omitempty"`
 	TaxaSaidaPagtoResgate          string             `bson:"taxa_saida_pagto_resgate,omitempty"`
-	TaxaSaidaPr                    string             `bson:"taxa_saida_pr,omitempty"`
-	TaxaSaidaReal                  string             `bson:"taxa_saida_real,omitempty"`
+	TaxaSaidaPr                    float64            `bson:"taxa_saida_pr,omitempty"`
+	TaxaSaidaReal                  float64            `bson:"taxa_saida_real,omitempty"`
 	TpDiaPagtoResgate              string             `bson:"tp_dia_pagto_resgate,omitempty"`
 	TpPrazo                        string             `bson:"tp_prazo,omitempty"`
-	VlCupom                        string             `bson:"vl_cupom,omitempty"`
-	CreatedAt                      time.Time          `bson:"created-at"`
-	UpdateAt                       time.Time          `bson:"update-at"`
+	VlCupom                        float64            `bson:"vl_cupom,omitempty"`
 }

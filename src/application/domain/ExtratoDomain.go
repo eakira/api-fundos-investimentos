@@ -1,11 +1,13 @@
 package domain
 
+import "time"
+
 type ExtratoDomain struct {
 	Id                             string
-	LimMaxCreditoPrivado           string
-	LimMaxAtivosExterior           string
-	LimMaxMesmoGestor              string
-	AplicacaoMinima                string
+	LimMaxCreditoPrivado           float64
+	LimMaxAtivosExterior           float64
+	LimMaxMesmoGestor              float64
+	AplicacaoMinima                float64
 	PodeCreditoprivado             string
 	CotaDiaria                     string
 	MetodoCalculoPerformance       string
@@ -17,11 +19,11 @@ type ExtratoDomain struct {
 	CotaPatriminioLiquido          string
 	DenominacaoSocial              string
 	FormaDistribuicao              string
-	DataCompetenciaDocumento       string
+	DataCompetenciaDocumento       time.Time
 	TaxaDeIngresso                 string
 	TaxaDePerformance              string
 	TaxaDeSaida                    string
-	FatorLimiteOperacoes           string
+	FatorLimiteOperacoes           float64
 	FinalidadeOperacoesDerivativos string
 	FundoCotas                     string
 	FundoEspelho                   string
@@ -33,89 +35,89 @@ type ExtratoDomain struct {
 	PodeOperacoesSuperiorPl        string
 	ParametroTaxaPerformance       string
 	PoliticaInvistimento           string
-	PrAcaoMax                      string
-	PrAcaoMin                      string
-	PrAdminGestorMax               string
-	PrAdminGestorMin               string
-	PrAtivoOutroMax                string
-	PrAtivoOutroMin                string
-	PrCiaMax                       string
-	PrCiaMin                       string
-	PrCompromMax                   string
-	PrCompromMin                   string
-	PrCotaEtfMax                   string
-	PrCotaEtfMin                   string
-	PrCotaFiMax                    string
-	PrCotaFiMin                    string
-	PrCotaFiProfMax                string
-	PrCotaFiProfMin                string
-	PrCotaFiQualifMax              string
-	PrCotaFiQualifMin              string
-	PrCotaFicMax                   string
-	PrCotaFicMin                   string
-	PrCotaFicProfMax               string
-	PrCotaFicProfMin               string
-	PrCotaFicQualifMax             string
-	PrCotaFicQualifMin             string
-	PrCotaFicfidcMax               string
-	PrCotaFicfidcMin               string
-	PrCotaFicfidcNpMax             string
-	PrCotaFicfidcNpMin             string
-	PrCotaFicfipMax                string
-	PrCotaFicfipMin                string
-	PrCotaFidcMax                  string
-	PrCotaFidcMin                  string
-	PrCotaFidcNpMax                string
-	PrCotaFidcNpMin                string
-	PrCotaFiiMax                   string
-	PrCotaFiiMin                   string
-	PrCotaFipMax                   string
-	PrCotaFipMin                   string
-	PrCotaFmieeMax                 string
-	PrCotaFmieeMin                 string
-	PrCriMax                       string
-	PrCriMin                       string
-	PrDebentureMax                 string
-	PrDebentureMin                 string
-	PrDerivMax                     string
-	PrDerivMin                     string
-	PrEmissorOutroMax              string
-	PrEmissorOutroMin              string
-	PrFiMax                        string
-	PrFiMin                        string
-	PrIndiceReferTaxaPerfm         string
-	PrInstituicaoFinancMax         string
-	PrInstituicaoFinancMin         string
-	PrNpMax                        string
-	PrNpMin                        string
-	PrOuroMax                      string
-	PrOuroMin                      string
-	PrTitInstituicaoFinancBacenMax string
-	PrTitInstituicaoFinancBacenMin string
-	PrTitpubMax                    string
-	PrTitpubMin                    string
-	PrUniaoMax                     string
-	PrUniaoMin                     string
-	PrVlmobMax                     string
-	PrVlmobMin                     string
+	PrAcaoMax                      float64
+	PrAcaoMin                      float64
+	PrAdminGestorMax               float64
+	PrAdminGestorMin               float64
+	PrAtivoOutroMax                float64
+	PrAtivoOutroMin                float64
+	PrCiaMax                       float64
+	PrCiaMin                       float64
+	PrCompromMax                   float64
+	PrCompromMin                   float64
+	PrCotaEtfMax                   float64
+	PrCotaEtfMin                   float64
+	PrCotaFiMax                    float64
+	PrCotaFiMin                    float64
+	PrCotaFiProfMax                float64
+	PrCotaFiProfMin                float64
+	PrCotaFiQualifMax              float64
+	PrCotaFiQualifMin              float64
+	PrCotaFicMax                   float64
+	PrCotaFicMin                   float64
+	PrCotaFicProfMax               float64
+	PrCotaFicProfMin               float64
+	PrCotaFicQualifMax             float64
+	PrCotaFicQualifMin             float64
+	PrCotaFicfidcMax               float64
+	PrCotaFicfidcMin               float64
+	PrCotaFicfidcNpMax             float64
+	PrCotaFicfidcNpMin             float64
+	PrCotaFicfipMax                float64
+	PrCotaFicfipMin                float64
+	PrCotaFidcMax                  float64
+	PrCotaFidcMin                  float64
+	PrCotaFidcNpMax                float64
+	PrCotaFidcNpMin                float64
+	PrCotaFiiMax                   float64
+	PrCotaFiiMin                   float64
+	PrCotaFipMax                   float64
+	PrCotaFipMin                   float64
+	PrCotaFmieeMax                 float64
+	PrCotaFmieeMin                 float64
+	PrCriMax                       float64
+	PrCriMin                       float64
+	PrDebentureMax                 float64
+	PrDebentureMin                 float64
+	PrDerivMax                     float64
+	PrDerivMin                     float64
+	PrEmissorOutroMax              float64
+	PrEmissorOutroMin              float64
+	PrFiMax                        float64
+	PrFiMin                        float64
+	PrIndiceReferTaxaPerfm         float64
+	PrInstituicaoFinancMax         float64
+	PrInstituicaoFinancMin         float64
+	PrNpMax                        float64
+	PrNpMin                        float64
+	PrOuroMax                      float64
+	PrOuroMin                      float64
+	PrTitInstituicaoFinancBacenMax float64
+	PrTitInstituicaoFinancBacenMin float64
+	PrTitpubMax                    float64
+	PrTitpubMin                    float64
+	PrUniaoMax                     float64
+	PrUniaoMin                     float64
+	PrVlmobMax                     float64
+	PrVlmobMin                     float64
 	Prazo                          string
 	PrazoAtualizCota               string
 	PublicoAlvo                    string
-	QtDiaConversaoCota             string
-	PrUniaoMaxQtDiaPagtoCota       string
-	PrUniaoMaxQtDiaPagtoResgate    string
-	PrUniaoMaxQtDiaResgateCotas    string
+	QtDiaConversaoCota             int
+	PrUniaoMaxQtDiaPagtoCota       int
+	PrUniaoMaxQtDiaPagtoResgate    int
+	PrUniaoMaxQtDiaResgateCotas    int
 	RegAnbima                      string
 	ResultCartIncorpPl             string
-	TaxaAdm                        string
-	TaxaCustodiaMax                string
-	TaxaIngressoPr                 string
-	TaxaIngressoReal               string
-	TaxaPerfm                      string
+	TaxaAdm                        float64
+	TaxaCustodiaMax                float64
+	TaxaIngressoPr                 float64
+	TaxaIngressoReal               float64
+	TaxaPerfm                      float64
 	TaxaSaidaPagtoResgate          string
-	TaxaSaidaPr                    string
-	TaxaSaidaReal                  string
+	TaxaSaidaPr                    float64
+	TaxaSaidaReal                  float64
 	TpDiaPagtoResgate              string
 	TpPrazo                        string
-	VlCupom                        string
+	VlCupom                        float64
 }
