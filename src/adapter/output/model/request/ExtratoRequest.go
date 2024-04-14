@@ -9,7 +9,7 @@ type ExtratoRequest struct {
 	CotaDiaria                     string  `json:"ATUALIZ_DIARIA_COTA,omitempty"`
 	MetodoCalculoPerformance       string  `json:"CALC_TAXA_PERFM,omitempty"`
 	ClasseAnbima                   string  `json:"CLASSE_ANBIMA,omitempty"`
-	FundoCnpj                      string  `json:"CNPJ_FUNDO,omitempty"`
+	FundoCnpj                      Cnpj    `json:"CNPJ_FUNDO,omitempty"`
 	Codominio                      string  `json:"CONDOM,omitempty"`
 	ContraparteLigado              string  `json:"CONTRAP_LIGADO,omitempty"`
 	CotaValorEmissao               string  `json:"COTA_EMISSAO,omitempty"`
