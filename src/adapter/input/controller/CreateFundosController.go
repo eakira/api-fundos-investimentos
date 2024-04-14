@@ -8,7 +8,7 @@ import (
 	"github.com/jinzhu/copier"
 )
 
-func (fc *fundosControllerInterface) CreateFundosController(request []request.FundosCadastrosRequest) {
+func (fc *fundosControllerInterface) CreateFundosController(request []request.FundosRequest) {
 	logger.Info("Init CreateFundosController", "sincronizarFundos")
 
 	fundoDomain := make([]domain.FundosDomain, len(request))

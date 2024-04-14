@@ -24,7 +24,7 @@ func CreateMany(
 
 	switch mapa[0]["collection"] {
 	case "cadastros":
-		dados := []request.FundosCadastrosRequest{}
+		dados := []request.FundosRequest{}
 		json.Unmarshal(data, &dados)
 		domain := &[]domain.FundosDomain{}
 		copier.Copy(domain, dados)

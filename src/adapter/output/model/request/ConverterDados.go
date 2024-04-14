@@ -1,8 +1,8 @@
 package request
 
 import (
-	"encoding/json"
-	"fmt"
+	"api-fundos-investimentos/configuration/logger"
+	"api-fundos-investimentos/configuration/resterrors"
 	"strconv"
 	"strings"
 	"time"
@@ -15,17 +15,18 @@ type Cnpj string
 
 type Decimal float64
 
-// Implementação da interface json.Unmarshaler
+type Integer int
+
 func (d *Date) UnmarshalJSON(data []byte) error {
-	var dateStr string
-	if err := json.Unmarshal(data, &dateStr); err != nil {
-		return err
+	dateStr := strings.Trim(string(data), `"`)
+
+	if dateStr == "" {
+		return nil
 	}
 
-	// Parse da string da data para time.Time
 	parsedDate, err := time.Parse("2006-01-02", dateStr)
 	if err != nil {
-		panic("teste")
+		logger.Error("erro ao converter a data", err, "sincronizarFundos")
 		return err
 	}
 
@@ -33,34 +34,57 @@ func (d *Date) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// Implementação da interface json.Unmarshaler
 func (c *Cnpj) UnmarshalJSON(data []byte) error {
 	rawCnpj := strings.Trim(string(data), `"`)
+
+	if rawCnpj == "" {
+		return nil
+	}
 
 	mapFunc := func(r rune) rune {
 		if unicode.IsDigit(r) {
 			return r
 		}
-		return -1 // Retorna -1 para remover o caractere
+		return -1
 	}
-	// Atribuir o valor parseado ao campo Date
+
 	*c = Cnpj(strings.Map(mapFunc, rawCnpj))
 
 	return nil
 }
 
-// Implementação da interface json.Unmarshaler
 func (d *Decimal) UnmarshalJSON(data []byte) error {
 	rawNumber := strings.Trim(string(data), `"`)
 
-	// Converter a string para um float64
-	number, err := strconv.ParseFloat(rawNumber, 64)
-	if err != nil {
-		return fmt.Errorf("falha ao converter número: %v", err)
+	if rawNumber == "" {
+		return nil
 	}
 
-	// Atribuir o valor convertido ao campo Number
+	number, err := strconv.ParseFloat(rawNumber, 64)
+	if err != nil {
+		logger.Error("falha ao converter número:", err, "sincronizarFundos")
+		return err
+	}
+
 	*d = Decimal(number)
+
+	return nil
+}
+
+func (d *Integer) UnmarshalJSON(data []byte) error {
+	rawNumber := strings.Trim(string(data), `"`)
+
+	if rawNumber == "" {
+		return nil
+	}
+
+	number, err := strconv.ParseInt(rawNumber, 10, 64)
+	if err != nil {
+		logger.Error("falha ao converter número:", err, "sincronizarFundos")
+		return resterrors.NewInternalServerError(err.Error())
+	}
+
+	*d = Integer(number)
 
 	return nil
 }

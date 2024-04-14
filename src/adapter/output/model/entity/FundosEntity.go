@@ -1,6 +1,8 @@
 package entity
 
 import (
+	"time"
+
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
@@ -8,7 +10,7 @@ type FundosEntity struct {
 	ID                    primitive.ObjectID `bson:"_id,omitempty"`
 	AdministradorNome     string             `bson:"administrador_nome"`
 	AuditorNome           string             `bson:"auditor_nome"`
-	CodigoCVM             string             `bson:"codigo_cvm"`
+	CodigoCVM             int                `bson:"codigo_cvm"`
 	Classe                string             `bson:"classe"`
 	ClasseAnbima          string             `bson:"classe_anbima"`
 	AdministradorCNPJ     string             `bson:"administrador_cnpj"`
@@ -22,15 +24,15 @@ type FundosEntity struct {
 	Custodiante           string             `bson:"custodiante"`
 	FundoNome             string             `bson:"fundo_nome"`
 	Diretor               string             `bson:"diretor"`
-	DataCancelamento      string             `bson:"data_cancelamento"`
-	DataConstituicao      string             `bson:"data_constituicao"`
-	DataFim               string             `bson:"data_fim"`
-	DataInicio            string             `bson:"data_inicio"`
-	DataInicioClasse      string             `bson:"data_inicio_classe"`
-	DataInicioSocial      string             `bson:"data_inicio_social"`
-	DataInicioSituacao    string             `bson:"data_inicio_situacao"`
-	DataPatrimonioLiquido string             `bson:"data_patrimonio_liquido"`
-	DataRegistro          string             `bson:"data_registro"`
+	DataCancelamento      time.Time          `bson:"data_cancelamento"`
+	DataConstituicao      time.Time          `bson:"data_constituicao"`
+	DataFim               time.Time          `bson:"data_fim"`
+	DataInicio            time.Time          `bson:"data_inicio"`
+	DataInicioClasse      time.Time          `bson:"data_inicio_classe"`
+	DataInicioSocial      time.Time          `bson:"data_inicio_social"`
+	DataInicioSituacao    time.Time          `bson:"data_inicio_situacao"`
+	DataPatrimonioLiquido time.Time          `bson:"data_patrimonio_liquido"`
+	DataRegistro          time.Time          `bson:"data_registro"`
 	Entidade              string             `bson:"entidade"`
 	CotasPossui           string             `bson:"cotas_possui"`
 	Exclusivo             string             `bson:"exclusivo"`
@@ -46,5 +48,5 @@ type FundosEntity struct {
 	TaxaPerformance       string             `bson:"taxa_performance"`
 	TipoFundo             string             `bson:"tipo_fundo"`
 	TributacaoLongoPrazo  string             `bson:"tributacao_longo_prazo"`
-	ValorPatriminioLiq    string             `bson:"valor_patriminio_liquido"`
+	ValorPatriminioLiq    float64            `bson:"valor_patriminio_liquido"`
 }

@@ -22,7 +22,7 @@ func FundosPersistenciaDadosListener(
 
 	switch mapa[0]["collection"] {
 	case "cadastros":
-		dados := []request.FundosCadastrosRequest{}
+		dados := []request.FundosRequest{}
 		json.Unmarshal(message, &dados)
 		controller.CreateFundosController(dados)
 
