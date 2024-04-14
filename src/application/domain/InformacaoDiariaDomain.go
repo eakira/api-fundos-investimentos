@@ -5,14 +5,14 @@ import "time"
 type InformacaoDiariaDomain struct {
 	Id                     string
 	FundoCnpj              string
-	CaptacaoDia            string
-	DataCompetencia        string
-	ResgateDia             string
+	CaptacaoDia            float64
+	DataCompetencia        time.Time
+	ResgateDia             float64
 	TipoFundo              string
-	ValorPatrimonioLiquido string
-	CotaValor              string
-	QtdCotista             string
-	ValorTotal             string
+	ValorPatrimonioLiquido float64
+	CotaValor              float64
+	QtdCotista             int
+	ValorTotal             float64
 	CreatedAt              time.Time
 	UpdateAt               time.Time
 }

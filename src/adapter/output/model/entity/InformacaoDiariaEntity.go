@@ -1,16 +1,22 @@
 package entity
 
-import "go.mongodb.org/mongo-driver/bson/primitive"
+import (
+	"time"
+
+	"go.mongodb.org/mongo-driver/bson/primitive"
+)
 
 type InformacaoDiariaEntity struct {
 	ID                     primitive.ObjectID `json:"id" bson:"_id,omitempty"`
 	FundoCnpj              string             `bson:"fundo_cnpj,omitempty"`
-	CaptacaoDia            string             `bson:"captacao_dia,omitempty"`
-	DataCompetencia        string             `bson:"data_competencia,omitempty"`
-	ResgateDia             string             `bson:"resgate_dia,omitempty"`
+	CaptacaoDia            float64            `bson:"captacao_dia,omitempty"`
+	DataCompetencia        time.Time          `bson:"data_competencia,omitempty"`
+	ResgateDia             float64            `bson:"resgate_dia,omitempty"`
 	TipoFundo              string             `bson:"tipo_fundo,omitempty"`
-	ValorPatrimonioLiquido string             `bson:"valor_patrimonio_liquido,omitempty"`
-	CotaValor              string             `bson:"cota_valor,omitempty"`
-	QtdCotista             string             `bson:"qtd_cotista,omitempty"`
-	ValorTotal             string             `bson:"valor_total,omitempty"`
+	ValorPatrimonioLiquido float64            `bson:"valor_patrimonio_liquido,omitempty"`
+	CotaValor              float64            `bson:"cota_valor,omitempty"`
+	QtdCotista             int                `bson:"qtd_cotista,omitempty"`
+	ValorTotal             float64            `bson:"valor_total,omitempty"`
+	CreatedAt              time.Time          `bson:"created_at,omitempty"`
+	UpdateAt               time.Time          `bson:"update_at,omitempty"`
 }
