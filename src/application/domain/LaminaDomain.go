@@ -7,7 +7,7 @@ type LaminaDomain struct {
 	CalcRentabFundo           string
 	CalcRentabFundoGatilho    string
 	ClasseRiscoAdmin          string
-	CnpjFundo                 string
+	FundoCnpj                 string
 	CondicCaren               string
 	CondicEntr                string
 	CondicSaida               string
@@ -80,7 +80,7 @@ type LaminaDomain struct {
 }
 
 type LaminaCarteiraDomain struct {
-	CnpjFundo   string
+	FundoCnpj   string
 	DenomSocial string
 	DtComptc    string
 	PrPlAtivo   string
@@ -89,7 +89,7 @@ type LaminaCarteiraDomain struct {
 
 type LaminaRentabilidadeAnoDomain struct {
 	AnoReferencia            string
-	CnpjFundo                string
+	FundoCnpj                string
 	DenomSocial              string
 	DtComptc                 string
 	PrPerfIndiceReferAno     string
@@ -99,7 +99,7 @@ type LaminaRentabilidadeAnoDomain struct {
 }
 
 type LaminaRentabilidadeMesDomain struct {
-	CnpjFundo                string
+	FundoCnpj                string
 	DenomSocial              string
 	DtComptc                 string
 	MesReferencia            string

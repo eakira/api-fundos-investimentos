@@ -6,7 +6,7 @@ type PerfilMensalEntity struct {
 	CenarioFPRIBovespa                 string `bson:"cenario_fpr_ibovespa"`                   // Cenário de fator de risco para Ibovespa
 	CenarioFPRJuros                    string `bson:"cenario_fpr_juros"`                      // Cenário de fator de risco para juros
 	CenarioFPROutro                    string `bson:"cenario_fpr_outro"`                      // Outro cenário de fator de risco
-	CNPJFundo                          string `bson:"cnpj_fundo"`                             // CNPJ do fundo
+	FundoCnpj                          string `bson:"cnpj_fundo"`                             // CNPJ do fundo
 	ComitenteLigado1                   string `bson:"comitente_ligado_1"`                     // Comitente ligado 1
 	ComitenteLigado2                   string `bson:"comitente_ligado_2"`                     // Comitente ligado 2
 	ComitenteLigado3                   string `bson:"comitente_ligado_3"`                     // Comitente ligado 3

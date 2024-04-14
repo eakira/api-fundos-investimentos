@@ -8,7 +8,7 @@ type InformacoesFundoEntity struct {
 	ApresentacaoAdministrador  string             `bson:"apresentacao_admin,omitempty"`
 	ApresentacaoGestor         string             `bson:"apresentacao_gestor,omitempty"`
 	CnpjAgenciaRisco           string             `bson:"cnpj_agencia_risco,omitempty"`
-	CnpjFundo                  string             `bson:"cnpj_fundo,omitempty"`
+	FundoCnpj                  string             `bson:"cnpj_fundo,omitempty"`
 	DisclaimerAgenciaRisco     string             `bson:"disclaimer_agencia_risco,omitempty"`
 	DistribuidorLigado         string             `bson:"distribuidor_ligado,omitempty"`
 	DataCompetencia            string             `bson:"data_competencia,omitempty"`
@@ -28,7 +28,7 @@ type InformacoesFundoEntity struct {
 
 type InformacoesDivulgacaoEntity struct {
 	ID               primitive.ObjectID `bson:"_id,omitempty"`
-	CnpjFundo        string             `bson:"cnpj_fundo,omitempty"`
+	FundoCnpj        string             `bson:"cnpj_fundo,omitempty"`
 	DataCompetencia  string             `bson:"data_competencia,omitempty"`
 	FormaInformacoes string             `bson:"forma_informacoes,omitempty"`
 	LocalInformacoes string             `bson:"local_informacoes,omitempty"`
@@ -38,7 +38,7 @@ type InformacoesDivulgacaoEntity struct {
 
 type InformacoesCotistaEntity struct {
 	ID                   primitive.ObjectID `bson:"_id,omitempty"`
-	CnpjFundo            string             `bson:"cnpj_fundo,omitempty"`
+	FundoCnpj            string             `bson:"cnpj_fundo,omitempty"`
 	DescricaoRespCotista string             `bson:"descricao_resp_cotista,omitempty"`
 	DataCompetencia      string             `bson:"data_competencia,omitempty"`
 	FormaInfCotista      string             `bson:"forma_inf_cotista,omitempty"`
@@ -48,7 +48,7 @@ type InformacoesCotistaEntity struct {
 }
 type ServicoPrestadoEntity struct {
 	ID               primitive.ObjectID `bson:"_id,omitempty"`
-	CnpjFundo        string             `bson:"cnpj_fundo,omitempty"`
+	FundoCnpj        string             `bson:"cnpj_fundo,omitempty"`
 	DescricaoServico string             `bson:"descricao_servico,omitempty"`
 	DataCompetencia  string             `bson:"data_competencia,omitempty"`
 	NomePrestador    string             `bson:"nome_prestador,omitempty"`

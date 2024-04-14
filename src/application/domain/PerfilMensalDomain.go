@@ -6,7 +6,7 @@ type PerfilMensalDomain struct {
 	CenarioFPRIBovespa                 string // Cenário de fator de risco para Ibovespa
 	CenarioFPRJuros                    string // Cenário de fator de risco para juros
 	CenarioFPROutro                    string // Outro cenário de fator de risco
-	CNPJFundo                          string // CNPJ do fundo
+	FundoCnpj                          string // CNPJ do fundo
 	ComitenteLigado1                   string // Comitente ligado 1
 	ComitenteLigado2                   string // Comitente ligado 2
 	ComitenteLigado3                   string // Comitente ligado 3

@@ -8,7 +8,7 @@ type LaminaRequest struct {
 	CalcRentabFundo           string `json:"CALC_RENTAB_FUNDO,omitempty"`             // Fórmula de cálculo de sua rentabilidade
 	CalcRentabFundoGatilho    string `json:"CALC_RENTAB_FUNDO_GATILHO,omitempty"`     // Descrição da fórmula de cálculo da rentabilidade do fundo, incluindo todas as condições (gatilhos) e cláusulas que afetarão o desempenho
 	ClasseRiscoAdmin          string `json:"CLASSE_RISCO_ADMIN,omitempty"`            // Risco do fundo de acordo com a classificação do administrador (escala de 1 a 5)
-	CnpjFundo                 string `json:"CNPJ_FUNDO,omitempty"`                    // CNPJ do fundo
+	FundoCnpj                 string `json:"CNPJ_FUNDO,omitempty"`                    // CNPJ do fundo
 	CondicCaren               string `json:"CONDIC_CAREN,omitempty"`                  // Condições do período de carência
 	CondicEntr                string `json:"CONDIC_ENTR,omitempty"`                   // Condições de entrada
 	CondicSaida               string `json:"CONDIC_SAIDA,omitempty"`                  // Condições de saída
@@ -81,7 +81,7 @@ type LaminaRequest struct {
 }
 
 type LaminaCarteiraRequest struct {
-	CnpjFundo   string `json:"CNPJ_FUNDO,omitempty"`   // CNPJ do fundo
+	FundoCnpj   string `json:"CNPJ_FUNDO,omitempty"`   // CNPJ do fundo
 	DenomSocial string `json:"DENOM_SOCIAL,omitempty"` // Denominação Social
 	DtComptc    string `json:"DT_COMPTC,omitempty"`    // Data de competência do documento (formato: "AAAA-MM-DD")
 	PrPlAtivo   string `json:"PR_PL_ATIVO,omitempty"`  // Concentração dos investimentos do fundo por tipo de ativo (em % do PL)
@@ -90,7 +90,7 @@ type LaminaCarteiraRequest struct {
 
 type LaminaRentabilidadeAnoRequest struct {
 	AnoReferencia            string `json:"ANO_RENTAB,omitempty"`                   // Ano referente à rentabilidade do fundo
-	CnpjFundo                string `json:"CNPJ_FUNDO,omitempty"`                   // CNPJ do fundo
+	FundoCnpj                string `json:"CNPJ_FUNDO,omitempty"`                   // CNPJ do fundo
 	DenomSocial              string `json:"DENOM_SOCIAL,omitempty"`                 // Denominação Social
 	DtComptc                 string `json:"DT_COMPTC,omitempty"`                    // Data de competência do documento (formato: "AAAA-MM-DD")
 	PrPerfIndiceReferAno     string `json:"PR_PERFM_INDICE_REFER_ANO,omitempty"`    // Desempenho anual do fundo como percentual do índice de referência
@@ -100,7 +100,7 @@ type LaminaRentabilidadeAnoRequest struct {
 }
 
 type LaminaRentabilidadeMesRequest struct {
-	CnpjFundo                string `json:"CNPJ_FUNDO,omitempty"`                   // CNPJ do fundo
+	FundoCnpj                string `json:"CNPJ_FUNDO,omitempty"`                   // CNPJ do fundo
 	DenomSocial              string `json:"DENOM_SOCIAL,omitempty"`                 // Denominação Social
 	DtComptc                 string `json:"DT_COMPTC,omitempty"`                    // Data de competência do documento (formato: "AAAA-MM-DD")
 	MesReferencia            string `json:"MES_RENTAB,omitempty"`                   // Mês referente à rentabilidade do fundo

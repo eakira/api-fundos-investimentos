@@ -35,8 +35,8 @@ type CdaSelicEntity struct {
 
 type CdaFundosInvestimentosEntity struct {
 	ID                       primitive.ObjectID `bson:"_id,omitempty"`
-	CnpjFundo                string             `bson:"cnpj_fundo"`
-	CnpjFundoCota            string             `bson:"cnpj_fundo_cota"`
+	FundoCnpj                string             `bson:"cnpj_fundo"`
+	FundoCnpjCota            string             `bson:"cnpj_fundo_cota"`
 	DenominacaoSocial        string             `bson:"denominacao_social"`
 	DataCompetencia          string             `bson:"data_competencia"`
 	PrazoConfidencialidade   string             `bson:"prazo_confidencialidade"`
@@ -58,7 +58,7 @@ type CdaFundosInvestimentosEntity struct {
 type CdaSwapEntity struct {
 	ID                       primitive.ObjectID `bson:"_id,omitempty"`
 	CodigoSwap               string             `bson:"codigo_swap"`
-	CnpjFundo                string             `bson:"cnpj_fundo"`
+	FundoCnpj                string             `bson:"cnpj_fundo"`
 	DenominacaoSocial        string             `bson:"denominacao_social"`
 	DescricaoTipoAtivo       string             `bson:"descricao_tipo_ativo"`
 	DataCompetencia          string             `bson:"data_competencia"`
@@ -81,7 +81,7 @@ type CdaDemaisAtivosEntity struct {
 	ID                       primitive.ObjectID `bson:"_id,omitempty"`
 	CodigoAtivo              string             `bson:"codigo_ativo"`
 	CodigoISIN               string             `bson:"codigo_isin"`
-	CnpjFundo                string             `bson:"cnpj_fundo"`
+	FundoCnpj                string             `bson:"cnpj_fundo"`
 	DenominacaoSocial        string             `bson:"denominacao_social"`
 	DescricaoAtivo           string             `bson:"descricao_ativo"`
 	DataCompetencia          string             `bson:"data_competencia"`
@@ -107,7 +107,7 @@ type CdaDepositoAPrazoOutrosAtivosEntity struct {
 	NomeAgenciaClassificacaoRisco string             `bson:"nome_agencia_classificacao_risco"`
 	CodigoIndexadorPosFixados     string             `bson:"codigo_indexador_pos_fixados"`
 	CnpjEmissor                   string             `bson:"cnpj_emissor"`
-	CnpjFundo                     string             `bson:"cnpj_fundo"`
+	FundoCnpj                     string             `bson:"cnpj_fundo"`
 	DenominacaoSocial             string             `bson:"denominacao_social"`
 	DescricaoIndexadorPosFixados  string             `bson:"descricao_indexador_pos_fixados"`
 	DataCompetencia               string             `bson:"data_competencia"`
@@ -137,7 +137,7 @@ type CdaDepositoAPrazoOutrosAtivosEntity struct {
 type CdaAgroCreditoPrivadoEntity struct {
 	ID                             primitive.ObjectID `bson:"_id,omitempty"`
 	CodigoIndexadorPosFixados      string             `bson:"codigo_indexador_pos_fixados"`
-	CnpjFundo                      string             `bson:"cnpj_fundo"`
+	FundoCnpj                      string             `bson:"cnpj_fundo"`
 	CnpjInstituicaoFinanceiraCoobr string             `bson:"cnpj_instituicao_financeira_coobr"`
 	CpfCnpjEmissor                 string             `bson:"cpf_cnpj_emissor"`
 	DenominacaoSocial              string             `bson:"denominacao_social"`
@@ -174,7 +174,7 @@ type CdaInvestimentosExteriorEntity struct {
 	CodigoAtivoBolsaMercado           string             `bson:"codigo_ativo_bolsa_mercado"`
 	CodigoBolsaMercado                string             `bson:"codigo_bolsa_mercado"`
 	CodigoPais                        string             `bson:"codigo_pais"`
-	CnpjFundo                         string             `bson:"cnpj_fundo"`
+	FundoCnpj                         string             `bson:"cnpj_fundo"`
 	DenominacaoSocial                 string             `bson:"denominacao_social"`
 	DescricaoAtivoExterior            string             `bson:"descricao_ativo_exterior"`
 	DataCompetencia                   string             `bson:"data_competencia"`
@@ -205,7 +205,7 @@ type CdaInvestimentosExteriorEntity struct {
 
 type CdaDemaisAtivosNaoCodificadosEntity struct {
 	ID                          primitive.ObjectID `bson:"_id,omitempty"`
-	CnpjFundo                   string             `bson:"cnpj_fundo"`
+	FundoCnpj                   string             `bson:"cnpj_fundo"`
 	CpfCnpjEmissor              string             `bson:"cpf_cnpj_emissor"`
 	DenominacaoSocial           string             `bson:"denominacao_social"`
 	DescricaoAtivo              string             `bson:"descricao_ativo"`
@@ -229,7 +229,7 @@ type CdaDemaisAtivosNaoCodificadosEntity struct {
 
 type CdaConfidencialEntity struct {
 	ID                  primitive.ObjectID `bson:"_id,omitempty"`
-	CnpjFundo           string             `bson:"cnpj_fundo"`
+	FundoCnpj           string             `bson:"cnpj_fundo"`
 	DenominacaoSocial   string             `bson:"denominacao_social"`
 	DataCompetencia     string             `bson:"data_competencia"`
 	PrazoConfidencial   string             `bson:"prazo_confidencial"`
@@ -248,7 +248,7 @@ type CdaFiimEntity struct {
 	CodigoBolsaMercado       string             `bson:"codigo_bolsa_mercado"`
 	CodigoPais               string             `bson:"codigo_pais"`
 	CodigoSELIC              string             `bson:"codigo_selic"`
-	CnpjFundo                string             `bson:"cnpj_fundo"`
+	FundoCnpj                string             `bson:"cnpj_fundo"`
 	CpfCnpjEmissor           string             `bson:"cpf_cnpj_emissor"`
 	DenominacaoSocial        string             `bson:"denominacao_social"`
 	DescricaoAtivo           string             `bson:"descricao_ativo"`
@@ -278,7 +278,7 @@ type CdaFiimEntity struct {
 
 type CdaFiimConfidencialEntity struct {
 	IDDocumento              string `bson:"id_documento"`
-	CnpjFundo                string `bson:"cnpj_fundo"`
+	FundoCnpj                string `bson:"cnpj_fundo"`
 	DenominacaoSocial        string `bson:"denominacao_social"`
 	DataCompetencia          string `bson:"data_competencia"`
 	PrazoConfidencial        string `bson:"prazo_confidencial"`
@@ -292,7 +292,7 @@ type CdaFiimConfidencialEntity struct {
 
 type CdaPatrimonioLiquidoEntity struct {
 	ID                primitive.ObjectID `bson:"_id,omitempty"`
-	CnpjFundo         string             `bson:"cnpj_fundo"`
+	FundoCnpj         string             `bson:"cnpj_fundo"`
 	DenominacaoSocial string             `bson:"denominacao_social"`
 	DataCompetencia   string             `bson:"data_competencia"`
 	TipoFundo         string             `bson:"tipo_fundo"`

@@ -29,8 +29,8 @@ type CdaSelicDomain struct {
 }
 
 type CdaFundosInvestimentosDomain struct {
-	CnpjFundo                string
-	CnpjFundoCota            string
+	FundoCnpj                string
+	FundoCnpjCota            string
 	DenominacaoSocial        string
 	DataCompetencia          string
 	PrazoConfidencialidade   string
@@ -51,7 +51,7 @@ type CdaFundosInvestimentosDomain struct {
 
 type CdaSwapDomain struct {
 	CodigoSwap               string
-	CnpjFundo                string
+	FundoCnpj                string
 	DenominacaoSocial        string
 	DescricaoTipoAtivo       string
 	DataCompetencia          string
@@ -73,7 +73,7 @@ type CdaSwapDomain struct {
 type CdaDemaisAtivosDomain struct {
 	CodigoAtivo              string
 	CodigoISIN               string
-	CnpjFundo                string
+	FundoCnpj                string
 	DenominacaoSocial        string
 	DescricaoAtivo           string
 	DataCompetencia          string
@@ -98,7 +98,7 @@ type CdaDepositoAPrazoOutrosAtivosDomain struct {
 	NomeAgenciaClassificacaoRisco string
 	CodigoIndexadorPosFixados     string
 	CnpjEmissor                   string
-	CnpjFundo                     string
+	FundoCnpj                     string
 	DenominacaoSocial             string
 	DescricaoIndexadorPosFixados  string
 	DataCompetencia               string
@@ -128,7 +128,7 @@ type CdaDepositoAPrazoOutrosAtivosDomain struct {
 
 type CdaAgroCreditoPrivadoDomain struct {
 	CodigoIndexadorPosFixados      string
-	CnpjFundo                      string
+	FundoCnpj                      string
 	CnpjInstituicaoFinanceiraCoobr string
 	CpfCnpjEmissor                 string
 	DenominacaoSocial              string
@@ -164,7 +164,7 @@ type CdaInvestimentosExteriorDomain struct {
 	CodigoAtivoBolsaMercado           string
 	CodigoBolsaMercado                string
 	CodigoPais                        string
-	CnpjFundo                         string
+	FundoCnpj                         string
 	DenominacaoSocial                 string
 	DescricaoAtivoExterior            string
 	DataCompetencia                   string
@@ -194,7 +194,7 @@ type CdaInvestimentosExteriorDomain struct {
 }
 
 type CdaDemaisAtivosNaoCodificadosDomain struct {
-	CnpjFundo                   string
+	FundoCnpj                   string
 	CpfCnpjEmissor              string
 	DenominacaoSocial           string
 	DescricaoAtivo              string
@@ -217,7 +217,7 @@ type CdaDemaisAtivosNaoCodificadosDomain struct {
 }
 
 type CdaConfidencialDomain struct {
-	CnpjFundo           string
+	FundoCnpj           string
 	DenominacaoSocial   string
 	DataCompetencia     string
 	PrazoConfidencial   string
@@ -235,7 +235,7 @@ type CdaFiimDomain struct {
 	CodigoBolsaMercado       string
 	CodigoPais               string
 	CodigoSELIC              string
-	CnpjFundo                string
+	FundoCnpj                string
 	CpfCnpjEmissor           string
 	DenominacaoSocial        string
 	DescricaoAtivo           string
@@ -264,7 +264,7 @@ type CdaFiimDomain struct {
 }
 
 type CdaFiimConfidencialDomain struct {
-	CnpjFundo                string
+	FundoCnpj                string
 	DenominacaoSocial        string
 	DataCompetencia          string
 	PrazoConfidencial        string
@@ -278,7 +278,7 @@ type CdaFiimConfidencialDomain struct {
 }
 
 type CdaPatrimonioLiquidoDomain struct {
-	CnpjFundo         string
+	FundoCnpj         string
 	DenominacaoSocial string
 	DataCompetencia   string
 	TipoFundo         string

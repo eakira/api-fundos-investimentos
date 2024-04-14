@@ -5,7 +5,7 @@ type InformacoesFundoDomain struct {
 	ApresentacaoAdministrador  string
 	ApresentacaoGestor         string
 	CnpjAgenciaRisco           string
-	CnpjFundo                  string
+	FundoCnpj                  string
 	DisclaimerAgenciaRisco     string
 	DistribuidorLigado         string
 	DataCompetencia            string
@@ -24,7 +24,7 @@ type InformacoesFundoDomain struct {
 }
 
 type InformacoesDivulgacaoDomain struct {
-	CnpjFundo        string
+	FundoCnpj        string
 	DataCompetencia  string
 	FormaInformacoes string
 	LocalInformacoes string
@@ -33,7 +33,7 @@ type InformacoesDivulgacaoDomain struct {
 }
 
 type InformacoesCotistaDomain struct {
-	CnpjFundo            string
+	FundoCnpj            string
 	DescricaoRespCotista string
 	DataCompetencia      string
 	FormaInfCotista      string
@@ -43,7 +43,7 @@ type InformacoesCotistaDomain struct {
 }
 
 type ServicoPrestadoDomain struct {
-	CnpjFundo        string
+	FundoCnpj        string
 	DescricaoServico string
 	DataCompetencia  string
 	NomePrestador    string

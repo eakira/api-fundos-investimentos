@@ -10,14 +10,14 @@ func (fc *fundosControllerInterface) SincronizarFundosController(c *gin.Context)
 	logger.Info("Init SincronizarFundos", "sincronizarFundos")
 
 	tipo := []string{
-		"cadastros",
-		"balancete",
+		//"cadastros",
+		//		"balancete",
 		"cda",
-		"extrato",
-		"informacao-diaria",
-		"informacoes-complementares",
-		"lamina",
-		"perfil-mensal",
+		//		"extrato",
+		//		"informacao-diaria",
+		//		"informacoes-complementares",
+		//		"lamina",
+		//		"perfil-mensal",
 	}
 	for _, value := range tipo {
 		fc.service.QueueFundosSincronizarService(value)

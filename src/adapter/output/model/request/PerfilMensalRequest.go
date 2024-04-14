@@ -6,7 +6,7 @@ type PerfilMensalRequest struct {
 	CenarioFPRIBovespa                 string `json:"cenario_fpr_ibovespa"`
 	CenarioFPRJuros                    string `json:"cenario_fpr_juros"`
 	CenarioFPROutro                    string `json:"cenario_fpr_outro"`
-	CNPJFundo                          string `json:"cnpj_fundo"`
+	FundoCnpj                          string `json:"cnpj_fundo"`
 	ComitenteLigado1                   string `json:"comitente_ligado_1"`
 	ComitenteLigado2                   string `json:"comitente_ligado_2"`
 	ComitenteLigado3                   string `json:"comitente_ligado_3"`

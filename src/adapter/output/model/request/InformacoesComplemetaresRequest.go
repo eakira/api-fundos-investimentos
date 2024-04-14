@@ -5,7 +5,7 @@ type InformacoesFundoResquest struct {
 	ApresentacaoAdministrador  string `json:"APRES_ADMIN,omitempty"`               // Apresentação do administrador
 	ApresentacaoGestor         string `json:"APRES_GESTOR,omitempty"`              // Apresentação do gestor de recursos
 	CnpjAgenciaRisco           string `json:"CNPJ_AG_RISCO,omitempty"`             // CNPJ da agência de classificação de risco (20 caracteres)
-	CnpjFundo                  string `json:"CNPJ_FUNDO,omitempty"`                // CNPJ do fundo (20 caracteres)
+	FundoCnpj                  string `json:"CNPJ_FUNDO,omitempty"`                // CNPJ do fundo (20 caracteres)
 	DisclaimerAgenciaRisco     string `json:"DISCLAIMER_AG_RISCO,omitempty"`       // Padronização do disclaimer relativo à advertência sobre a manutenção do serviço de classificação de risco (100 caracteres)
 	DistribuidorLigado         string `json:"DISTRIB_LIGADO,omitempty"`            // Indica se o distribuidor oferta para o público alvo do fundo, preponderantemente, fundos geridos por um único gestor ou por gestoras ligadas a um mesmo grupo econômico (1 caractere)
 	DataCompetencia            string `json:"DT_COMPTC,omitempty"`                 // Data de competência do documento (AAAA-MM-DD)
@@ -24,7 +24,7 @@ type InformacoesFundoResquest struct {
 }
 
 type InformacoesDivulgacaoRequest struct {
-	CnpjFundo        string `json:"CNPJ_FUNDO,omitempty"` // CNPJ do fundo (20 caracteres)
+	FundoCnpj        string `json:"CNPJ_FUNDO,omitempty"` // CNPJ do fundo (20 caracteres)
 	DataCompetencia  string `json:"DT_COMPTC,omitempty"`  // Data de competência do documento (AAAA-MM-DD)
 	FormaInformacoes string `json:"FORMA_INF,omitempty"`  // Forma de divulgação das informações (100 caracteres)
 	LocalInformacoes string `json:"LOCAL_INF,omitempty"`  // Local de divulgação das informações (300 caracteres)
@@ -33,7 +33,7 @@ type InformacoesDivulgacaoRequest struct {
 }
 
 type InformacoesCotistaResquest struct {
-	CnpjFundo            string `json:"CNPJ_FUNDO,omitempty"`        // CNPJ do fundo (20 caracteres)
+	FundoCnpj            string `json:"CNPJ_FUNDO,omitempty"`        // CNPJ do fundo (20 caracteres)
 	DescricaoRespCotista string `json:"DS_RESP_INF_COTST,omitempty"` // Descrição do responsável referente ao local, meio e forma de solicitação de informações pelo cotista (250 caracteres)
 	DataCompetencia      string `json:"DT_COMPTC,omitempty"`         // Data de competência do documento (AAAA-MM-DD)
 	FormaInfCotista      string `json:"FORMA_INF_COTST,omitempty"`   // Forma de solicitação de informações pelo cotista (100 caracteres)
@@ -43,7 +43,7 @@ type InformacoesCotistaResquest struct {
 }
 
 type ServicoPrestadoResquest struct {
-	CnpjFundo        string `json:"CNPJ_FUNDO,omitempty"`    // CNPJ do fundo (20 caracteres)
+	FundoCnpj        string `json:"CNPJ_FUNDO,omitempty"`    // CNPJ do fundo (20 caracteres)
 	DescricaoServico string `json:"DS_SERV_PREST,omitempty"` // Descrição do serviço prestado (100 caracteres)
 	DataCompetencia  string `json:"DT_COMPTC,omitempty"`     // Data de competência do documento (AAAA-MM-DD)
 	NomePrestador    string `json:"NM_PREST_SERV,omitempty"` // Nome do prestador do serviço (100 caracteres)

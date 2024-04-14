@@ -1,36 +1,36 @@
 package request
 
 type CdaSelicRequest struct {
-	CodigoConta              string `json:"CD_CONTA_BALCTE,omitempty"`    // Código da conta balancete
-	FundoCnpj                string `json:"CNPJ_FUNDO,omitempty"`         // CNPJ do fundo
-	DataCompetencia          string `json:"DT_COMPTC,omitempty"`          // Data de competência
-	PlanoContabil            string `json:"PLANO_CONTA_BALCTE,omitempty"` // Plano contábil
-	SaldoConta               string `json:"VL_SALDO_BALCTE,omitempty"`    // Saldo da conta balancete
-	CdIsin                   string `json:"CD_ISIN,omitempty"`            // Código ISIN (International Securities Identification Number)
-	CdSelic                  string `json:"CD_SELIC,omitempty"`           // Código SELIC
-	DenominacaoSocial        string `json:"DENOM_SOCIAL,omitempty"`       // Denominação Social
-	DataEmissao              string `json:"DT_EMISSAO,omitempty"`         // Data de emissão (AAAA-MM-DD)
-	DataVencimento           string `json:"DT_VENC,omitempty"`            // Data de vencimento (AAAA-MM-DD)
-	DataCompetenciaDoc       string `json:"DT_COMPTC_DOC,omitempty"`      // Data de competência do documento
-	PrazoConfidencialidade   string `json:"DT_CONFID_APLIC,omitempty"`    // Prazo de confidencialidade da aplicação (AAAA-MM-DD)
-	EmissorLigado            string `json:"EMISSOR_LIGADO,omitempty"`     // Indica se o emissor da aplicação é ligado ao gestor ou administrador do fundo de investimento (S/N)
-	QuantidadeAquisicoes     string `json:"QT_AQUIS_NEGOC,omitempty"`     // Quantidade de aquisições dos negócios realizados no mês
-	QuantidadePosicaoFinal   string `json:"QT_POS_FINAL,omitempty"`       // Quantidade da posição final
-	QuantidadeVendas         string `json:"QT_VENDA_NEGOC,omitempty"`     // Quantidade de vendas dos negócios realizados no mês
-	TipoAplicacao            string `json:"TP_APLIC,omitempty"`           // Tipo de aplicação
-	TipoAtivo                string `json:"TP_ATIVO,omitempty"`           // Tipo de ativo
-	TipoFundo                string `json:"TP_FUNDO,omitempty"`           // Tipo de fundo
-	TipoNegociacao           string `json:"TP_NEGOC,omitempty"`           // Tipo de negociação (Para negociação/Mantido até o vencimento)
-	TipoTituloPublico        string `json:"TP_TITPUB,omitempty"`          // Tipo de título público
-	ValorAquisicoes          string `json:"VL_AQUIS_NEGOC,omitempty"`     // Valor das aquisições dos negócios realizados no mês
-	ValorCustoPosicaoFinal   string `json:"VL_CUSTO_POS_FINAL,omitempty"` // Valor de custo da posição final
-	ValorMercadoPosicaoFinal string `json:"VL_MERC_POS_FINAL,omitempty"`  // Valor de mercado da posição final
-	ValorVendas              string `json:"VL_VENDA_NEGOC,omitempty"`     // Valor das vendas dos negócios realizados no mês
+	CodigoConta              string  `json:"CD_CONTA_BALCTE,omitempty"`    // Código da conta balancete
+	FundoCnpj                Cnpj    `json:"CNPJ_FUNDO,omitempty"`         // CNPJ do fundo
+	DataCompetencia          Date    `json:"DT_COMPTC,omitempty"`          // Data de competência
+	PlanoContabil            string  `json:"PLANO_CONTA_BALCTE,omitempty"` // Plano contábil
+	SaldoConta               string  `json:"VL_SALDO_BALCTE,omitempty"`    // Saldo da conta balancete
+	CdIsin                   string  `json:"CD_ISIN,omitempty"`            // Código ISIN (International Securities Identification Number)
+	CdSelic                  string  `json:"CD_SELIC,omitempty"`           // Código SELIC
+	DenominacaoSocial        string  `json:"DENOM_SOCIAL,omitempty"`       // Denominação Social
+	DataEmissao              Date    `json:"DT_EMISSAO,omitempty"`         // Data de emissão (AAAA-MM-DD)
+	DataVencimento           Date    `json:"DT_VENC,omitempty"`            // Data de vencimento (AAAA-MM-DD)
+	DataCompetenciaDoc       string  `json:"DT_COMPTC_DOC,omitempty"`      // Data de competência do documento
+	PrazoConfidencialidade   Date    `json:"DT_CONFID_APLIC,omitempty"`    // Prazo de confidencialidade da aplicação (AAAA-MM-DD)
+	EmissorLigado            string  `json:"EMISSOR_LIGADO,omitempty"`     // Indica se o emissor da aplicação é ligado ao gestor ou administrador do fundo de investimento (S/N)
+	QuantidadeAquisicoes     Decimal `json:"QT_AQUIS_NEGOC,omitempty"`     // Quantidade de aquisições dos negócios realizados no mês
+	QuantidadePosicaoFinal   Decimal `json:"QT_POS_FINAL,omitempty"`       // Quantidade da posição final
+	QuantidadeVendas         Decimal `json:"QT_VENDA_NEGOC,omitempty"`     // Quantidade de vendas dos negócios realizados no mês
+	TipoAplicacao            string  `json:"TP_APLIC,omitempty"`           // Tipo de aplicação
+	TipoAtivo                string  `json:"TP_ATIVO,omitempty"`           // Tipo de ativo
+	TipoFundo                string  `json:"TP_FUNDO,omitempty"`           // Tipo de fundo
+	TipoNegociacao           string  `json:"TP_NEGOC,omitempty"`           // Tipo de negociação (Para negociação/Mantido até o vencimento)
+	TipoTituloPublico        string  `json:"TP_TITPUB,omitempty"`          // Tipo de título público
+	ValorAquisicoes          Decimal `json:"VL_AQUIS_NEGOC,omitempty"`     // Valor das aquisições dos negócios realizados no mês
+	ValorCustoPosicaoFinal   Decimal `json:"VL_CUSTO_POS_FINAL,omitempty"` // Valor de custo da posição final
+	ValorMercadoPosicaoFinal Decimal `json:"VL_MERC_POS_FINAL,omitempty"`  // Valor de mercado da posição final
+	ValorVendas              Decimal `json:"VL_VENDA_NEGOC,omitempty"`     // Valor das vendas dos negócios realizados no mês
 }
 
 type CdaFundosInvestimentosRequest struct {
-	CnpjFundo                string `json:"CNPJ_FUNDO,omitempty"`         // CNPJ do fundo (20 caracteres)
-	CnpjFundoCota            string `json:"CNPJ_FUNDO_COTA,omitempty"`    // CNPJ do fundo investido (20 caracteres)
+	FundoCnpj                string `json:"CNPJ_FUNDO,omitempty"`         // CNPJ do fundo (20 caracteres)
+	FundoCnpjCota            string `json:"CNPJ_FUNDO_COTA,omitempty"`    // CNPJ do fundo investido (20 caracteres)
 	DenominacaoSocial        string `json:"DENOM_SOCIAL,omitempty"`       // Denominação Social (100 caracteres)
 	DataCompetencia          string `json:"DT_COMPTC,omitempty"`          // Data de competência do documento (AAAA-MM-DD)
 	PrazoConfidencialidade   string `json:"DT_CONFID_APLIC,omitempty"`    // Prazo de confidencialidade da aplicação (AAAA-MM-DD)
@@ -51,7 +51,7 @@ type CdaFundosInvestimentosRequest struct {
 
 type CdaSwapRequest struct {
 	CodigoSwap               string `json:"CD_SWAP,omitempty"`            // Código SWAP (50 caracteres)
-	CnpjFundo                string `json:"CNPJ_FUNDO,omitempty"`         // CNPJ do fundo (20 caracteres)
+	FundoCnpj                string `json:"CNPJ_FUNDO,omitempty"`         // CNPJ do fundo (20 caracteres)
 	DenominacaoSocial        string `json:"DENOM_SOCIAL,omitempty"`       // Denominação Social (100 caracteres)
 	DescricaoTipoAtivo       string `json:"DS_SWAP,omitempty"`            // Descrição do tipo de ativo SWAP (100 caracteres)
 	DataCompetencia          string `json:"DT_COMPTC,omitempty"`          // Data de competência do documento (AAAA-MM-DD)
@@ -73,7 +73,7 @@ type CdaSwapRequest struct {
 type CdaDemaisAtivosRequest struct {
 	CodigoAtivo              string `json:"CD_ATIVO,omitempty"`           // Código do ativo (100 caracteres)
 	CodigoISIN               string `json:"CD_ISIN,omitempty"`            // Código ISIN (International Securities Identification Number) (12 caracteres)
-	CnpjFundo                string `json:"CNPJ_FUNDO,omitempty"`         // CNPJ do fundo (20 caracteres)
+	FundoCnpj                string `json:"CNPJ_FUNDO,omitempty"`         // CNPJ do fundo (20 caracteres)
 	DenominacaoSocial        string `json:"DENOM_SOCIAL,omitempty"`       // Denominação Social (100 caracteres)
 	DescricaoAtivo           string `json:"DS_ATIVO,omitempty"`           // Descrição do ativo (100 caracteres)
 	DataCompetencia          string `json:"DT_COMPTC,omitempty"`          // Data de competência do documento (AAAA-MM-DD)
@@ -98,7 +98,7 @@ type CdaDepositoAPrazoOutrosAtivosRequest struct {
 	NomeAgenciaClassificacaoRisco string `json:"AG_RISCO,omitempty"`           // Nome da agência de classificação de risco (200 caracteres)
 	CodigoIndexadorPosFixados     string `json:"CD_INDEXADOR_POSFX,omitempty"` // Código do indexador (somente pós-fixados) (50 caracteres)
 	CnpjEmissor                   string `json:"CNPJ_EMISSOR,omitempty"`       // CNPJ do emissor (20 caracteres)
-	CnpjFundo                     string `json:"CNPJ_FUNDO,omitempty"`         // CNPJ do fundo (20 caracteres)
+	FundoCnpj                     string `json:"CNPJ_FUNDO,omitempty"`         // CNPJ do fundo (20 caracteres)
 	DenominacaoSocial             string `json:"DENOM_SOCIAL,omitempty"`       // Denominação Social (100 caracteres)
 	DescricaoIndexadorPosFixados  string `json:"DS_INDEXADOR_POSFX,omitempty"` // Descrição do indexador (somente pós-fixados) (100 caracteres)
 	DataCompetencia               string `json:"DT_COMPTC,omitempty"`          // Data de competência do documento (AAAA-MM-DD)
@@ -128,7 +128,7 @@ type CdaDepositoAPrazoOutrosAtivosRequest struct {
 
 type CdaAgroCreditoPrivadoRequest struct {
 	CodigoIndexadorPosFixados      string `json:"CD_INDEXADOR_POSFX,omitempty"`            // Código do indexador (somente pós-fixados) (50 caracteres)
-	CnpjFundo                      string `json:"CNPJ_FUNDO,omitempty"`                    // CNPJ do fundo (20 caracteres)
+	FundoCnpj                      string `json:"CNPJ_FUNDO,omitempty"`                    // CNPJ do fundo (20 caracteres)
 	CnpjInstituicaoFinanceiraCoobr string `json:"CNPJ_INSTITUICAO_FINANC_COOBR,omitempty"` // CNPJ da instituição financeira com coobrigação (20 caracteres)
 	CpfCnpjEmissor                 string `json:"CPF_CNPJ_EMISSOR,omitempty"`              // Código de identificação do emissor, pessoa física ou jurídica (20 caracteres)
 	DenominacaoSocial              string `json:"DENOM_SOCIAL,omitempty"`                  // Denominação Social (100 caracteres)
@@ -164,7 +164,7 @@ type CdaInvestimentosExteriorRequest struct {
 	CodigoAtivoBolsaMercado           string `json:"CD_ATIVO_BV_MERC,omitempty"`       // Código do ativo na Bolsa ou Mercado de balcão onde foi adquirido (12 caracteres)
 	CodigoBolsaMercado                string `json:"CD_BV_MERC,omitempty"`             // Código da Bolsa ou Mercado de balcão (6 caracteres)
 	CodigoPais                        string `json:"CD_PAIS,omitempty"`                // Código do país (3 caracteres)
-	CnpjFundo                         string `json:"CNPJ_FUNDO,omitempty"`             // CNPJ do fundo (20 caracteres)
+	FundoCnpj                         string `json:"CNPJ_FUNDO,omitempty"`             // CNPJ do fundo (20 caracteres)
 	DenominacaoSocial                 string `json:"DENOM_SOCIAL,omitempty"`           // Denominação Social (100 caracteres)
 	DescricaoAtivoExterior            string `json:"DS_ATIVO_EXTERIOR,omitempty"`      // Descrição do ativo no exterior (50 caracteres)
 	DataCompetencia                   string `json:"DT_COMPTC,omitempty"`              // Data de competência do documento (AAAA-MM-DD)
@@ -195,7 +195,7 @@ type CdaInvestimentosExteriorRequest struct {
 
 // DetalhesInvestimento representa informações detalhadas sobre um investimento.
 type CdaDemaisAtivosNaoCodificadosRequest struct {
-	CnpjFundo                   string `json:"CNPJ_FUNDO,omitempty"`         // CNPJ do fundo (20 caracteres)
+	FundoCnpj                   string `json:"CNPJ_FUNDO,omitempty"`         // CNPJ do fundo (20 caracteres)
 	CpfCnpjEmissor              string `json:"CPF_CNPJ_EMISSOR,omitempty"`   // Código de identificação do emissor, pessoa física ou jurídica (20 caracteres)
 	DenominacaoSocial           string `json:"DENOM_SOCIAL,omitempty"`       // Denominação Social (100 caracteres)
 	DescricaoAtivo              string `json:"DS_ATIVO,omitempty"`           // Descrição do ativo (1000 caracteres)
@@ -218,7 +218,7 @@ type CdaDemaisAtivosNaoCodificadosRequest struct {
 }
 
 type CdaConfidencial struct {
-	CnpjFundo           string `json:"CNPJ_FUNDO,omitempty"`         // CNPJ do fundo (20 caracteres)
+	FundoCnpj           string `json:"CNPJ_FUNDO,omitempty"`         // CNPJ do fundo (20 caracteres)
 	DenominacaoSocial   string `json:"DENOM_SOCIAL,omitempty"`       // Denominação Social (100 caracteres)
 	DataCompetencia     string `json:"DT_COMPTC,omitempty"`          // Data de competência do documento (AAAA-MM-DD)
 	PrazoConfidencial   string `json:"DT_CONFID_APLIC,omitempty"`    // Prazo de confidencialidade da aplicação (AAAA-MM-DD)
@@ -236,7 +236,7 @@ type CdaFiim struct {
 	CodigoBolsaMercado       string `json:"CD_BV_MERC,omitempty"`         // Código da Bolsa ou Mercado de balcão (5 caracteres)
 	CodigoPais               string `json:"CD_PAIS,omitempty"`            // Código do país
 	CodigoSELIC              string `json:"CD_SELIC,omitempty"`           // Código SELIC (50 caracteres)
-	CnpjFundo                string `json:"CNPJ_FUNDO,omitempty"`         // CNPJ do fundo (20 caracteres)
+	FundoCnpj                string `json:"CNPJ_FUNDO,omitempty"`         // CNPJ do fundo (20 caracteres)
 	CpfCnpjEmissor           string `json:"CPF_CNPJ_EMISSOR,omitempty"`   // Código de identificação do emissor, pessoa física ou jurídica
 	DenominacaoSocial        string `json:"DENOM_SOCIAL,omitempty"`       // Denominação Social (255 caracteres)
 	DescricaoAtivo           string `json:"DS_ATIVO,omitempty"`           // Descrição do ativo (255 caracteres)
@@ -265,7 +265,7 @@ type CdaFiim struct {
 }
 
 type CdaFiimConfidencial struct {
-	CnpjFundo                string `json:"CNPJ_FUNDO,omitempty"`         // CNPJ do fundo (20 caracteres)
+	FundoCnpj                string `json:"CNPJ_FUNDO,omitempty"`         // CNPJ do fundo (20 caracteres)
 	DenominacaoSocial        string `json:"DENOM_SOCIAL,omitempty"`       // Denominação Social (255 caracteres)
 	DataCompetencia          string `json:"DT_COMPTC,omitempty"`          // Data de competência do documento (AAAA-MM-DD)
 	PrazoConfidencial        string `json:"DT_CONFID_APLIC,omitempty"`    // Prazo de confidencialidade da aplicação (AAAA-MM-DD)
@@ -279,7 +279,7 @@ type CdaFiimConfidencial struct {
 }
 
 type CdaPatrimonioLiquido struct {
-	CnpjFundo         string `json:"CNPJ_FUNDO,omitempty"`    // CNPJ do fundo (20 caracteres)
+	FundoCnpj         string `json:"CNPJ_FUNDO,omitempty"`    // CNPJ do fundo (20 caracteres)
 	DenominacaoSocial string `json:"DENOM_SOCIAL,omitempty"`  // Denominação Social (100 caracteres)
 	DataCompetencia   string `json:"DT_COMPTC,omitempty"`     // Data de competência do documento (AAAA-MM-DD)
 	TipoFundo         string `json:"TP_FUNDO,omitempty"`      // Tipo de fundo (15 caracteres)

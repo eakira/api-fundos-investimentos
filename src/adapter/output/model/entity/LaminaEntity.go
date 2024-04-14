@@ -7,7 +7,7 @@ type LaminaEntity struct {
 	CalcRentabFundo           string `bson:"calc_rentab_fundo,omitempty"`
 	CalcRentabFundoGatilho    string `bson:"calc_rentab_fundo_gatilho,omitempty"`
 	ClasseRiscoAdmin          string `bson:"classe_risco_admin,omitempty"`
-	CnpjFundo                 string `bson:"cnpj_fundo,omitempty"`
+	FundoCnpj                 string `bson:"cnpj_fundo,omitempty"`
 	CondicCaren               string `bson:"condic_caren,omitempty"`
 	CondicEntr                string `bson:"condic_entr,omitempty"`
 	CondicSaida               string `bson:"condic_saida,omitempty"`
@@ -80,7 +80,7 @@ type LaminaEntity struct {
 }
 
 type LaminaCarteiraEntity struct {
-	CnpjFundo   string `bson:"cnpj_fundo,omitempty"`
+	FundoCnpj   string `bson:"cnpj_fundo,omitempty"`
 	DenomSocial string `bson:"denom_social,omitempty"`
 	DtComptc    string `bson:"dt_comptc,omitempty"`
 	PrPlAtivo   string `bson:"pr_pl_ativo,omitempty"`
@@ -89,7 +89,7 @@ type LaminaCarteiraEntity struct {
 
 type LaminaRentabilidadeAnoEntity struct {
 	AnoRentab                string `bson:"ano_rentab,omitempty"`
-	CnpjFundo                string `bson:"cnpj_fundo,omitempty"`
+	FundoCnpj                string `bson:"cnpj_fundo,omitempty"`
 	DenomSocial              string `bson:"denom_social,omitempty"`
 	DtComptc                 string `bson:"dt_comptc,omitempty"`
 	PrPerfmIndiceReferAno    string `bson:"pr_perfm_indice_refer_ano,omitempty"`
@@ -99,7 +99,7 @@ type LaminaRentabilidadeAnoEntity struct {
 }
 
 type LaminaRentabilidadeMesEntity struct {
-	CnpjFundo                string `bson:"cnpj_fundo,omitempty"`
+	FundoCnpj                string `bson:"cnpj_fundo,omitempty"`
 	DenomSocial              string `bson:"denom_social,omitempty"`
 	DtComptc                 string `bson:"dt_comptc,omitempty"`
 	MesRentab                string `bson:"mes_rentab,omitempty"`
