@@ -1,10 +1,12 @@
 package domain
 
+import "time"
+
 type BalanceteDomain struct {
 	Id              string
-	CodigoConta     string
+	CodigoConta     int
 	FundoCnpj       string
-	DataCompetencia string
+	DataCompetencia time.Time
 	PlanoContabil   string
-	SaldoConta      string
+	SaldoConta      float64
 }
