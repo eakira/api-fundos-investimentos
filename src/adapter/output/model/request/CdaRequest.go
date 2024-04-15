@@ -217,7 +217,7 @@ type CdaDemaisAtivosNaoCodificadosRequest struct {
 	ValorVendas                 Decimal `json:"VL_VENDA_NEGOC,omitempty"`     // Valor das vendas dos negócios realizados no mês
 }
 
-type CdaConfidencial struct {
+type CdaConfidencialRequest struct {
 	FundoCnpj           Cnpj    `json:"CNPJ_FUNDO,omitempty"`         // CNPJ do fundo (20 caracteres)
 	DenominacaoSocial   string  `json:"DENOM_SOCIAL,omitempty"`       // Denominação Social (100 caracteres)
 	DataCompetencia     Date    `json:"DT_COMPTC,omitempty"`          // Data de competência do documento (AAAA-MM-DD)
@@ -230,7 +230,7 @@ type CdaConfidencial struct {
 	ValorVendas         float64 `json:"VL_VENDA_NEGOC,omitempty"`     // Valor das vendas dos negócios realizados no mês
 }
 
-type CdaFiim struct {
+type CdaFiimRequest struct {
 	BolsaMercado             string  `json:"BV_MERC,omitempty"`            // Bolsa ou Mercado de balcão (47 caracteres)
 	CodigoAtivo              string  `json:"CD_ATIVO,omitempty"`           // Código do ativo (255 caracteres)
 	CodigoBolsaMercado       string  `json:"CD_BV_MERC,omitempty"`         // Código da Bolsa ou Mercado de balcão (5 caracteres)
@@ -264,7 +264,7 @@ type CdaFiim struct {
 	ValorVendas              Decimal `json:"VL_VENDA_NEGOC,omitempty"`     // Valor das vendas dos negócios realizados no mês
 }
 
-type CdaFiimConfidencial struct {
+type CdaFiimConfidencialRequest struct {
 	FundoCnpj                Cnpj    `json:"CNPJ_FUNDO,omitempty"`         // CNPJ do fundo (20 caracteres)
 	DenominacaoSocial        string  `json:"DENOM_SOCIAL,omitempty"`       // Denominação Social (255 caracteres)
 	DataCompetencia          Date    `json:"DT_COMPTC,omitempty"`          // Data de competência do documento (AAAA-MM-DD)
@@ -278,7 +278,7 @@ type CdaFiimConfidencial struct {
 	ValorVendas              Decimal `json:"VL_VENDA_NEGOC,omitempty"`     // Valor das vendas dos negócios realizados no mês
 }
 
-type CdaPatrimonioLiquido struct {
+type CdaPatrimonioLiquidoRequest struct {
 	FundoCnpj         Cnpj    `json:"CNPJ_FUNDO,omitempty"`    // CNPJ do fundo (20 caracteres)
 	DenominacaoSocial string  `json:"DENOM_SOCIAL,omitempty"`  // Denominação Social (100 caracteres)
 	DataCompetencia   Date    `json:"DT_COMPTC,omitempty"`     // Data de competência do documento (AAAA-MM-DD)

@@ -94,28 +94,28 @@ func CreateMany(
 		fs.CreateCdaDemaisAtivosNaoCodificadosService(*domain)
 
 	case "cda-confidencial":
-		dados := []request.CdaConfidencial{}
+		dados := []request.CdaConfidencialRequest{}
 		json.Unmarshal(data, &dados)
 		domain := &[]domain.CdaConfidencialDomain{}
 		copier.Copy(domain, dados)
 		fs.CreateCdaConfidencialService(*domain)
 
 	case "cda-fiim":
-		dados := []request.CdaFiim{}
+		dados := []request.CdaFiimRequest{}
 		json.Unmarshal(data, &dados)
 		domain := &[]domain.CdaFiimDomain{}
 		copier.Copy(domain, dados)
 		fs.CreateCdaFiimService(*domain)
 
 	case "cda-fiim-confidencial":
-		dados := []request.CdaFiimConfidencial{}
+		dados := []request.CdaFiimConfidencialRequest{}
 		json.Unmarshal(data, &dados)
 		domain := &[]domain.CdaFiimConfidencialDomain{}
 		copier.Copy(domain, dados)
 		fs.CreateCdaFiimConfidencialidade(*domain)
 
 	case "cda-patrimonio-liquido":
-		dados := []request.CdaPatrimonioLiquido{}
+		dados := []request.CdaPatrimonioLiquidoRequest{}
 		json.Unmarshal(data, &dados)
 		domain := &[]domain.CdaPatrimonioLiquidoDomain{}
 		copier.Copy(domain, dados)
