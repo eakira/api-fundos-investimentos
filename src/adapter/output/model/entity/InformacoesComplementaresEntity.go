@@ -1,6 +1,10 @@
 package entity
 
-import "go.mongodb.org/mongo-driver/bson/primitive"
+import (
+	"time"
+
+	"go.mongodb.org/mongo-driver/bson/primitive"
+)
 
 type InformacoesFundoEntity struct {
 	ID                         primitive.ObjectID `bson:"_id,omitempty"`
@@ -11,7 +15,7 @@ type InformacoesFundoEntity struct {
 	FundoCnpj                  string             `bson:"cnpj_fundo,omitempty"`
 	DisclaimerAgenciaRisco     string             `bson:"disclaimer_agencia_risco,omitempty"`
 	DistribuidorLigado         string             `bson:"distribuidor_ligado,omitempty"`
-	DataCompetencia            string             `bson:"data_competencia,omitempty"`
+	DataCompetencia            time.Time          `bson:"data_competencia,omitempty"`
 	GrauRisco                  string             `bson:"grau_risco,omitempty"`
 	InformacoesAutorregulacao  string             `bson:"informacoes_autorregulacao,omitempty"`
 	OutrasInformacoes          string             `bson:"outras_informacoes,omitempty"`
@@ -29,7 +33,7 @@ type InformacoesFundoEntity struct {
 type InformacoesDivulgacaoEntity struct {
 	ID               primitive.ObjectID `bson:"_id,omitempty"`
 	FundoCnpj        string             `bson:"cnpj_fundo,omitempty"`
-	DataCompetencia  string             `bson:"data_competencia,omitempty"`
+	DataCompetencia  time.Time          `bson:"data_competencia,omitempty"`
 	FormaInformacoes string             `bson:"forma_informacoes,omitempty"`
 	LocalInformacoes string             `bson:"local_informacoes,omitempty"`
 	MeioInformacoes  string             `bson:"meio_informacoes,omitempty"`
@@ -40,7 +44,7 @@ type InformacoesCotistaEntity struct {
 	ID                   primitive.ObjectID `bson:"_id,omitempty"`
 	FundoCnpj            string             `bson:"cnpj_fundo,omitempty"`
 	DescricaoRespCotista string             `bson:"descricao_resp_cotista,omitempty"`
-	DataCompetencia      string             `bson:"data_competencia,omitempty"`
+	DataCompetencia      time.Time          `bson:"data_competencia,omitempty"`
 	FormaInfCotista      string             `bson:"forma_inf_cotista,omitempty"`
 	LocalInfCotista      string             `bson:"local_inf_cotista,omitempty"`
 	MeioInfCotista       string             `bson:"meio_inf_cotista,omitempty"`
@@ -50,7 +54,7 @@ type ServicoPrestadoEntity struct {
 	ID               primitive.ObjectID `bson:"_id,omitempty"`
 	FundoCnpj        string             `bson:"cnpj_fundo,omitempty"`
 	DescricaoServico string             `bson:"descricao_servico,omitempty"`
-	DataCompetencia  string             `bson:"data_competencia,omitempty"`
+	DataCompetencia  time.Time          `bson:"data_competencia,omitempty"`
 	NomePrestador    string             `bson:"nome_prestador,omitempty"`
 	TipoFundo        string             `bson:"tipo_fundo,omitempty"`
 }
