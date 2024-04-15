@@ -1,5 +1,7 @@
 package domain
 
+import "time"
+
 type InformacoesFundoDomain struct {
 	AgenciaRisco               string
 	ApresentacaoAdministrador  string
@@ -8,7 +10,7 @@ type InformacoesFundoDomain struct {
 	FundoCnpj                  string
 	DisclaimerAgenciaRisco     string
 	DistribuidorLigado         string
-	DataCompetencia            string
+	DataCompetencia            time.Time
 	GrauRisco                  string
 	InformacoesAutorregulacao  string
 	OutrasInformacoes          string
@@ -25,7 +27,7 @@ type InformacoesFundoDomain struct {
 
 type InformacoesDivulgacaoDomain struct {
 	FundoCnpj        string
-	DataCompetencia  string
+	DataCompetencia  time.Time
 	FormaInformacoes string
 	LocalInformacoes string
 	MeioInformacoes  string
@@ -35,7 +37,7 @@ type InformacoesDivulgacaoDomain struct {
 type InformacoesCotistaDomain struct {
 	FundoCnpj            string
 	DescricaoRespCotista string
-	DataCompetencia      string
+	DataCompetencia      time.Time
 	FormaInfCotista      string
 	LocalInfCotista      string
 	MeioInfCotista       string
@@ -45,7 +47,7 @@ type InformacoesCotistaDomain struct {
 type ServicoPrestadoDomain struct {
 	FundoCnpj        string
 	DescricaoServico string
-	DataCompetencia  string
+	DataCompetencia  time.Time
 	NomePrestador    string
 	TipoFundo        string
 }
