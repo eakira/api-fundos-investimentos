@@ -15,7 +15,7 @@ const (
 	permissions = 0777
 )
 
-func (fc *fundosClient) DownloadArquivosCVMPort(file string) []string {
+func (fc *fundosClient) DownloadArquivosCVMPort(file string, baixar bool) []string {
 	logger.Info("Iniciando DownloadArquivosCVMPort", "sincronizarFundos")
 
 	storagePath := filepath.Join(env.GetPathArquivosCvm(), filepath.Dir(file))
@@ -26,11 +26,12 @@ func (fc *fundosClient) DownloadArquivosCVMPort(file string) []string {
 	}
 
 	localFilePath := filepath.Join(storagePath, filepath.Base(file))
-
-	err = downloadArquivo(env.GetCvmUrl()+file, localFilePath)
-	if err != nil {
-		logger.Error("Erro ao baixar o arquivo:", err, "sincronizarFundos")
-		return nil
+	if baixar {
+		err = downloadArquivo(env.GetCvmUrl()+file, localFilePath)
+		if err != nil {
+			logger.Error("Erro ao baixar o arquivo:", err, "sincronizarFundos")
+			return nil
+		}
 	}
 
 	var nomes []string

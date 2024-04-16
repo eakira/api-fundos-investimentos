@@ -17,7 +17,7 @@ import (
 func (fs *fundosDomainService) DownloadArquivosCVMService(arquivosDomain domain.ArquivosDomain) *resterrors.RestErr {
 	logger.Info("Init DownloadArquivosCVMService", "sincronizarFundos")
 
-	arquivos := fs.externo.DownloadArquivosCVMPort(arquivosDomain.Endereco)
+	arquivos := fs.externo.DownloadArquivosCVMPort(arquivosDomain.Endereco, arquivosDomain.Baixar)
 
 	salvandoDownload(fs, arquivosDomain)
 	salvandoArquivos(fs, arquivosDomain, arquivos)
