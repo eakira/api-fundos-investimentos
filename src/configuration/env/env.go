@@ -14,7 +14,7 @@ func GetAppName() string {
 }
 
 func GetAmbienteDev() bool {
-	return os.Getenv("PERSISTENCIA") == "local"
+	return os.Getenv("ENV") == "local"
 }
 
 func GetTimeShutdown() string {
