@@ -13,6 +13,10 @@ func GetAppName() string {
 	return os.Getenv("APP_NAME")
 }
 
+func GetAmbienteDev() bool {
+	return os.Getenv("PERSISTENCIA") == "local"
+}
+
 func GetTimeShutdown() string {
 	return os.Getenv("TIME_SHUTDOWN")
 }

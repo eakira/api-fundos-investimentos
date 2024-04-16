@@ -84,7 +84,9 @@ func GraceFullyShutdown(
 				err,
 				"shutdown",
 			)
-			panic(err)
+			if env.GetAmbienteDev() {
+				panic(err)
+			}
 		}
 		ctxTimeout, cancel := context.WithTimeout(context.Background(), timeout)
 

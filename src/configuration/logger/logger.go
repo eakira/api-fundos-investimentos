@@ -21,7 +21,7 @@ var (
 func init() {
 	// Abra ou crie o arquivo de log de erro
 	errFile, err := os.OpenFile(LOG_ERROR_PATH, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
-	if err != nil {
+	if err != nil && env.GetAmbienteDev() {
 		panic(err)
 	}
 	defer errFile.Close() // Feche o arquivo depois de usar
@@ -60,7 +60,9 @@ func Error(message string, err error, journey string, tags ...zap.Field) {
 
 	log.Error(message, tags...)
 	log.Sync()
-	panic(err)
+	if env.GetAmbienteDev() {
+		panic(err)
+	}
 }
 
 func getLevelLogs() zapcore.Level {
