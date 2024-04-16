@@ -14,7 +14,7 @@ import (
 	"github.com/jinzhu/copier"
 )
 
-func (fs *fundosDomainService) QueueFundosSincronizarService(tipo string) *resterrors.RestErr {
+func (fs *fundosDomainService) QueueFundosSincronizarService(tipo string, baixar bool) *resterrors.RestErr {
 	logger.Info("Init QueueFundosExternoService", "sincronizarFundos")
 
 	files := getFiles(tipo)
@@ -23,6 +23,7 @@ func (fs *fundosDomainService) QueueFundosSincronizarService(tipo string) *reste
 		value.CreatedAt = time.Now()
 		value.UpdateAt = time.Now()
 		value.Status = constants.ENVIADO
+		value.Baixar = baixar
 
 		arquivosDomain := &domain.ArquivosDomain{}
 		copier.Copy(arquivosDomain, value)

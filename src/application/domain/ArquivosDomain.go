@@ -8,6 +8,7 @@ type ArquivosDomain struct {
 	TipoArquivo string
 	Referencia  string
 	Status      string
+	Baixar      bool
 	Download    bool
 	Processado  bool
 	CreatedAt   time.Time

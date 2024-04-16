@@ -12,6 +12,7 @@ type ArquivosEntity struct {
 	TipoArquivo string             `bson:"tipo-arquivo"`
 	Referencia  string             `bson:"referencia"`
 	Status      string             `bson:"status"`
+	Baixar      bool               `bson:"baixar"`
 	Download    bool               `bson:"download"`
 	Processado  bool               `bson:"processado"`
 	CreatedAt   time.Time          `bson:"created-at"`

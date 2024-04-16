@@ -16,6 +16,7 @@ type FundosDownloadCvmFilesQueueResponse struct {
 	Status      string    `json:"status"`
 	Download    string    `json:"download"`
 	Processado  string    `json:"processado"`
+	Baixar      bool      `json:"baixar"`
 	CreatedAt   time.Time `json:"created-at"`
 	UpdateAt    time.Time `json:"update-at"`
 }
