@@ -77,3 +77,22 @@ func getLevelLogs() zapcore.Level {
 		return zapcore.InfoLevel
 	}
 }
+
+// InitTestLogger inicializa um logger simples para uso nos testes
+func InitTestLogger() {
+	cfg := zap.NewDevelopmentConfig()
+	cfg.OutputPaths = []string{"stdout"}
+
+	var err error
+	log, err = cfg.Build()
+	if err != nil {
+		panic(err)
+	}
+}
+
+func GetTestLogger() *zap.Logger {
+	if log == nil {
+		InitTestLogger()
+	}
+	return log
+}
