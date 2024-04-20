@@ -29,7 +29,11 @@ func (ur *fundosRepository) CreateFundosRepository(
 		return nil, resterrors.NewInternalServerError(err.Error())
 	}
 
+	fundosDomainReturn := &domain.FundosDomain{}
+	copier.Copy(fundosDomainReturn, entity)
+	fundosDomainReturn.Id = entity.ID.Hex()
+
 	logger.Info("CreateFundosRepository executed successfully", "sincronizarFundos")
 
-	return &fundosDomain, nil
+	return fundosDomainReturn, nil
 }
