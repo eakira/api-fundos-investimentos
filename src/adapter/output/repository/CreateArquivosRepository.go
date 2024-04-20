@@ -25,17 +25,13 @@ func (ur *fundosRepository) CreateArquivosRepository(
 
 	result, err := collection.InsertOne(context.Background(), arquivosEntity)
 	if err != nil {
+		logger.Error("Error trying to CreateArquivosRepository", err, "sincronizarFundos")
 		return nil, resterrors.NewInternalServerError(err.Error())
 	}
 
 	logger.Info(
 		fmt.Sprintf("Domain: %v", arquivosDomain),
 		"sincronizarFundos")
-
-	if err != nil {
-		logger.Error("Error trying to CreateArquivosRepository", err, "sincronizarFundos")
-		return nil, resterrors.NewInternalServerError(err.Error())
-	}
 
 	arquivosEntity.ID = result.InsertedID.(primitive.ObjectID)
 

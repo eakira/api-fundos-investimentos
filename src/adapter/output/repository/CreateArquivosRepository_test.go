@@ -13,14 +13,13 @@ import (
 )
 
 func TestArquivosRepository_CreateArquivos(t *testing.T) {
-	databaseName := "user_database_test"
+	databaseName := "database_test"
 
 	err := os.Setenv("MONGODB_DATABASE", databaseName)
 	if err != nil {
 		t.FailNow()
 		return
 	}
-
 	defer os.Clearenv()
 
 	logger.InitTestLogger()
@@ -46,12 +45,21 @@ func TestArquivosRepository_CreateArquivos(t *testing.T) {
 			Download:    false,
 			Processado:  false,
 			CreatedAt:   time.Now(),
-			UpdateAt:    time.Now(),
+			UpdatedAt:   time.Now(),
 		}
 
-		_, err := repo.CreateArquivosRepository(arquivoDomain)
+		domainCriado, err := repo.CreateArquivosRepository(arquivoDomain)
 
 		assert.Nil(t, err)
+		assert.EqualValues(t, arquivoDomain.Endereco, domainCriado.Endereco)
+		assert.EqualValues(t, arquivoDomain.TipoArquivo, domainCriado.TipoArquivo)
+		assert.EqualValues(t, arquivoDomain.Referencia, domainCriado.Referencia)
+		assert.EqualValues(t, arquivoDomain.Status, domainCriado.Status)
+		assert.EqualValues(t, arquivoDomain.Baixar, domainCriado.Baixar)
+		assert.EqualValues(t, arquivoDomain.Download, domainCriado.Download)
+		assert.EqualValues(t, arquivoDomain.Processado, domainCriado.Processado)
+		assert.EqualValues(t, arquivoDomain.CreatedAt, domainCriado.CreatedAt)
+		assert.EqualValues(t, arquivoDomain.UpdatedAt, domainCriado.UpdatedAt)
 	})
 
 	mtestDb.Run("return_error_from_database", func(mt *mtest.T) {
@@ -71,7 +79,7 @@ func TestArquivosRepository_CreateArquivos(t *testing.T) {
 			Download:    false,
 			Processado:  false,
 			CreatedAt:   time.Now(),
-			UpdateAt:    time.Now(),
+			UpdatedAt:   time.Now(),
 		}
 
 		arquivosDomain, err := repo.CreateArquivosRepository(arquivoDomain)
