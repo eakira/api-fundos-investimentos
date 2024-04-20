@@ -5,8 +5,8 @@ import (
 	"api-fundos-investimentos/configuration/logger"
 	"os"
 	"testing"
-	"time"
 
+	"github.com/go-faker/faker/v4"
 	"github.com/stretchr/testify/assert"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo/integration/mtest"
@@ -36,21 +36,13 @@ func TestArquivosRepository_CreateArquivos(t *testing.T) {
 		databaseMock := mt.Client.Database(databaseName)
 		repo := NewFundosRepository(databaseMock)
 
-		arquivoDomain := domain.ArquivosDomain{
-			Endereco:    "FI/CAD/DADOS/cad_fi.csv",
-			TipoArquivo: "cadastros",
-			Referencia:  "2023",
-			Status:      "PROCESSANDO",
-			Baixar:      true,
-			Download:    false,
-			Processado:  false,
-			CreatedAt:   time.Now(),
-			UpdatedAt:   time.Now(),
-		}
+		arquivoDomain := domain.ArquivosDomain{}
+		err := faker.FakeData(&arquivoDomain)
+		assert.Nil(t, err)
 
 		domainCriado, err := repo.CreateArquivosRepository(arquivoDomain)
-
 		assert.Nil(t, err)
+
 		assert.EqualValues(t, arquivoDomain.Endereco, domainCriado.Endereco)
 		assert.EqualValues(t, arquivoDomain.TipoArquivo, domainCriado.TipoArquivo)
 		assert.EqualValues(t, arquivoDomain.Referencia, domainCriado.Referencia)
@@ -70,17 +62,9 @@ func TestArquivosRepository_CreateArquivos(t *testing.T) {
 		databaseMock := mt.Client.Database(databaseName)
 		repo := NewFundosRepository(databaseMock)
 
-		arquivoDomain := domain.ArquivosDomain{
-			Endereco:    "FI/CAD/DADOS/cad_fi.csv",
-			TipoArquivo: "cadastros",
-			Referencia:  "2023",
-			Status:      "PROCESSANDO",
-			Baixar:      true,
-			Download:    false,
-			Processado:  false,
-			CreatedAt:   time.Now(),
-			UpdatedAt:   time.Now(),
-		}
+		arquivoDomain := domain.ArquivosDomain{}
+		err := faker.FakeData(&arquivoDomain)
+		assert.Nil(t, err)
 
 		arquivosDomain, err := repo.CreateArquivosRepository(arquivoDomain)
 
