@@ -12,7 +12,7 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/integration/mtest"
 )
 
-func TestCreateArquivosRepository(t *testing.T) {
+func TestCreateManyBalecenteRepository(t *testing.T) {
 	databaseName := "database_test"
 
 	err := os.Setenv("MONGODB_DATABASE", databaseName)
@@ -36,22 +36,13 @@ func TestCreateArquivosRepository(t *testing.T) {
 		databaseMock := mt.Client.Database(databaseName)
 		repo := NewFundosRepository(databaseMock)
 
-		arquivoDomain := domain.ArquivosDomain{}
-		err := faker.FakeData(&arquivoDomain)
+		balanceteDomain := []domain.BalanceteDomain{}
+		err := faker.FakeData(&balanceteDomain)
 		assert.Nil(t, err)
 
-		domainCriado, err := repo.CreateArquivosRepository(arquivoDomain)
+		err = repo.CreateManyBalecenteRepository(balanceteDomain)
 		assert.Nil(t, err)
 
-		assert.EqualValues(t, arquivoDomain.Endereco, domainCriado.Endereco)
-		assert.EqualValues(t, arquivoDomain.TipoArquivo, domainCriado.TipoArquivo)
-		assert.EqualValues(t, arquivoDomain.Referencia, domainCriado.Referencia)
-		assert.EqualValues(t, arquivoDomain.Status, domainCriado.Status)
-		assert.EqualValues(t, arquivoDomain.Baixar, domainCriado.Baixar)
-		assert.EqualValues(t, arquivoDomain.Download, domainCriado.Download)
-		assert.EqualValues(t, arquivoDomain.Processado, domainCriado.Processado)
-		assert.EqualValues(t, arquivoDomain.CreatedAt, domainCriado.CreatedAt)
-		assert.EqualValues(t, arquivoDomain.UpdatedAt, domainCriado.UpdatedAt)
 	})
 
 	mtestDb.Run("return_error_from_database", func(mt *mtest.T) {
@@ -62,13 +53,12 @@ func TestCreateArquivosRepository(t *testing.T) {
 		databaseMock := mt.Client.Database(databaseName)
 		repo := NewFundosRepository(databaseMock)
 
-		arquivoDomain := domain.ArquivosDomain{}
-		err := faker.FakeData(&arquivoDomain)
+		balanceteDomain := []domain.BalanceteDomain{}
+		err := faker.FakeData(&balanceteDomain)
 		assert.Nil(t, err)
 
-		arquivosDomain, err := repo.CreateArquivosRepository(arquivoDomain)
+		err = repo.CreateManyBalecenteRepository(balanceteDomain)
 
 		assert.NotNil(t, err)
-		assert.Nil(t, arquivosDomain)
 	})
 }
