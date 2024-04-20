@@ -27,7 +27,7 @@ func (fs *fundosDomainService) DownloadArquivosCVMService(arquivosDomain domain.
 }
 
 func salvandoDownload(fs *fundosDomainService, arquivosDomain domain.ArquivosDomain) {
-	arquivosDomain.UpdateAt = time.Now()
+	arquivosDomain.UpdatedAt = time.Now()
 	arquivosDomain.Download = true
 	arquivosDomain.Status = constants.FINALIZADO
 	fs.repository.UpdateArquivosRepository(arquivosDomain)

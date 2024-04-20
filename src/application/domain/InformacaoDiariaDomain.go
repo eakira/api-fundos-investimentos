@@ -14,5 +14,5 @@ type InformacaoDiariaDomain struct {
 	QtdCotista             int
 	ValorTotal             float64
 	CreatedAt              time.Time
-	UpdateAt               time.Time
+	UpdatedAt              time.Time
 }

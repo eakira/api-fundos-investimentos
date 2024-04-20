@@ -21,7 +21,7 @@ func (fs *fundosDomainService) QueueFundosSincronizarService(tipo string, baixar
 
 	for _, value := range files {
 		value.CreatedAt = time.Now()
-		value.UpdateAt = time.Now()
+		value.UpdatedAt = time.Now()
 		value.Status = constants.ENVIADO
 		value.Baixar = baixar
 

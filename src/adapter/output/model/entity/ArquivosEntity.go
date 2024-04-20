@@ -16,5 +16,5 @@ type ArquivosEntity struct {
 	Download    bool               `bson:"download"`
 	Processado  bool               `bson:"processado"`
 	CreatedAt   time.Time          `bson:"created-at"`
-	UpdateAt    time.Time          `bson:"update-at"`
+	UpdatedAt   time.Time          `bson:"update-at"`
 }

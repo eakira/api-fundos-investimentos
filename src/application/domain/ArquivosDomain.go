@@ -12,5 +12,5 @@ type ArquivosDomain struct {
 	Download    bool
 	Processado  bool
 	CreatedAt   time.Time
-	UpdateAt    time.Time
+	UpdatedAt   time.Time
 }

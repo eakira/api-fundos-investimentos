@@ -18,5 +18,5 @@ type InformacaoDiariaEntity struct {
 	QtdCotista             int                `bson:"qtd_cotista,omitempty"`
 	ValorTotal             float64            `bson:"valor_total,omitempty"`
 	CreatedAt              time.Time          `bson:"created_at,omitempty"`
-	UpdateAt               time.Time          `bson:"update_at,omitempty"`
+	UpdatedAt              time.Time          `bson:"update_at,omitempty"`
 }

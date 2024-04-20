@@ -16,5 +16,5 @@ type FundosCvmArquivosQueueRequest struct {
 	Download    string    `json:"download"`
 	Processado  string    `json:"processado"`
 	CreatedAt   time.Time `json:"created-at"`
-	UpdateAt    time.Time `json:"update-at"`
+	UpdatedAt   time.Time `json:"update-at"`
 }

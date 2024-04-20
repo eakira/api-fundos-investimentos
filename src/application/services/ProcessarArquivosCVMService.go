@@ -189,7 +189,7 @@ func salvarProcessamento(
 	fs *fundosDomainService,
 	arquivosDomain domain.ArquivosDomain,
 ) {
-	arquivosDomain.UpdateAt = time.Now()
+	arquivosDomain.UpdatedAt = time.Now()
 	arquivosDomain.Processado = true
 	arquivosDomain.Status = constants.PROCESSANDO
 
