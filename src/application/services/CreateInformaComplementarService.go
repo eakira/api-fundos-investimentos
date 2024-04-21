@@ -6,10 +6,10 @@ import (
 	"api-fundos-investimentos/configuration/resterrors"
 )
 
-func (fs *fundosDomainService) CreateInformacaoComplementarFundoService(domain []domain.InformacoesFundoDomain) *resterrors.RestErr {
+func (fs *fundosDomainService) CreateInformacaoComplementarFundoService(informacacoesFundoDomain []domain.InformacoesFundoDomain) *resterrors.RestErr {
 	logger.Info("Init CreateInformacaoComplementarFundo", "sincronizarFundos")
 
-	if err := fs.repository.CreateManyInformacaoComplementarFundoRepository(domain); err != nil {
+	if err := fs.repository.CreateManyInformacaoComplementarFundoRepository(informacacoesFundoDomain); err != nil {
 		logger.Error("Error calling CreateManyInformacaoComplementarFundoRepository", err, "sincronizarFundos")
 		return err
 	}
@@ -18,10 +18,10 @@ func (fs *fundosDomainService) CreateInformacaoComplementarFundoService(domain [
 	return nil
 }
 
-func (fs *fundosDomainService) CreateInformacaoComplementarDivulgacaoService(domain []domain.InformacoesDivulgacaoDomain) *resterrors.RestErr {
+func (fs *fundosDomainService) CreateInformacaoComplementarDivulgacaoService(informacoesDivulgacaoDomain []domain.InformacoesDivulgacaoDomain) *resterrors.RestErr {
 	logger.Info("Init CreateInformacaoComplementarDivulgacao", "sincronizarFundos")
 
-	if err := fs.repository.CreateManyInformacaoComplementarDivulgacaoRepository(domain); err != nil {
+	if err := fs.repository.CreateManyInformacaoComplementarDivulgacaoRepository(informacoesDivulgacaoDomain); err != nil {
 		logger.Error("Error calling CreateManyInformacaoComplementarFundoRepository", err, "sincronizarFundos")
 		return err
 	}
@@ -42,10 +42,10 @@ func (fs *fundosDomainService) CreateInformacaoComplementarCotistaService(domain
 	return nil
 }
 
-func (fs *fundosDomainService) CreateInformacaoComplementarServicoPrestadoService(domain []domain.ServicoPrestadoDomain) *resterrors.RestErr {
+func (fs *fundosDomainService) CreateInformacaoComplementarServicoPrestadoService(servicoPrestadoDomain []domain.ServicoPrestadoDomain) *resterrors.RestErr {
 	logger.Info("Init CreateInformacaoComplementarServicoPrestado", "sincronizarFundos")
 
-	if err := fs.repository.CreateManyInformacaoComplementarServicoPrestadoRepository(domain); err != nil {
+	if err := fs.repository.CreateManyInformacaoComplementarServicoPrestadoRepository(servicoPrestadoDomain); err != nil {
 		logger.Error("Error calling CreateManyInformacaoComplementarFundoRepository", err, "sincronizarFundos")
 		return err
 	}

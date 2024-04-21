@@ -24,6 +24,8 @@ type FundosDomainService interface {
 	CreateCdaInvestimentosExteriorService([]domain.CdaInvestimentosExteriorDomain) *resterrors.RestErr
 	CreateCdaDemaisAtivosNaoCodificadosService([]domain.CdaDemaisAtivosNaoCodificadosDomain) *resterrors.RestErr
 	CreateCdaFiimConfidencialidade([]domain.CdaFiimConfidencialDomain) *resterrors.RestErr
+	CreateCdaPatrominioLiquido([]domain.CdaPatrimonioLiquidoDomain) *resterrors.RestErr
+
 	CreateCdaFiimService([]domain.CdaFiimDomain) *resterrors.RestErr
 	CreateInformacaoComplementarFundoService([]domain.InformacoesFundoDomain) *resterrors.RestErr
 	CreateInformacaoComplementarDivulgacaoService([]domain.InformacoesDivulgacaoDomain) *resterrors.RestErr

@@ -6,10 +6,10 @@ import (
 	"api-fundos-investimentos/configuration/resterrors"
 )
 
-func (fs *fundosDomainService) CreatePerfilMensalService(domain []domain.PerfilMensalDomain) *resterrors.RestErr {
+func (fs *fundosDomainService) CreatePerfilMensalService(perfilMensalDomain []domain.PerfilMensalDomain) *resterrors.RestErr {
 	logger.Info("Init CreatePerfilMensalService", "sincronizarFundos")
 
-	if err := fs.repository.CreateManyPerfilMensalRepository(domain); err != nil {
+	if err := fs.repository.CreateManyPerfilMensalRepository(perfilMensalDomain); err != nil {
 		logger.Error("Error calling CreateManyPerfilMensalRepository", err, "sincronizarFundos")
 		return err
 	}
