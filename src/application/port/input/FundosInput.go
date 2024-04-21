@@ -13,6 +13,7 @@ type FundosDomainService interface {
 	CreateBalanceteService([]domain.BalanceteDomain) *resterrors.RestErr
 	CreateExtratoService([]domain.ExtratoDomain) *resterrors.RestErr
 	CreateInformacaoDiariaService([]domain.InformacaoDiariaDomain) *resterrors.RestErr
+	CreateCdaConfidencialService([]domain.CdaConfidencialDomain) *resterrors.RestErr
 	CreatePerfilMensalService([]domain.PerfilMensalDomain) *resterrors.RestErr
 	CreateCdaSelicService([]domain.CdaSelicDomain) *resterrors.RestErr
 	CreateCdaFundosInvestimentosService([]domain.CdaFundosInvestimentosDomain) *resterrors.RestErr
@@ -22,6 +23,8 @@ type FundosDomainService interface {
 	CreateCdaAgroCreditoPrivadoService([]domain.CdaAgroCreditoPrivadoDomain) *resterrors.RestErr
 	CreateCdaInvestimentosExteriorService([]domain.CdaInvestimentosExteriorDomain) *resterrors.RestErr
 	CreateCdaDemaisAtivosNaoCodificadosService([]domain.CdaDemaisAtivosNaoCodificadosDomain) *resterrors.RestErr
+	CreateCdaFiimConfidencialidade([]domain.CdaFiimConfidencialDomain) *resterrors.RestErr
+	CreateCdaFiimService([]domain.CdaFiimDomain) *resterrors.RestErr
 	CreateInformacaoComplementarFundoService([]domain.InformacoesFundoDomain) *resterrors.RestErr
 	CreateInformacaoComplementarDivulgacaoService([]domain.InformacoesDivulgacaoDomain) *resterrors.RestErr
 	CreateInformacaoComplementarCotistaService([]domain.InformacoesCotistaDomain) *resterrors.RestErr
