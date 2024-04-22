@@ -18,6 +18,7 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
+	"sync"
 	"syscall"
 	"time"
 
@@ -50,14 +51,15 @@ func main() {
 	addr := env.GetPort()
 	chanError := make(chan error)
 	chanShutdown := make(chan bool)
+	var mutex = &sync.Mutex{}
 
 	server := &http.Server{
 		Addr:    fmt.Sprintf(":%s", addr),
 		Handler: router,
 	}
 
-	go initHttp(router, server, fundosController)
-	go initListener(fundosController, chanShutdown)
+	go initHttp(router, server, fundosController, mutex)
+	go initListener(fundosController, chanShutdown, mutex)
 	go GraceFullyShutdown(server, chanError, chanShutdown, fundosController)
 
 	if err := <-chanError; err != nil {
@@ -111,8 +113,9 @@ func initHttp(
 	router *gin.Engine,
 	server *http.Server,
 	fundosController controller.FundosControllerInterface,
+	mutex *sync.Mutex,
 ) {
-	routes.InitRoutes(&router.RouterGroup, fundosController)
+	routes.InitRoutes(&router.RouterGroup, fundosController, mutex)
 
 	if err := server.ListenAndServe(); !errors.Is(err, http.ErrServerClosed) {
 		log.Fatal(err)
@@ -121,8 +124,9 @@ func initHttp(
 func initListener(
 	fundosController controller.FundosControllerInterface,
 	chanShutdown chan bool,
+	mutex *sync.Mutex,
 ) {
-	listener.Consume(fundosController, chanShutdown)
+	listener.Consume(fundosController, chanShutdown, mutex)
 }
 
 func initDependenciesController(

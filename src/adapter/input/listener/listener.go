@@ -28,7 +28,11 @@ func initConsume() (sarama.Consumer, *resterrors.RestErr) {
 }
 
 // Consume inicia a escuta nos tópicos Kafka
-func Consume(fundosController controller.FundosControllerInterface, shutdown chan bool) {
+func Consume(
+	fundosController controller.FundosControllerInterface,
+	shutdown chan bool,
+	mutex *sync.Mutex,
+) {
 	topic := env.GetTopics()
 	partition := env.GetPartitions()
 	topics := strings.Split(topic, ",")
@@ -40,7 +44,7 @@ func Consume(fundosController controller.FundosControllerInterface, shutdown cha
 		for _, partition := range partitions {
 			value, _ := strconv.ParseInt(partition, 10, 32)
 			wg.Add(1)
-			go consumeTopic(topic, int32(value), fundosController, shutdown, &wg)
+			go consumeTopic(topic, int32(value), fundosController, shutdown, mutex, &wg)
 		}
 	}
 
@@ -48,7 +52,13 @@ func Consume(fundosController controller.FundosControllerInterface, shutdown cha
 }
 
 // consumeTopic consome mensagens de um tópico específico e uma partição específica
-func consumeTopic(topic string, partition int32, fundosController controller.FundosControllerInterface, shutdown chan bool, wg *sync.WaitGroup) {
+func consumeTopic(
+	topic string,
+	partition int32,
+	fundosController controller.FundosControllerInterface,
+	shutdown chan bool,
+	mutex *sync.Mutex,
+	wg *sync.WaitGroup) {
 	defer wg.Done()
 
 	logger.Info(fmt.Sprintf("Init Listener: %s", topic), "kafka")
@@ -75,11 +85,13 @@ func consumeTopic(topic string, partition int32, fundosController controller.Fun
 			logger.Info(fmt.Sprintf("Shutting down listener for topic %s partition %d", topic, partition), "kafka")
 			return
 		case message := <-partitionConsumer.Messages():
+			mutex.Lock()
 			err := switchCaseTopic(topic, message.Value, fundosController)
 			if err != nil {
 				logger.Error("Error processing message: ", err, "kafka")
 			}
 			logger.Info(fmt.Sprintf("[Consumer] partitionid: %d; offset:%d, value: %s\n", message.Partition, message.Offset, string(message.Value)), "listener")
+			mutex.Unlock()
 		}
 	}
 }
