@@ -460,11 +460,12 @@ func (m *MockFundosExternoPort) EXPECT() *MockFundosExternoPortMockRecorder {
 }
 
 // DownloadArquivosCVMPort mocks base method.
-func (m *MockFundosExternoPort) DownloadArquivosCVMPort(arg0 string, arg1 bool) []string {
+func (m *MockFundosExternoPort) DownloadArquivosCVMPort(arg0 string, arg1 bool) ([]string, *resterrors.RestErr) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "DownloadArquivosCVMPort", arg0, arg1)
 	ret0, _ := ret[0].([]string)
-	return ret0
+	ret1, _ := ret[1].(*resterrors.RestErr)
+	return ret0, ret1
 }
 
 // DownloadArquivosCVMPort indicates an expected call of DownloadArquivosCVMPort.

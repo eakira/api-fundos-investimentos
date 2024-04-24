@@ -122,7 +122,7 @@ type FundosPort interface {
 }
 
 type FundosExternoPort interface {
-	DownloadArquivosCVMPort(string, bool) []string
+	DownloadArquivosCVMPort(string, bool) ([]string, *resterrors.RestErr)
 }
 
 type FundosQueuePort interface {

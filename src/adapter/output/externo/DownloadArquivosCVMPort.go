@@ -3,6 +3,7 @@ package externo
 import (
 	"api-fundos-investimentos/configuration/env"
 	"api-fundos-investimentos/configuration/logger"
+	"api-fundos-investimentos/configuration/resterrors"
 	"archive/zip"
 	"fmt"
 	"io"
@@ -15,14 +16,14 @@ const (
 	permissions = 0777
 )
 
-func (fc *fundosClient) DownloadArquivosCVMPort(file string, baixar bool) []string {
+func (fc *fundosClient) DownloadArquivosCVMPort(file string, baixar bool) ([]string, *resterrors.RestErr) {
 	logger.Info("Iniciando DownloadArquivosCVMPort", "sincronizarFundos")
 
 	storagePath := filepath.Join(env.GetPathArquivosCvm(), filepath.Dir(file))
 	err := os.MkdirAll(storagePath, permissions)
 	if err != nil {
 		logger.Error("Erro ao tentar criar a pasta do arquivo:", err, "sincronizarFundos")
-		return nil
+		return nil, resterrors.NewInternalServerError("Erro ao tentar criar a pasta do arquivo")
 	}
 
 	localFilePath := filepath.Join(storagePath, filepath.Base(file))
@@ -30,7 +31,7 @@ func (fc *fundosClient) DownloadArquivosCVMPort(file string, baixar bool) []stri
 		err = downloadArquivo(env.GetCvmUrl()+file, localFilePath)
 		if err != nil {
 			logger.Error("Erro ao baixar o arquivo:", err, "sincronizarFundos")
-			return nil
+			return nil, resterrors.NewInternalServerError("Erro ao baixar o arquivo")
 		}
 	}
 
@@ -42,7 +43,7 @@ func (fc *fundosClient) DownloadArquivosCVMPort(file string, baixar bool) []stri
 	}
 
 	logger.Info("Download de arquivo concluído com sucesso.", "sincronizarFundos")
-	return nomes
+	return nomes, nil
 }
 
 func downloadArquivo(

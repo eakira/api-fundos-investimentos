@@ -17,7 +17,10 @@ import (
 func (fs *fundosDomainService) DownloadArquivosCVMService(arquivosDomain domain.ArquivosDomain) *resterrors.RestErr {
 	logger.Info("Init DownloadArquivosCVMService", "sincronizarFundos")
 
-	arquivos := fs.externo.DownloadArquivosCVMPort(arquivosDomain.Endereco, arquivosDomain.Baixar)
+	arquivos, err := fs.externo.DownloadArquivosCVMPort(arquivosDomain.Endereco, arquivosDomain.Baixar)
+	if err != nil {
+		return err
+	}
 
 	salvandoDownload(fs, arquivosDomain)
 	salvandoArquivos(fs, arquivosDomain, arquivos)
@@ -26,26 +29,33 @@ func (fs *fundosDomainService) DownloadArquivosCVMService(arquivosDomain domain.
 	return nil
 }
 
-func salvandoDownload(fs *fundosDomainService, arquivosDomain domain.ArquivosDomain) {
+func salvandoDownload(fs *fundosDomainService, arquivosDomain domain.ArquivosDomain) *resterrors.RestErr {
 	arquivosDomain.UpdatedAt = time.Now()
 	arquivosDomain.Download = true
 	arquivosDomain.Status = constants.FINALIZADO
-	fs.repository.UpdateArquivosRepository(arquivosDomain)
+	return fs.repository.UpdateArquivosRepository(arquivosDomain)
 }
 
-func salvandoArquivos(fs *fundosDomainService, arquivosDomain domain.ArquivosDomain, arquivos []string) {
+func salvandoArquivos(fs *fundosDomainService, arquivosDomain domain.ArquivosDomain, arquivos []string) *resterrors.RestErr {
 	for _, endereco := range arquivos {
 		arquivosDomain.CreatedAt = time.Now()
 		arquivosDomain.Endereco = endereco
 		arquivosDomain.Download = true
 		arquivosDomain.Status = constants.DOWNLOAD
-		proximo, _ := fs.repository.CreateArquivosRepository(arquivosDomain)
-		proximoQueueDownload(fs, proximo)
-	}
+		proximo, err := fs.repository.CreateArquivosRepository(arquivosDomain)
+		if err != nil {
+			return err
+		}
 
+		err = proximoQueueDownload(fs, proximo)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
-func proximoQueueDownload(fs *fundosDomainService, arquivosDomain *domain.ArquivosDomain) {
+func proximoQueueDownload(fs *fundosDomainService, arquivosDomain *domain.ArquivosDomain) *resterrors.RestErr {
 	arquivosRequest := &request.FundosCvmArquivosQueueRequest{}
 	copier.Copy(arquivosRequest, arquivosDomain)
 
@@ -55,6 +65,6 @@ func proximoQueueDownload(fs *fundosDomainService, arquivosDomain *domain.Arquiv
 		Queue: "update-all",
 		Data:  data,
 	}
-	fs.queue.Produce(response)
 
+	return fs.queue.Produce(response)
 }
