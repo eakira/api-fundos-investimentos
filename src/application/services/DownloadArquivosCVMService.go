@@ -22,8 +22,15 @@ func (fs *fundosDomainService) DownloadArquivosCVMService(arquivosDomain domain.
 		return err
 	}
 
-	salvandoDownload(fs, arquivosDomain)
-	salvandoArquivos(fs, arquivosDomain, arquivos)
+	err = salvandoDownload(fs, arquivosDomain)
+	if err != nil {
+		return err
+	}
+
+	err = salvandoArquivos(fs, arquivosDomain, arquivos)
+	if err != nil {
+		return err
+	}
 
 	logger.Info("Finish DownloadArquivosCVMService", "sincronizarFundos")
 	return nil
