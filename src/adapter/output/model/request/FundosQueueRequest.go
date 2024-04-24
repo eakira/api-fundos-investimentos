@@ -14,6 +14,7 @@ type FundosCvmArquivosQueueRequest struct {
 	Referencia  string    `json:"referencia"`
 	Status      string    `json:"status"`
 	Download    string    `json:"download"`
+	Baixar      bool      `json:"baixar"`
 	Processado  string    `json:"processado"`
 	CreatedAt   time.Time `json:"created-at"`
 	UpdatedAt   time.Time `json:"update-at"`
