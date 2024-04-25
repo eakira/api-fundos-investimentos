@@ -11,7 +11,7 @@ import (
 
 func TestCreateExtratoServiceService(t *testing.T) {
 
-	repository, service := InitServiceTest(t)
+	repository, service, _, _ := InitServiceTest(t)
 
 	t.Run("when_sending_a_valid_domain_returns_success", func(t *testing.T) {
 

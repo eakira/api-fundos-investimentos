@@ -11,7 +11,7 @@ import (
 
 func TestCreateInformacaoComplementarFundoService(t *testing.T) {
 
-	repository, service := InitServiceTest(t)
+	repository, service, _, _ := InitServiceTest(t)
 
 	t.Run("when_sending_a_valid_domain_returns_success", func(t *testing.T) {
 
@@ -42,7 +42,7 @@ func TestCreateInformacaoComplementarFundoService(t *testing.T) {
 
 func TestCreateInformacaoComplementarDivulgacaoService(t *testing.T) {
 
-	repository, service := InitServiceTest(t)
+	repository, service, _, _ := InitServiceTest(t)
 
 	t.Run("when_sending_a_valid_domain_returns_success", func(t *testing.T) {
 
@@ -73,7 +73,7 @@ func TestCreateInformacaoComplementarDivulgacaoService(t *testing.T) {
 
 func TestCreateInformacaoComplementarCotistaService(t *testing.T) {
 
-	repository, service := InitServiceTest(t)
+	repository, service, _, _ := InitServiceTest(t)
 
 	t.Run("when_sending_a_valid_domain_returns_success", func(t *testing.T) {
 
@@ -104,7 +104,7 @@ func TestCreateInformacaoComplementarCotistaService(t *testing.T) {
 
 func TestCreateInformacaoComplementarServicoPrestadoService(t *testing.T) {
 
-	repository, service := InitServiceTest(t)
+	repository, service, _, _ := InitServiceTest(t)
 
 	t.Run("when_sending_a_valid_domain_returns_success", func(t *testing.T) {
 

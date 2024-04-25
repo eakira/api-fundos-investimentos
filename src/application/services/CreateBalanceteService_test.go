@@ -16,6 +16,8 @@ import (
 func InitServiceTest(t *testing.T) (
 	repository *mocks.MockFundosPort,
 	service input.FundosDomainService,
+	queue *mocks.MockFundosQueuePort,
+	externo *mocks.MockFundosExternoPort,
 ) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
@@ -23,8 +25,8 @@ func InitServiceTest(t *testing.T) (
 	logger.InitTestLogger()
 
 	repository = mocks.NewMockFundosPort(ctrl)
-	queue := mocks.NewMockFundosQueuePort(ctrl)
-	externo := mocks.NewMockFundosExternoPort(ctrl)
+	queue = mocks.NewMockFundosQueuePort(ctrl)
+	externo = mocks.NewMockFundosExternoPort(ctrl)
 	service = NewFundosDomainService(repository, queue, externo)
 
 	return
@@ -32,7 +34,7 @@ func InitServiceTest(t *testing.T) (
 
 func TestCreateBalanceteService(t *testing.T) {
 
-	repository, service := InitServiceTest(t)
+	repository, service, _, _ := InitServiceTest(t)
 
 	t.Run("when_sending_a_valid_domain_returns_success", func(t *testing.T) {
 
