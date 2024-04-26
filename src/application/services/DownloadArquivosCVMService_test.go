@@ -42,7 +42,7 @@ func TestDownloadArquivosCVMService(t *testing.T) {
 		updateDomain.Download = true
 		updateDomain.Status = constants.FINALIZADO
 
-		repository.EXPECT().UpdateArquivosRepository(updateDomain).Do(func(arg domain.ArquivosDomain) {
+		repository.EXPECT().UpdateArquivosRepository(gomock.Any()).DoAndReturn(func(arg domain.ArquivosDomain) {
 			if arg.Endereco != updateDomain.Endereco ||
 				arg.TipoArquivo != updateDomain.TipoArquivo ||
 				arg.Referencia != updateDomain.Referencia ||
@@ -58,7 +58,7 @@ func TestDownloadArquivosCVMService(t *testing.T) {
 		arquivosDomain.Download = true
 		arquivosDomain.Status = constants.DOWNLOAD
 
-		repository.EXPECT().CreateArquivosRepository(gomock.Any()).Do(func(arg domain.ArquivosDomain) {
+		repository.EXPECT().CreateArquivosRepository(gomock.Any()).DoAndReturn(func(arg domain.ArquivosDomain) {
 			if arg.Endereco != arquivosDomain.Endereco ||
 				arg.TipoArquivo != arquivosDomain.TipoArquivo ||
 				arg.Referencia != arquivosDomain.Referencia ||
@@ -71,9 +71,64 @@ func TestDownloadArquivosCVMService(t *testing.T) {
 			}
 		}).Return(&arquivosDomain, nil)
 
-		queue.EXPECT().Produce(gomock.Any()).Do(func(arg response.FundosQueueResponse) {
+		queue.EXPECT().Produce(gomock.Any()).DoAndReturn(func(arg response.FundosQueueResponse) {
 			if arg.Topic != env.GetTopicProcessarArquivos() ||
 				arg.Queue != "update-all" {
+				t.Errorf("Os campos não correspondem")
+			}
+
+		}).Return(nil)
+
+		err := service.DownloadArquivosCVMService(arquivosDomain)
+		assert.Nil(t, err)
+	})
+
+	// Alterando às variaveis para outras não esperadas
+	t.Run("when_sending_a_invalid_domain_Download_returns_error", func(t *testing.T) {
+		repository, service, queue, externo := InitServiceTest(t)
+
+		arquivosDomain := createArquivosDomainForComparison()
+		externo.EXPECT().DownloadArquivosCVMPort(arquivosDomain.Endereco, arquivosDomain.Baixar).Return(
+			[]string{arquivosDomain.Endereco},
+			nil,
+		)
+
+		updateDomain := arquivosDomain
+		updateDomain.Download = false
+		updateDomain.Status = constants.DOWNLOAD
+
+		repository.EXPECT().UpdateArquivosRepository(gomock.Any()).DoAndReturn(func(arg domain.ArquivosDomain) {
+			if arg.Endereco != updateDomain.Endereco ||
+				arg.TipoArquivo != updateDomain.TipoArquivo ||
+				arg.Referencia != updateDomain.Referencia ||
+				arg.Status == updateDomain.Status ||
+				arg.Baixar != updateDomain.Baixar ||
+				arg.Download == updateDomain.Download ||
+				arg.Processado != updateDomain.Processado ||
+				!arg.CreatedAt.Equal(updateDomain.CreatedAt) {
+				t.Errorf("Os campos não correspondem")
+			}
+		}).Return(nil)
+
+		arquivosDomain.Download = false
+		arquivosDomain.Status = constants.FINALIZADO
+
+		repository.EXPECT().CreateArquivosRepository(gomock.Any()).DoAndReturn(func(arg domain.ArquivosDomain) {
+			if arg.Endereco != arquivosDomain.Endereco ||
+				arg.TipoArquivo != arquivosDomain.TipoArquivo ||
+				arg.Referencia != arquivosDomain.Referencia ||
+				arg.Status == arquivosDomain.Status ||
+				arg.Baixar != arquivosDomain.Baixar ||
+				arg.Download == arquivosDomain.Download ||
+				arg.Processado != arquivosDomain.Processado ||
+				!arquivosDomain.CreatedAt.Equal(arquivosDomain.CreatedAt) {
+				t.Errorf("Os campos não correspondem")
+			}
+		}).Return(&arquivosDomain, nil)
+
+		queue.EXPECT().Produce(gomock.Any()).DoAndReturn(func(arg response.FundosQueueResponse) {
+			if arg.Topic == "teste" ||
+				arg.Queue == "update" {
 				t.Errorf("Os campos não correspondem")
 			}
 
