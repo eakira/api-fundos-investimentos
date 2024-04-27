@@ -103,10 +103,10 @@ type ExtratoDomain struct {
 	Prazo                          string
 	PrazoAtualizCota               string
 	PublicoAlvo                    string
-	QtDiaConversaoCota             int
-	PrUniaoMaxQtDiaPagtoCota       int
-	PrUniaoMaxQtDiaPagtoResgate    int
-	PrUniaoMaxQtDiaResgateCotas    int
+	QtDiaConversaoCota             float64
+	PrUniaoMaxQtDiaPagtoCota       float64
+	PrUniaoMaxQtDiaPagtoResgate    float64
+	PrUniaoMaxQtDiaResgateCotas    float64
 	RegAnbima                      string
 	ResultCartIncorpPl             string
 	TaxaAdm                        float64

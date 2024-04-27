@@ -100,10 +100,10 @@ type ExtratoRequest struct {
 	Prazo                          string  `json:"PRAZO,omitempty"`
 	PrazoAtualizCota               string  `json:"PRAZO_ATUALIZ_COTA,omitempty"`
 	PublicoAlvo                    string  `json:"PUBLICO_ALVO,omitempty"`
-	QtDiaConversaoCota             Integer `json:"QT_DIA_CONVERSAO_COTA,omitempty"`
-	PrUniaoMaxQtDiaPagtoCota       Integer `json:"QT_DIA_PAGTO_COTA,omitempty"`
-	PrUniaoMaxQtDiaPagtoResgate    Integer `json:"QT_DIA_PAGTO_RESGATE,omitempty"`
-	PrUniaoMaxQtDiaResgateCotas    Integer `json:"QT_DIA_RESGATE_COTAS,omitempty"`
+	QtDiaConversaoCota             Decimal `json:"QT_DIA_CONVERSAO_COTA,omitempty"`
+	PrUniaoMaxQtDiaPagtoCota       Decimal `json:"QT_DIA_PAGTO_COTA,omitempty"`
+	PrUniaoMaxQtDiaPagtoResgate    Decimal `json:"QT_DIA_PAGTO_RESGATE,omitempty"`
+	PrUniaoMaxQtDiaResgateCotas    Decimal `json:"QT_DIA_RESGATE_COTAS,omitempty"`
 	RegAnbima                      string  `json:"REG_ANBIMA,omitempty"`
 	ResultCartIncorpPl             string  `json:"RESULT_CART_INCORP_PL,omitempty"`
 	TaxaAdm                        Decimal `json:"TAXA_ADM,omitempty"`
