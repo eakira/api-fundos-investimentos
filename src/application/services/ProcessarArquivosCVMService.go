@@ -99,8 +99,7 @@ func processarLinhas(
 			logger.Error("Erro ao serializar JSON: ", err, "sincronizarFundos")
 		}
 	}
-
-	close(jsonChan)
+	defer close(jsonChan)
 }
 
 func definirCollection(
@@ -126,15 +125,19 @@ func definirCollection(
 	}
 }
 
-func mapeandoCollection(arquivosDomain domain.ArquivosDomain, mapCollection map[string]string) string {
-	collection := ""
+func mapeandoCollection(
+	arquivosDomain domain.ArquivosDomain,
+	mapCollection map[string]string,
+) (
+	collection string,
+) {
 	for key, value := range mapCollection {
 		if strings.Contains(arquivosDomain.Endereco, key) {
 			collection = value
 			break
 		}
 	}
-	return collection
+	return
 }
 
 func enviarJSON(mapaJson []map[string]interface{}, jsonChan chan []byte) error {
@@ -151,22 +154,16 @@ func processaCsv(
 	cabecalhoChan chan []string,
 	linhaChan chan []string,
 ) {
-	nomeArquivo := strings.Replace(arquivosDomain.Endereco, ".zip", ".csv", 1)
-	arquivo, err := os.Open(nomeArquivo)
-	if err != nil {
-		logger.Error("Erro ao abrir arquivo CSV: ", err, "sincronizarFundos")
+	reader, arquivo, error := openArquivo(arquivosDomain.Endereco)
+	if error != nil {
+		return
 	}
 	defer arquivo.Close()
-
-	decoder := charmap.ISO8859_1.NewDecoder()
-	reader := csv.NewReader(decoder.Reader(arquivo))
-	reader.Comma = ';'
-	reader.FieldsPerRecord = -1
-	reader.LazyQuotes = true
 
 	cabecalho, err := reader.Read()
 	if err != nil {
 		logger.Error("Erro ao ler cabeçalho do CSV: ", err, "sincronizarFundos")
+		return
 	}
 	cabecalhoChan <- cabecalho
 
@@ -177,12 +174,36 @@ func processaCsv(
 		}
 		if err != nil {
 			logger.Error("Erro ao ler linha do CSV: ", err, "sincronizarFundos")
+			return
 		}
 		linhaChan <- linha
 	}
 
-	close(linhaChan)
-	close(cabecalhoChan)
+	defer close(linhaChan)
+	defer close(cabecalhoChan)
+
+}
+
+func openArquivo(
+	endereco string,
+) (
+	reader *csv.Reader,
+	arquivo *os.File,
+	erro *resterrors.RestErr,
+) {
+	arquivo, err := os.Open(endereco)
+	if err != nil {
+		logger.Error("Erro ao abrir arquivo CSV: ", err, "sincronizarFundos")
+		erro = resterrors.NewInternalServerError("Erro ao abrir arquivo CSV:")
+		return
+	}
+
+	decoder := charmap.ISO8859_1.NewDecoder()
+	reader = csv.NewReader(decoder.Reader(arquivo))
+	reader.Comma = ';'
+	reader.FieldsPerRecord = -1
+	reader.LazyQuotes = true
+	return
 }
 
 func salvarProcessamento(
@@ -211,7 +232,7 @@ func proximoQueue(
 		}
 		mensagemChan <- response
 	}
-	close(mensagemChan)
+	defer close(mensagemChan)
 }
 
 func enviaPersistencia(
@@ -223,6 +244,6 @@ func enviaPersistencia(
 	for data := range jsonChan {
 		CreateMany(fs, data)
 	}
-	close(mensagemChan)
+	defer close(mensagemChan)
 	wg.Done()
 }
