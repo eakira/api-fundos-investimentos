@@ -59,7 +59,7 @@ func GetPathArquivosCvm() string {
 }
 
 func GetLimitInsert() int {
-	value := os.Getenv("LIMIT_INSERT")
+	value := os.Getenv("DATABASE_LIMIT_INSERT")
 	v, _ := strconv.ParseInt(value, 10, 32)
 	return int(v)
 }
