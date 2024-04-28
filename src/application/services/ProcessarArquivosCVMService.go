@@ -26,12 +26,17 @@ func (fs *fundosDomainService) ProcessarArquivosCVMService(arquivosDomain domain
 	linhaChan := make(chan []string, 100000)
 	jsonChan := make(chan []byte, 5000)
 	mensagemChan := make(chan response.FundosQueueResponse, 1000)
-
+	chanError := make(chan *resterrors.RestErr)
 	var wg sync.WaitGroup
 	wg.Add(1)
 
-	go processaArquivo(fs, arquivosDomain, cabecalhoChan, linhaChan, jsonChan, mensagemChan, &wg)
-	salvarProcessamento(fs, arquivosDomain)
+	go processaArquivo(fs, arquivosDomain, cabecalhoChan, linhaChan, jsonChan, mensagemChan, chanError, &wg)
+	salvarProcessamento(fs, arquivosDomain, chanError)
+
+	for err := range chanError {
+		defer wg.Done()
+		return err // Retornar o erro recebido
+	}
 	wg.Wait()
 
 	logger.Info("Processamento de Arquivos CVM Concluído", "sincronizarFundos")
@@ -45,17 +50,18 @@ func processaArquivo(
 	linhaChan chan []string,
 	jsonChan chan []byte,
 	mensagemChan chan response.FundosQueueResponse,
+	chanError chan *resterrors.RestErr,
 	wg *sync.WaitGroup,
 ) {
-	go processaCsv(arquivosDomain, cabecalhoChan, linhaChan)
-	go processarLinhas(arquivosDomain, cabecalhoChan, linhaChan, jsonChan)
+	go processaCsv(arquivosDomain, cabecalhoChan, linhaChan, chanError)
+	go processarLinhas(arquivosDomain, cabecalhoChan, linhaChan, jsonChan, chanError)
 
 	if env.GetPersistenciaLocal() {
 		// Envio para persistência local
-		enviaPersistencia(fs, jsonChan, mensagemChan)
+		enviaPersistencia(fs, jsonChan, mensagemChan, chanError)
 	} else {
 		// Envio para Kafka
-		proximoQueue(jsonChan, mensagemChan)
+		proximoQueue(jsonChan, mensagemChan, chanError)
 		fs.queue.ProduceLote(mensagemChan)
 	}
 	defer wg.Done()
@@ -67,6 +73,7 @@ func processarLinhas(
 	cabecalhoChan chan []string,
 	linhaChan chan []string,
 	jsonChan chan []byte,
+	chanError chan *resterrors.RestErr,
 ) {
 	cabecalho := <-cabecalhoChan
 	tipoArquivo := definirCollection(arquivosDomain)
@@ -154,9 +161,11 @@ func processaCsv(
 	arquivosDomain domain.ArquivosDomain,
 	cabecalhoChan chan []string,
 	linhaChan chan []string,
+	chanError chan *resterrors.RestErr,
 ) {
 	reader, arquivo, error := openArquivo(arquivosDomain.Endereco)
 	if error != nil {
+		chanError <- error
 		return
 	}
 	defer arquivo.Close()
@@ -164,16 +173,19 @@ func processaCsv(
 	cabecalho, err := reader.Read()
 
 	if err != nil {
+		chanError <- resterrors.NewInternalServerError("Erro ao ler cabeçalho do CSV")
 		logger.Error("Erro ao ler cabeçalho do CSV: ", err, "sincronizarFundos")
 		return
 	}
 	cabecalhoChan <- cabecalho
+
 	for {
 		linha, err := reader.Read()
 		if err == io.EOF {
 			break
 		}
 		if err != nil {
+			chanError <- resterrors.NewInternalServerError("Erro ao ler linha do CSV")
 			logger.Error("Erro ao ler linha do CSV: ", err, "sincronizarFundos")
 			return
 		}
@@ -211,6 +223,7 @@ func openArquivo(
 func salvarProcessamento(
 	fs *fundosDomainService,
 	arquivosDomain domain.ArquivosDomain,
+	chanError chan *resterrors.RestErr,
 ) {
 	arquivosDomain.UpdatedAt = time.Now()
 	arquivosDomain.Processado = true
@@ -218,6 +231,7 @@ func salvarProcessamento(
 
 	err := fs.repository.UpdateArquivosRepository(arquivosDomain)
 	if err != nil {
+		chanError <- resterrors.NewInternalServerError("Erro ao salvar processamento: ")
 		logger.Error("Erro ao salvar processamento: ", err, "sincronizarFundos")
 	}
 }
@@ -225,6 +239,7 @@ func salvarProcessamento(
 func proximoQueue(
 	jsonChan chan []byte,
 	mensagemChan chan response.FundosQueueResponse,
+	chanError chan *resterrors.RestErr,
 ) {
 	for data := range jsonChan {
 		response := response.FundosQueueResponse{
@@ -235,15 +250,18 @@ func proximoQueue(
 		mensagemChan <- response
 	}
 	defer close(mensagemChan)
+	defer close(chanError)
 }
 
 func enviaPersistencia(
 	fs *fundosDomainService,
 	jsonChan chan []byte,
 	mensagemChan chan response.FundosQueueResponse,
+	chanError chan *resterrors.RestErr,
 ) {
 	for data := range jsonChan {
 		CreateMany(fs, data)
 	}
 	defer close(mensagemChan)
+	defer close(chanError)
 }
