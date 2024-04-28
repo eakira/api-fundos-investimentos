@@ -14,7 +14,6 @@ import (
 	domain "api-fundos-investimentos/application/domain"
 	resterrors "api-fundos-investimentos/configuration/resterrors"
 	reflect "reflect"
-	sync "sync"
 
 	gomock "go.uber.org/mock/gomock"
 )
@@ -512,15 +511,15 @@ func (mr *MockFundosQueuePortMockRecorder) Produce(arg0 any) *gomock.Call {
 }
 
 // ProduceLote mocks base method.
-func (m *MockFundosQueuePort) ProduceLote(arg0 chan response.FundosQueueResponse, arg1 *sync.WaitGroup) *resterrors.RestErr {
+func (m *MockFundosQueuePort) ProduceLote(arg0 chan response.FundosQueueResponse) *resterrors.RestErr {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "ProduceLote", arg0, arg1)
+	ret := m.ctrl.Call(m, "ProduceLote", arg0)
 	ret0, _ := ret[0].(*resterrors.RestErr)
 	return ret0
 }
 
 // ProduceLote indicates an expected call of ProduceLote.
-func (mr *MockFundosQueuePortMockRecorder) ProduceLote(arg0, arg1 any) *gomock.Call {
+func (mr *MockFundosQueuePortMockRecorder) ProduceLote(arg0 any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ProduceLote", reflect.TypeOf((*MockFundosQueuePort)(nil).ProduceLote), arg0, arg1)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ProduceLote", reflect.TypeOf((*MockFundosQueuePort)(nil).ProduceLote), arg0)
 }
