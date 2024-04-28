@@ -59,11 +59,12 @@ func GetPathArquivosCvm() string {
 }
 
 func GetLimitInsert() int {
-	return 200
+	value := os.Getenv("LIMIT_INSERT")
+	v, _ := strconv.ParseInt(value, 10, 32)
+	return int(v)
 }
 
 func GetNumParticoes() int32 {
-
 	value := os.Getenv("NUM_PARTITIONS")
 	v, _ := strconv.ParseInt(value, 10, 32)
 	return int32(v)
