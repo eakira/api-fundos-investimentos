@@ -27,16 +27,15 @@ func createArquivosDomainParaProcessamento() domain.ArquivosDomain {
 
 func TestProcessarArquivosCVMService(t *testing.T) {
 
-	t.Run("when_sending_a_valid_domain_returns_success", func(t *testing.T) {
-		repository, service, queue, externo := InitServiceTest(t)
+	// Enviando um caso de sucesso como fila
+	t.Run("processing_a_queued_file_returning_success", func(t *testing.T) {
+		repository, service, queue, _ := InitServiceTest(t)
 		err := os.Setenv("DATABASE_LIMIT_INSERT", "6")
+		assert.Nil(t, err)
+		err = os.Setenv("PERSISTENCIA", "fila")
 		assert.Nil(t, err)
 
 		arquivosDomain := createArquivosDomainParaProcessamento()
-		externo.EXPECT().DownloadArquivosCVMPort(arquivosDomain.Endereco, arquivosDomain.Baixar).Return(
-			[]string{arquivosDomain.Endereco},
-			nil,
-		)
 
 		updateDomain := arquivosDomain
 		updateDomain.Processado = true
@@ -59,6 +58,40 @@ func TestProcessarArquivosCVMService(t *testing.T) {
 
 		err = service.ProcessarArquivosCVMService(arquivosDomain)
 		assert.Nil(t, err)
+	})
+
+	// Erro ao Abrir um arquivo
+	t.Run("processing_a_invalid_file_returning_error", func(t *testing.T) {
+		repository, service, queue, _ := InitServiceTest(t)
+		err := os.Setenv("DATABASE_LIMIT_INSERT", "6")
+		assert.Nil(t, err)
+		err = os.Setenv("PERSISTENCIA", "fila")
+		assert.Nil(t, err)
+
+		arquivosDomain := createArquivosDomainParaProcessamento()
+		arquivosDomain.Endereco = "ArquivoQueNãoExiste.csv"
+
+		updateDomain := arquivosDomain
+		updateDomain.Processado = true
+		updateDomain.Status = constants.PROCESSANDO
+
+		repository.EXPECT().UpdateArquivosRepository(gomock.Any()).DoAndReturn(func(arg domain.ArquivosDomain) {
+			if arg.Endereco != updateDomain.Endereco ||
+				arg.TipoArquivo != updateDomain.TipoArquivo ||
+				arg.Referencia != updateDomain.Referencia ||
+				arg.Status != updateDomain.Status ||
+				arg.Baixar != updateDomain.Baixar ||
+				arg.Download != updateDomain.Download ||
+				arg.Processado != updateDomain.Processado ||
+				!arg.CreatedAt.Equal(updateDomain.CreatedAt) {
+				t.Errorf("Os campos não correspondem")
+			}
+		}).Return(nil)
+
+		queue.EXPECT().ProduceLote(gomock.Any()).Return(nil)
+
+		err = service.ProcessarArquivosCVMService(arquivosDomain)
+		assert.NotNil(t, err)
 	})
 
 }
