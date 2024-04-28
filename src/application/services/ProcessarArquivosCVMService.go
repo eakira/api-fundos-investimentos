@@ -52,12 +52,13 @@ func processaArquivo(
 
 	if env.GetPersistenciaLocal() {
 		// Envio para persistência local
-		enviaPersistencia(fs, jsonChan, mensagemChan, wg)
+		enviaPersistencia(fs, jsonChan, mensagemChan)
 	} else {
 		// Envio para Kafka
 		proximoQueue(jsonChan, mensagemChan)
-		fs.queue.ProduceLote(mensagemChan, wg)
+		fs.queue.ProduceLote(mensagemChan)
 	}
+	defer wg.Done()
 
 }
 
@@ -161,12 +162,12 @@ func processaCsv(
 	defer arquivo.Close()
 
 	cabecalho, err := reader.Read()
+
 	if err != nil {
 		logger.Error("Erro ao ler cabeçalho do CSV: ", err, "sincronizarFundos")
 		return
 	}
 	cabecalhoChan <- cabecalho
-
 	for {
 		linha, err := reader.Read()
 		if err == io.EOF {
@@ -192,6 +193,7 @@ func openArquivo(
 	erro *resterrors.RestErr,
 ) {
 	arquivo, err := os.Open(endereco)
+
 	if err != nil {
 		logger.Error("Erro ao abrir arquivo CSV: ", err, "sincronizarFundos")
 		erro = resterrors.NewInternalServerError("Erro ao abrir arquivo CSV:")
@@ -239,11 +241,9 @@ func enviaPersistencia(
 	fs *fundosDomainService,
 	jsonChan chan []byte,
 	mensagemChan chan response.FundosQueueResponse,
-	wg *sync.WaitGroup,
 ) {
 	for data := range jsonChan {
 		CreateMany(fs, data)
 	}
 	defer close(mensagemChan)
-	wg.Done()
 }

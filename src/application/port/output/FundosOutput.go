@@ -4,7 +4,6 @@ import (
 	"api-fundos-investimentos/adapter/output/model/response"
 	"api-fundos-investimentos/application/domain"
 	"api-fundos-investimentos/configuration/resterrors"
-	"sync"
 )
 
 type FundosPort interface {
@@ -127,5 +126,5 @@ type FundosExternoPort interface {
 
 type FundosQueuePort interface {
 	Produce(response.FundosQueueResponse) *resterrors.RestErr
-	ProduceLote(chan response.FundosQueueResponse, *sync.WaitGroup) *resterrors.RestErr
+	ProduceLote(chan response.FundosQueueResponse) *resterrors.RestErr
 }

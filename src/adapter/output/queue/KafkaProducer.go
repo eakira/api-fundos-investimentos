@@ -6,7 +6,6 @@ import (
 	"api-fundos-investimentos/configuration/logger"
 	"api-fundos-investimentos/configuration/resterrors"
 	"fmt"
-	"sync"
 
 	"github.com/IBM/sarama"
 )
@@ -57,7 +56,6 @@ func initProduce() (sarama.SyncProducer, *resterrors.RestErr) {
 
 func (nc *queueProduce) ProduceLote(
 	responseChan chan response.FundosQueueResponse,
-	wg *sync.WaitGroup,
 ) *resterrors.RestErr {
 	logger.Info("Init Kafka Produce", "kafkaProduce")
 
@@ -76,7 +74,6 @@ func (nc *queueProduce) ProduceLote(
 			"kafkaProduce",
 		)
 	}
-	wg.Done()
 
 	logger.Info("Finish Kafka Produce", "kafkaProduce")
 
