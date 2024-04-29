@@ -94,4 +94,72 @@ func TestProcessarArquivosCVMService(t *testing.T) {
 		assert.NotNil(t, err)
 	})
 
+	// Arquivo vazio
+	t.Run("processing_a_blank_file_returning_error", func(t *testing.T) {
+		repository, service, queue, _ := InitServiceTest(t)
+		err := os.Setenv("DATABASE_LIMIT_INSERT", "6")
+		assert.Nil(t, err)
+		err = os.Setenv("PERSISTENCIA", "fila")
+		assert.Nil(t, err)
+
+		arquivosDomain := createArquivosDomainParaProcessamento()
+		arquivosDomain.Endereco = "../../storage/cvm/mock/blank.csv"
+
+		updateDomain := arquivosDomain
+		updateDomain.Processado = true
+		updateDomain.Status = constants.PROCESSANDO
+
+		repository.EXPECT().UpdateArquivosRepository(gomock.Any()).DoAndReturn(func(arg domain.ArquivosDomain) {
+			if arg.Endereco != updateDomain.Endereco ||
+				arg.TipoArquivo != updateDomain.TipoArquivo ||
+				arg.Referencia != updateDomain.Referencia ||
+				arg.Status != updateDomain.Status ||
+				arg.Baixar != updateDomain.Baixar ||
+				arg.Download != updateDomain.Download ||
+				arg.Processado != updateDomain.Processado ||
+				!arg.CreatedAt.Equal(updateDomain.CreatedAt) {
+				t.Errorf("Os campos não correspondem")
+			}
+		}).Return(nil)
+
+		queue.EXPECT().ProduceLote(gomock.Any()).Return(nil)
+
+		err = service.ProcessarArquivosCVMService(arquivosDomain)
+		assert.NotNil(t, err)
+	})
+
+	// Arquivo apenas com cabeçalho
+	t.Run("processing_file_with_header_only_returning_error", func(t *testing.T) {
+		repository, service, queue, _ := InitServiceTest(t)
+		err := os.Setenv("DATABASE_LIMIT_INSERT", "6")
+		assert.Nil(t, err)
+		err = os.Setenv("PERSISTENCIA", "fila")
+		assert.Nil(t, err)
+
+		arquivosDomain := createArquivosDomainParaProcessamento()
+		arquivosDomain.Endereco = "../../storage/cvm/mock/apenas_cabecalho.csv"
+
+		updateDomain := arquivosDomain
+		updateDomain.Processado = true
+		updateDomain.Status = constants.PROCESSANDO
+
+		repository.EXPECT().UpdateArquivosRepository(gomock.Any()).DoAndReturn(func(arg domain.ArquivosDomain) {
+			if arg.Endereco != updateDomain.Endereco ||
+				arg.TipoArquivo != updateDomain.TipoArquivo ||
+				arg.Referencia != updateDomain.Referencia ||
+				arg.Status != updateDomain.Status ||
+				arg.Baixar != updateDomain.Baixar ||
+				arg.Download != updateDomain.Download ||
+				arg.Processado != updateDomain.Processado ||
+				!arg.CreatedAt.Equal(updateDomain.CreatedAt) {
+				t.Errorf("Os campos não correspondem")
+			}
+		}).Return(nil)
+
+		queue.EXPECT().ProduceLote(gomock.Any()).Return(nil)
+
+		err = service.ProcessarArquivosCVMService(arquivosDomain)
+		assert.NotNil(t, err)
+	})
+
 }
