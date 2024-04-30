@@ -30,8 +30,11 @@ func (fs *fundosDomainService) ProcessarArquivosCVMService(arquivosDomain domain
 	var wg sync.WaitGroup
 	wg.Add(1)
 
-	go processaArquivo(fs, arquivosDomain, cabecalhoChan, linhaChan, jsonChan, mensagemChan, chanError, &wg)
-	salvarProcessamento(fs, arquivosDomain, chanError)
+	go fs.processaArquivo(arquivosDomain, cabecalhoChan, linhaChan, jsonChan, mensagemChan, chanError, &wg)
+	err := salvarProcessamento(fs, arquivosDomain)
+	if err != nil {
+		return err
+	}
 
 	for err := range chanError {
 		defer wg.Done()
@@ -43,8 +46,7 @@ func (fs *fundosDomainService) ProcessarArquivosCVMService(arquivosDomain domain
 	return nil
 }
 
-func processaArquivo(
-	fs *fundosDomainService,
+func (fs *fundosDomainService) processaArquivo(
 	arquivosDomain domain.ArquivosDomain,
 	cabecalhoChan chan []string,
 	linhaChan chan []string,
@@ -58,7 +60,7 @@ func processaArquivo(
 
 	if env.GetPersistenciaLocal() {
 		// Envio para persistência local
-		enviaPersistencia(fs, jsonChan, mensagemChan, chanError)
+		fs.enviaPersistencia(jsonChan, mensagemChan, chanError)
 	} else {
 		// Envio para Kafka
 		proximoQueue(jsonChan, mensagemChan, chanError)
@@ -223,17 +225,12 @@ func openArquivo(
 func salvarProcessamento(
 	fs *fundosDomainService,
 	arquivosDomain domain.ArquivosDomain,
-	chanError chan *resterrors.RestErr,
-) {
+) *resterrors.RestErr {
 	arquivosDomain.UpdatedAt = time.Now()
 	arquivosDomain.Processado = true
 	arquivosDomain.Status = constants.PROCESSANDO
 
-	err := fs.repository.UpdateArquivosRepository(arquivosDomain)
-	if err != nil {
-		chanError <- resterrors.NewInternalServerError("Erro ao salvar processamento: ")
-		logger.Error("Erro ao salvar processamento: ", err, "sincronizarFundos")
-	}
+	return fs.repository.UpdateArquivosRepository(arquivosDomain)
 }
 
 func proximoQueue(
@@ -253,15 +250,18 @@ func proximoQueue(
 	defer close(chanError)
 }
 
-func enviaPersistencia(
-	fs *fundosDomainService,
+func (fs *fundosDomainService) enviaPersistencia(
 	jsonChan chan []byte,
 	mensagemChan chan response.FundosQueueResponse,
 	chanError chan *resterrors.RestErr,
-) {
+) *resterrors.RestErr {
 	for data := range jsonChan {
-		CreateMany(fs, data)
+		err := fs.CreateMany(data)
+		if err != nil {
+			return err
+		}
 	}
 	defer close(mensagemChan)
 	defer close(chanError)
+	return nil
 }
