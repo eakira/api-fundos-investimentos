@@ -10,8 +10,8 @@ import (
 	"github.com/jinzhu/copier"
 )
 
-func CreateMany(
-	fs *fundosDomainService,
+// TODO: REFATORAR
+func (fs *fundosDomainService) CreateMany(
 	data []byte,
 ) *resterrors.RestErr {
 	logger.Info("Init FundosPersistenciaDadosListener", "sincronizarFundos")
@@ -28,8 +28,10 @@ func CreateMany(
 		json.Unmarshal(data, &dados)
 		domain := &[]domain.FundosDomain{}
 		copier.Copy(domain, dados)
-		fs.CreateFundosService(*domain)
-
+		erro := fs.CreateFundosService(*domain)
+		if erro != nil {
+			return erro
+		}
 	case "balancete":
 		dados := []request.BalanceteRequest{}
 		json.Unmarshal(data, &dados)
