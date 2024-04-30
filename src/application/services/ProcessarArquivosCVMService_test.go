@@ -3,6 +3,7 @@ package services
 import (
 	"api-fundos-investimentos/application/constants"
 	"api-fundos-investimentos/application/domain"
+	"api-fundos-investimentos/configuration/resterrors"
 	"os"
 	"testing"
 	"time"
@@ -58,6 +59,30 @@ func TestProcessarArquivosCVMService(t *testing.T) {
 
 		err = service.ProcessarArquivosCVMService(arquivosDomain)
 		assert.Nil(t, err)
+	})
+
+	// Erro ao salvar o arquivo
+	t.Run("processing_a_invalid_domain_returning_error", func(t *testing.T) {
+		repository, service, queue, _ := InitServiceTest(t)
+		err := os.Setenv("DATABASE_LIMIT_INSERT", "6")
+		assert.Nil(t, err)
+		err = os.Setenv("PERSISTENCIA", "fila")
+		assert.Nil(t, err)
+
+		arquivosDomain := createArquivosDomainParaProcessamento()
+
+		updateDomain := arquivosDomain
+		updateDomain.Processado = true
+		updateDomain.Status = constants.PROCESSANDO
+
+		repository.EXPECT().UpdateArquivosRepository(gomock.Any()).Return(
+			resterrors.NewInternalServerError("Erro pra teste"),
+		)
+
+		queue.EXPECT().ProduceLote(gomock.Any()).Return(nil)
+
+		err = service.ProcessarArquivosCVMService(arquivosDomain)
+		assert.NotNil(t, err)
 	})
 
 	// Erro ao Abrir um arquivo
@@ -129,16 +154,14 @@ func TestProcessarArquivosCVMService(t *testing.T) {
 	})
 
 	// Arquivo apenas com cabeçalho
-	t.Run("processing_file_with_header_only_returning_error", func(t *testing.T) {
-		repository, service, queue, _ := InitServiceTest(t)
+	t.Run("processing_cadastros_returning_sucess", func(t *testing.T) {
+		repository, service, _, _ := InitServiceTest(t)
 		err := os.Setenv("DATABASE_LIMIT_INSERT", "6")
 		assert.Nil(t, err)
-		err = os.Setenv("PERSISTENCIA", "fila")
+		err = os.Setenv("PERSISTENCIA", "local")
 		assert.Nil(t, err)
 
 		arquivosDomain := createArquivosDomainParaProcessamento()
-		arquivosDomain.Endereco = "../../storage/cvm/mock/apenas_cabecalho.csv"
-
 		updateDomain := arquivosDomain
 		updateDomain.Processado = true
 		updateDomain.Status = constants.PROCESSANDO
@@ -156,10 +179,12 @@ func TestProcessarArquivosCVMService(t *testing.T) {
 			}
 		}).Return(nil)
 
-		queue.EXPECT().ProduceLote(gomock.Any()).Return(nil)
+		repository.EXPECT().CreateManyFundosRepository(gomock.Any()).Return(
+			nil,
+		)
 
 		err = service.ProcessarArquivosCVMService(arquivosDomain)
-		assert.NotNil(t, err)
+		assert.Nil(t, err)
 	})
 
 }
