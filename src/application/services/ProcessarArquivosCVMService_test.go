@@ -943,4 +943,172 @@ func TestProcessarArquivosCVMService(t *testing.T) {
 		assert.NotNil(t, err)
 	})
 
+	// Processando o arquivo de lamina localmente
+	t.Run("processing_a_file_lamina_returning_sucess", func(t *testing.T) {
+		repository, service, _, _ := InitServiceTest(t)
+		err := os.Setenv("DATABASE_LIMIT_INSERT", "100")
+		assert.Nil(t, err)
+		err = os.Setenv("PERSISTENCIA", "local")
+		assert.Nil(t, err)
+
+		arquivosDomain := createArquivosDomainParaProcessamento()
+		arquivosDomain.Endereco = "../../storage/mock/lamina_fi_202402.csv"
+		arquivosDomain.TipoArquivo = "lamina"
+
+		repository.EXPECT().UpdateArquivosRepository(gomock.Any()).Return(nil)
+
+		repository.EXPECT().CreateManyLaminaRepository(gomock.Any()).Return(nil)
+
+		err = service.ProcessarArquivosCVMService(arquivosDomain)
+		assert.Nil(t, err)
+	})
+
+	// Processando o arquivo de lamina localmente com erro
+	t.Run("processing_a_file_lamina_returning_error", func(t *testing.T) {
+		repository, service, _, _ := InitServiceTest(t)
+		err := os.Setenv("DATABASE_LIMIT_INSERT", "100")
+		assert.Nil(t, err)
+		err = os.Setenv("PERSISTENCIA", "local")
+		assert.Nil(t, err)
+
+		arquivosDomain := createArquivosDomainParaProcessamento()
+		arquivosDomain.Endereco = "../../storage/mock/lamina_fi_202402.csv"
+		arquivosDomain.TipoArquivo = "lamina"
+
+		repository.EXPECT().UpdateArquivosRepository(gomock.Any()).Return(nil)
+
+		repository.EXPECT().CreateManyLaminaRepository(gomock.Any()).Return(
+			resterrors.NewInternalServerError("Erro pra teste"),
+		)
+
+		err = service.ProcessarArquivosCVMService(arquivosDomain)
+		assert.NotNil(t, err)
+	})
+
+	// Processando o arquivo de lamina da carteira localmente
+	t.Run("processing_a_file_lamina_da_carteira_returning_sucess", func(t *testing.T) {
+		repository, service, _, _ := InitServiceTest(t)
+		err := os.Setenv("DATABASE_LIMIT_INSERT", "100")
+		assert.Nil(t, err)
+		err = os.Setenv("PERSISTENCIA", "local")
+		assert.Nil(t, err)
+
+		arquivosDomain := createArquivosDomainParaProcessamento()
+		arquivosDomain.Endereco = "../../storage/mock/lamina_fi_carteira_202110.csv"
+		arquivosDomain.TipoArquivo = "lamina"
+
+		repository.EXPECT().UpdateArquivosRepository(gomock.Any()).Return(nil)
+
+		repository.EXPECT().CreateManyLaminaCarteiraRepository(gomock.Any()).Return(nil)
+
+		err = service.ProcessarArquivosCVMService(arquivosDomain)
+		assert.Nil(t, err)
+	})
+
+	// Processando o arquivo de lamina da carteira localmente com erro
+	t.Run("processing_a_file_lamina_da_carteira_returning_error", func(t *testing.T) {
+		repository, service, _, _ := InitServiceTest(t)
+		err := os.Setenv("DATABASE_LIMIT_INSERT", "100")
+		assert.Nil(t, err)
+		err = os.Setenv("PERSISTENCIA", "local")
+		assert.Nil(t, err)
+
+		arquivosDomain := createArquivosDomainParaProcessamento()
+		arquivosDomain.Endereco = "../../storage/mock/lamina_fi_carteira_202110.csv"
+		arquivosDomain.TipoArquivo = "lamina"
+
+		repository.EXPECT().UpdateArquivosRepository(gomock.Any()).Return(nil)
+
+		repository.EXPECT().CreateManyLaminaCarteiraRepository(gomock.Any()).Return(
+			resterrors.NewInternalServerError("Erro pra teste"),
+		)
+
+		err = service.ProcessarArquivosCVMService(arquivosDomain)
+		assert.NotNil(t, err)
+	})
+
+	// Processando o arquivo de lamina rentabilidade do mes localmente
+	t.Run("processing_a_file_lamina_rentabilidade_mes_returning_sucess", func(t *testing.T) {
+		repository, service, _, _ := InitServiceTest(t)
+		err := os.Setenv("DATABASE_LIMIT_INSERT", "100")
+		assert.Nil(t, err)
+		err = os.Setenv("PERSISTENCIA", "local")
+		assert.Nil(t, err)
+
+		arquivosDomain := createArquivosDomainParaProcessamento()
+		arquivosDomain.Endereco = "../../storage/mock/lamina_fi_rentab_mes_202110.csv"
+		arquivosDomain.TipoArquivo = "lamina"
+
+		repository.EXPECT().UpdateArquivosRepository(gomock.Any()).Return(nil)
+
+		repository.EXPECT().CreateManyLaminaRentabilidadeMesRepository(gomock.Any()).Return(nil)
+
+		err = service.ProcessarArquivosCVMService(arquivosDomain)
+		assert.Nil(t, err)
+	})
+
+	// Processando o arquivo de lamina rentabilidade do mes localmente com erro
+	t.Run("processing_a_file_lamina_rentabilidade_mes_returning_error", func(t *testing.T) {
+		repository, service, _, _ := InitServiceTest(t)
+		err := os.Setenv("DATABASE_LIMIT_INSERT", "100")
+		assert.Nil(t, err)
+		err = os.Setenv("PERSISTENCIA", "local")
+		assert.Nil(t, err)
+
+		arquivosDomain := createArquivosDomainParaProcessamento()
+		arquivosDomain.Endereco = "../../storage/mock/lamina_fi_rentab_mes_202110.csv"
+		arquivosDomain.TipoArquivo = "lamina"
+
+		repository.EXPECT().UpdateArquivosRepository(gomock.Any()).Return(nil)
+
+		repository.EXPECT().CreateManyLaminaRentabilidadeMesRepository(gomock.Any()).Return(
+			resterrors.NewInternalServerError("Erro pra teste"),
+		)
+
+		err = service.ProcessarArquivosCVMService(arquivosDomain)
+		assert.NotNil(t, err)
+	})
+
+	// Processando o arquivo de lamina rentabilidade do ano localmente
+	t.Run("processing_a_file_lamina_rentabilidade_ano_returning_sucess", func(t *testing.T) {
+		repository, service, _, _ := InitServiceTest(t)
+		err := os.Setenv("DATABASE_LIMIT_INSERT", "100")
+		assert.Nil(t, err)
+		err = os.Setenv("PERSISTENCIA", "local")
+		assert.Nil(t, err)
+
+		arquivosDomain := createArquivosDomainParaProcessamento()
+		arquivosDomain.Endereco = "../../storage/mock/lamina_fi_rentab_ano_202110.csv"
+		arquivosDomain.TipoArquivo = "lamina"
+
+		repository.EXPECT().UpdateArquivosRepository(gomock.Any()).Return(nil)
+
+		repository.EXPECT().CreateManyLaminaRentabilidadeAnoRepository(gomock.Any()).Return(nil)
+
+		err = service.ProcessarArquivosCVMService(arquivosDomain)
+		assert.Nil(t, err)
+	})
+
+	// Processando o arquivo de lamina rentabilidade do ano localmente com erro
+	t.Run("processing_a_file_lamina_rentabilidade_ano_returning_error", func(t *testing.T) {
+		repository, service, _, _ := InitServiceTest(t)
+		err := os.Setenv("DATABASE_LIMIT_INSERT", "100")
+		assert.Nil(t, err)
+		err = os.Setenv("PERSISTENCIA", "local")
+		assert.Nil(t, err)
+
+		arquivosDomain := createArquivosDomainParaProcessamento()
+		arquivosDomain.Endereco = "../../storage/mock/lamina_fi_rentab_ano_202110.csv"
+		arquivosDomain.TipoArquivo = "lamina"
+
+		repository.EXPECT().UpdateArquivosRepository(gomock.Any()).Return(nil)
+
+		repository.EXPECT().CreateManyLaminaRentabilidadeAnoRepository(gomock.Any()).Return(
+			resterrors.NewInternalServerError("Erro pra teste"),
+		)
+
+		err = service.ProcessarArquivosCVMService(arquivosDomain)
+		assert.NotNil(t, err)
+	})
+
 }

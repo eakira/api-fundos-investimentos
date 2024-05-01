@@ -207,28 +207,40 @@ func (fs *fundosDomainService) CreateMany(
 		json.Unmarshal(data, &dados)
 		domain := &[]domain.LaminaDomain{}
 		copier.Copy(domain, dados)
-		fs.CreateLaminaService(*domain)
+		erro := fs.CreateLaminaService(*domain)
+		if erro != nil {
+			return erro
+		}
 
 	case "lamina-carteira":
 		dados := []request.LaminaCarteiraRequest{}
 		json.Unmarshal(data, &dados)
 		domain := &[]domain.LaminaCarteiraDomain{}
 		copier.Copy(domain, dados)
-		fs.CreateLaminaCarteiraService(*domain)
+		erro := fs.CreateLaminaCarteiraService(*domain)
+		if erro != nil {
+			return erro
+		}
 
 	case "lamina-rentabilidade-ano":
 		dados := []request.LaminaRentabilidadeAnoRequest{}
 		json.Unmarshal(data, &dados)
 		domain := &[]domain.LaminaRentabilidadeAnoDomain{}
 		copier.Copy(domain, dados)
-		fs.CreateLaminaRentabilidadeAnoService(*domain)
+		erro := fs.CreateLaminaRentabilidadeAnoService(*domain)
+		if erro != nil {
+			return erro
+		}
 
 	case "lamina-rentabilidade-mes":
 		dados := []request.LaminaRentabilidadeMesRequest{}
 		json.Unmarshal(data, &dados)
 		domain := &[]domain.LaminaRentabilidadeMesDomain{}
 		copier.Copy(domain, dados)
-		fs.CreateLaminaRentabilidadeMesService(*domain)
+		erro := fs.CreateLaminaRentabilidadeMesService(*domain)
+		if erro != nil {
+			return erro
+		}
 
 	case "extrato":
 		dados := []request.ExtratoRequest{}
