@@ -6,6 +6,7 @@ import (
 	"api-fundos-investimentos/configuration/resterrors"
 )
 
+// Cotas de fundos
 func (fs *fundosDomainService) CreateCdaFundosInvestimentosService(fundosInvestimentos []domain.CdaFundosInvestimentosDomain) *resterrors.RestErr {
 	logger.Info("Init CreateCdaFundosInvestimentosService", "sincronizarFundos")
 
