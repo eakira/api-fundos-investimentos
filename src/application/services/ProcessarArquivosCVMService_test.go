@@ -333,7 +333,7 @@ func TestProcessarArquivosCVMService(t *testing.T) {
 		assert.Nil(t, err)
 	})
 
-	// Processando o arquivo de cotas localmente
+	// Processando o arquivo de cotas localmente com erro
 	t.Run("processing_a_cotas_locally_returning_error", func(t *testing.T) {
 		repository, service, _, _ := InitServiceTest(t)
 		err := os.Setenv("DATABASE_LIMIT_INSERT", "100")
@@ -356,7 +356,7 @@ func TestProcessarArquivosCVMService(t *testing.T) {
 	})
 
 	// Processando o arquivo de swap localmente
-	t.Run("processing_a_cotas_locally_returning_sucess", func(t *testing.T) {
+	t.Run("processing_a_swap_locally_returning_sucess", func(t *testing.T) {
 		repository, service, _, _ := InitServiceTest(t)
 		err := os.Setenv("DATABASE_LIMIT_INSERT", "100")
 		assert.Nil(t, err)
@@ -375,8 +375,8 @@ func TestProcessarArquivosCVMService(t *testing.T) {
 		assert.Nil(t, err)
 	})
 
-	// Processando o arquivo de swap localmente
-	t.Run("processing_a_cotas_locally_returning_error", func(t *testing.T) {
+	// Processando o arquivo de swap localmente com erro
+	t.Run("processing_a_swap_locally_returning_error", func(t *testing.T) {
 		repository, service, _, _ := InitServiceTest(t)
 		err := os.Setenv("DATABASE_LIMIT_INSERT", "100")
 		assert.Nil(t, err)
@@ -390,6 +390,48 @@ func TestProcessarArquivosCVMService(t *testing.T) {
 		repository.EXPECT().UpdateArquivosRepository(gomock.Any()).Return(nil)
 
 		repository.EXPECT().CreateManyCdaSwapRepository(gomock.Any()).Return(
+			resterrors.NewInternalServerError("Erro pra teste"),
+		)
+
+		err = service.ProcessarArquivosCVMService(arquivosDomain)
+		assert.NotNil(t, err)
+	})
+
+	// Processando o arquivo de demais ativos localmente
+	t.Run("processing_a_demais_ativos_locally_returning_sucess", func(t *testing.T) {
+		repository, service, _, _ := InitServiceTest(t)
+		err := os.Setenv("DATABASE_LIMIT_INSERT", "100")
+		assert.Nil(t, err)
+		err = os.Setenv("PERSISTENCIA", "local")
+		assert.Nil(t, err)
+
+		arquivosDomain := createArquivosDomainParaProcessamento()
+		arquivosDomain.Endereco = "../../storage//mock/cda_fi_BLC_4_202402.csv"
+		arquivosDomain.TipoArquivo = "cda"
+
+		repository.EXPECT().UpdateArquivosRepository(gomock.Any()).Return(nil)
+
+		repository.EXPECT().CreateManyCdaDemaisAtivosRepository(gomock.Any()).Return(nil)
+
+		err = service.ProcessarArquivosCVMService(arquivosDomain)
+		assert.Nil(t, err)
+	})
+
+	// Processando o arquivo de demais ativos localmente
+	t.Run("processing_a_demais_ativos_locally_returning_error", func(t *testing.T) {
+		repository, service, _, _ := InitServiceTest(t)
+		err := os.Setenv("DATABASE_LIMIT_INSERT", "100")
+		assert.Nil(t, err)
+		err = os.Setenv("PERSISTENCIA", "local")
+		assert.Nil(t, err)
+
+		arquivosDomain := createArquivosDomainParaProcessamento()
+		arquivosDomain.Endereco = "../../storage//mock/cda_fi_BLC_4_202402.csv"
+		arquivosDomain.TipoArquivo = "cda"
+
+		repository.EXPECT().UpdateArquivosRepository(gomock.Any()).Return(nil)
+
+		repository.EXPECT().CreateManyCdaDemaisAtivosRepository(gomock.Any()).Return(
 			resterrors.NewInternalServerError("Erro pra teste"),
 		)
 
