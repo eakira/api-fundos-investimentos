@@ -84,7 +84,7 @@ func GetMapCda() map[string]string {
 		"BLC_7":       "cda-blc-7",
 		"BLC_8":       "cda-blc-8",
 		"fi_CONFID_":  "cda-confidencial",
-		"fiim":        "cda-fiim",
+		"fiim_2":      "cda-fiim",
 		"fiim_CONFID": "cda-fiim-confidencial",
 		"fi_PL":       "cda-patrimonio-liquido",
 	}
