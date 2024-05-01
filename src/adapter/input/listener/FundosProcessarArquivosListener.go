@@ -6,7 +6,6 @@ import (
 	"api-fundos-investimentos/configuration/logger"
 	"api-fundos-investimentos/configuration/resterrors"
 	"encoding/json"
-	"fmt"
 )
 
 func FundosProcessarArquivosListener(
@@ -20,9 +19,6 @@ func FundosProcessarArquivosListener(
 	if err != nil {
 		logger.Error("json Unmarshal error", err, "sincronizarFundos")
 	}
-	logger.Info(
-		fmt.Sprintf("json %s", dados),
-		"sincronizarFundos")
 
 	controller.ProcessarArquivosCVMController(dados)
 
