@@ -192,4 +192,101 @@ func TestProcessarArquivosCVMService(t *testing.T) {
 		err = service.ProcessarArquivosCVMService(arquivosDomain)
 		assert.Nil(t, err)
 	})
+
+	// Processando o arquivo de cadastro localmente
+	t.Run("processing_a_funds_locally_returning_error", func(t *testing.T) {
+		repository, service, _, _ := InitServiceTest(t)
+		err := os.Setenv("DATABASE_LIMIT_INSERT", "100")
+		assert.Nil(t, err)
+		err = os.Setenv("PERSISTENCIA", "local")
+		assert.Nil(t, err)
+
+		arquivosDomain := createArquivosDomainParaProcessamento()
+		arquivosDomain.Endereco = "../../storage/cvm/mock/cad_fi.csv"
+
+		updateDomain := arquivosDomain
+		updateDomain.Processado = true
+		updateDomain.Status = constants.PROCESSANDO
+
+		repository.EXPECT().UpdateArquivosRepository(gomock.Any()).DoAndReturn(func(arg domain.ArquivosDomain) {
+			if arg.Endereco != updateDomain.Endereco ||
+				arg.TipoArquivo != updateDomain.TipoArquivo ||
+				arg.Referencia != updateDomain.Referencia ||
+				arg.Status != updateDomain.Status ||
+				arg.Baixar != updateDomain.Baixar ||
+				arg.Download != updateDomain.Download ||
+				arg.Processado != updateDomain.Processado ||
+				!arg.CreatedAt.Equal(updateDomain.CreatedAt) {
+				t.Errorf("Os campos não correspondem")
+			}
+		}).Return(nil)
+
+		repository.EXPECT().CreateManyFundosRepository(gomock.Any()).Return(
+			resterrors.NewInternalServerError("Erro pra teste"),
+		)
+
+		err = service.ProcessarArquivosCVMService(arquivosDomain)
+		assert.NotNil(t, err)
+	})
+
+	// Processando o arquivo de Balancente localmente
+	t.Run("processing_a_funds_locally_returning_sucess", func(t *testing.T) {
+		repository, service, _, _ := InitServiceTest(t)
+		err := os.Setenv("DATABASE_LIMIT_INSERT", "100")
+		assert.Nil(t, err)
+		err = os.Setenv("PERSISTENCIA", "local")
+		assert.Nil(t, err)
+
+		arquivosDomain := createArquivosDomainParaProcessamento()
+		arquivosDomain.Endereco = "../../storage/cvm/mock/balancete_fi.csv"
+		arquivosDomain.TipoArquivo = "balancete"
+
+		updateDomain := arquivosDomain
+		updateDomain.Processado = true
+		updateDomain.Status = constants.PROCESSANDO
+
+		repository.EXPECT().UpdateArquivosRepository(gomock.Any()).Return(nil)
+
+		repository.EXPECT().CreateManyBalecenteRepository(gomock.Any()).Return(nil)
+
+		err = service.ProcessarArquivosCVMService(arquivosDomain)
+		assert.Nil(t, err)
+	})
+
+	// Processando o arquivo de Balancente localmente
+	t.Run("processing_a_balancente_locally_returning_sucess", func(t *testing.T) {
+		repository, service, _, _ := InitServiceTest(t)
+		err := os.Setenv("DATABASE_LIMIT_INSERT", "100")
+		assert.Nil(t, err)
+		err = os.Setenv("PERSISTENCIA", "local")
+		assert.Nil(t, err)
+
+		arquivosDomain := createArquivosDomainParaProcessamento()
+		arquivosDomain.Endereco = "../../storage/cvm/mock/balancete_fi.csv"
+		arquivosDomain.TipoArquivo = "balancete"
+
+		updateDomain := arquivosDomain
+		updateDomain.Processado = true
+		updateDomain.Status = constants.PROCESSANDO
+
+		repository.EXPECT().UpdateArquivosRepository(gomock.Any()).DoAndReturn(func(arg domain.ArquivosDomain) {
+			if arg.Endereco != updateDomain.Endereco ||
+				arg.TipoArquivo != updateDomain.TipoArquivo ||
+				arg.Referencia != updateDomain.Referencia ||
+				arg.Status != updateDomain.Status ||
+				arg.Baixar != updateDomain.Baixar ||
+				arg.Download != updateDomain.Download ||
+				arg.Processado != updateDomain.Processado ||
+				!arg.CreatedAt.Equal(updateDomain.CreatedAt) {
+				t.Errorf("Os campos não correspondem")
+			}
+		}).Return(nil)
+
+		repository.EXPECT().CreateManyBalecenteRepository(gomock.Any()).Return(
+			resterrors.NewInternalServerError("Erro pra teste"),
+		)
+
+		err = service.ProcessarArquivosCVMService(arquivosDomain)
+		assert.NotNil(t, err)
+	})
 }

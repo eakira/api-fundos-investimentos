@@ -37,7 +37,10 @@ func (fs *fundosDomainService) CreateMany(
 		json.Unmarshal(data, &dados)
 		domain := &[]domain.BalanceteDomain{}
 		copier.Copy(domain, dados)
-		fs.CreateBalanceteService(*domain)
+		erro := fs.CreateBalanceteService(*domain)
+		if erro != nil {
+			return erro
+		}
 
 	case "cda-blc-1":
 		dados := []request.CdaSelicRequest{}
