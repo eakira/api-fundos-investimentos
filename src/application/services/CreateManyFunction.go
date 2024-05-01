@@ -267,7 +267,10 @@ func (fs *fundosDomainService) CreateMany(
 		json.Unmarshal(data, &dados)
 		domain := &[]domain.PerfilMensalDomain{}
 		copier.Copy(domain, dados)
-		fs.CreatePerfilMensalService(*domain)
+		erro := fs.CreatePerfilMensalService(*domain)
+		if erro != nil {
+			return erro
+		}
 
 	}
 
