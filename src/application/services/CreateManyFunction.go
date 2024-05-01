@@ -107,7 +107,10 @@ func (fs *fundosDomainService) CreateMany(
 		json.Unmarshal(data, &dados)
 		domain := &[]domain.CdaInvestimentosExteriorDomain{}
 		copier.Copy(domain, dados)
-		fs.CreateCdaInvestimentosExteriorService(*domain)
+		erro := fs.CreateCdaInvestimentosExteriorService(*domain)
+		if erro != nil {
+			return erro
+		}
 
 	case "cda-blc-8":
 		dados := []request.CdaDemaisAtivosNaoCodificadosRequest{}
