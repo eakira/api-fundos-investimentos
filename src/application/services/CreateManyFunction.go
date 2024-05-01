@@ -167,28 +167,40 @@ func (fs *fundosDomainService) CreateMany(
 		json.Unmarshal(data, &dados)
 		domain := &[]domain.InformacoesFundoDomain{}
 		copier.Copy(domain, dados)
-		fs.CreateInformacaoComplementarFundoService(*domain)
+		erro := fs.CreateInformacaoComplementarFundoService(*domain)
+		if erro != nil {
+			return erro
+		}
 
 	case "informacao-complementar-divulgacao":
 		dados := []request.InformacoesDivulgacaoRequest{}
 		json.Unmarshal(data, &dados)
 		domain := &[]domain.InformacoesDivulgacaoDomain{}
 		copier.Copy(domain, dados)
-		fs.CreateInformacaoComplementarDivulgacaoService(*domain)
+		erro := fs.CreateInformacaoComplementarDivulgacaoService(*domain)
+		if erro != nil {
+			return erro
+		}
 
 	case "informacao-complementar-cotista":
 		dados := []request.InformacoesCotistaResquest{}
 		json.Unmarshal(data, &dados)
 		domain := &[]domain.InformacoesCotistaDomain{}
 		copier.Copy(domain, dados)
-		fs.CreateInformacaoComplementarCotistaService(*domain)
+		erro := fs.CreateInformacaoComplementarCotistaService(*domain)
+		if erro != nil {
+			return erro
+		}
 
 	case "informacao-complementar-servico-prestado":
 		dados := []request.ServicoPrestadoResquest{}
 		json.Unmarshal(data, &dados)
 		domain := &[]domain.ServicoPrestadoDomain{}
 		copier.Copy(domain, dados)
-		fs.CreateInformacaoComplementarServicoPrestadoService(*domain)
+		erro := fs.CreateInformacaoComplementarServicoPrestadoService(*domain)
+		if erro != nil {
+			return erro
+		}
 
 	case "lamina":
 		dados := []request.LaminaRequest{}
