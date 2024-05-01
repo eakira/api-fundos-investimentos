@@ -47,6 +47,10 @@ func main() {
 	fundosController := initDependenciesController(database)
 	fundosController.CreateTopicController() // Carregando os topicos do kafka
 
+	initServicos(fundosController)
+
+}
+func initServicos(fundosController controller.FundosControllerInterface) {
 	router := gin.Default()
 	addr := env.GetPort()
 	chanError := make(chan error)
@@ -65,8 +69,8 @@ func main() {
 	if err := <-chanError; err != nil {
 		logger.Error("Error: ", err, "init")
 	}
-
 }
+
 func GraceFullyShutdown(
 	server *http.Server,
 	chanError chan error,
