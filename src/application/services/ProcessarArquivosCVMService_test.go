@@ -1153,4 +1153,88 @@ func TestProcessarArquivosCVMService(t *testing.T) {
 		assert.NotNil(t, err)
 	})
 
+	// Processando o arquivo de extrato localmente
+	t.Run("processing_a_file_extrato_returning_sucess", func(t *testing.T) {
+		repository, service, _, _ := InitServiceTest(t)
+		err := os.Setenv("DATABASE_LIMIT_INSERT", "100")
+		assert.Nil(t, err)
+		err = os.Setenv("PERSISTENCIA", "local")
+		assert.Nil(t, err)
+
+		arquivosDomain := createArquivosDomainParaProcessamento()
+		arquivosDomain.Endereco = "../../storage/mock/extrato_fi_2023.csv"
+		arquivosDomain.TipoArquivo = "extrato"
+
+		repository.EXPECT().UpdateArquivosRepository(gomock.Any()).Return(nil)
+
+		repository.EXPECT().CreateManyExtratoRepository(gomock.Any()).Return(nil)
+
+		err = service.ProcessarArquivosCVMService(arquivosDomain)
+		assert.Nil(t, err)
+	})
+
+	// Processando o arquivo de extrato localmente com erro
+	t.Run("processing_a_file_extrato_returning_error", func(t *testing.T) {
+		repository, service, _, _ := InitServiceTest(t)
+		err := os.Setenv("DATABASE_LIMIT_INSERT", "100")
+		assert.Nil(t, err)
+		err = os.Setenv("PERSISTENCIA", "local")
+		assert.Nil(t, err)
+
+		arquivosDomain := createArquivosDomainParaProcessamento()
+		arquivosDomain.Endereco = "../../storage/mock/extrato_fi_2023.csv"
+		arquivosDomain.TipoArquivo = "extrato"
+
+		repository.EXPECT().UpdateArquivosRepository(gomock.Any()).Return(nil)
+
+		repository.EXPECT().CreateManyExtratoRepository(gomock.Any()).Return(
+			resterrors.NewInternalServerError("Erro pra teste"),
+		)
+
+		err = service.ProcessarArquivosCVMService(arquivosDomain)
+		assert.NotNil(t, err)
+	})
+
+	// Processando o arquivo de Informação Diária localmente
+	t.Run("processing_a_file_informacao_diaria_returning_sucess", func(t *testing.T) {
+		repository, service, _, _ := InitServiceTest(t)
+		err := os.Setenv("DATABASE_LIMIT_INSERT", "100")
+		assert.Nil(t, err)
+		err = os.Setenv("PERSISTENCIA", "local")
+		assert.Nil(t, err)
+
+		arquivosDomain := createArquivosDomainParaProcessamento()
+		arquivosDomain.Endereco = "../../storage/mock/inf_diario_fi_202402.csv"
+		arquivosDomain.TipoArquivo = "informacao-diaria"
+
+		repository.EXPECT().UpdateArquivosRepository(gomock.Any()).Return(nil)
+
+		repository.EXPECT().CreateManyInformacaoDiariaRepository(gomock.Any()).Return(nil)
+
+		err = service.ProcessarArquivosCVMService(arquivosDomain)
+		assert.Nil(t, err)
+	})
+
+	// Processando o arquivo de Informação Diária localmente com erro
+	t.Run("processing_a_file_informacao_diaria_returning_error", func(t *testing.T) {
+		repository, service, _, _ := InitServiceTest(t)
+		err := os.Setenv("DATABASE_LIMIT_INSERT", "100")
+		assert.Nil(t, err)
+		err = os.Setenv("PERSISTENCIA", "local")
+		assert.Nil(t, err)
+
+		arquivosDomain := createArquivosDomainParaProcessamento()
+		arquivosDomain.Endereco = "../../storage/mock/inf_diario_fi_202402.csv"
+		arquivosDomain.TipoArquivo = "informacao-diaria"
+
+		repository.EXPECT().UpdateArquivosRepository(gomock.Any()).Return(nil)
+
+		repository.EXPECT().CreateManyInformacaoDiariaRepository(gomock.Any()).Return(
+			resterrors.NewInternalServerError("Erro pra teste"),
+		)
+
+		err = service.ProcessarArquivosCVMService(arquivosDomain)
+		assert.NotNil(t, err)
+	})
+
 }
