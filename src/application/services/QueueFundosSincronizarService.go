@@ -17,7 +17,10 @@ import (
 func (fs *fundosDomainService) QueueFundosSincronizarService(tipo string, baixar bool) *resterrors.RestErr {
 	logger.Info("Init QueueFundosExternoService", "sincronizarFundos")
 
-	files := getFiles(tipo)
+	files, err := getFiles(tipo)
+	if err != nil {
+		return err
+	}
 
 	for _, value := range files {
 		value.CreatedAt = time.Now()
@@ -31,10 +34,15 @@ func (fs *fundosDomainService) QueueFundosSincronizarService(tipo string, baixar
 		domain, err := fs.repository.CreateArquivosRepository(*arquivosDomain)
 		if err != nil {
 			logger.Error("Error trying to CreateArquivosRepository", err, "sincronizarFundos")
+			return err
 		}
 		value.Id = domain.Id
 
-		nextQueue(fs, value)
+		err = nextQueue(fs, value)
+		if err != nil {
+			logger.Error("Erro ao criar a próxima fila", err, "sincronizarFundos")
+			return err
+		}
 	}
 
 	logger.Info("Finish QueueFundosExternoService", "sincronizarFundos")
@@ -44,17 +52,22 @@ func (fs *fundosDomainService) QueueFundosSincronizarService(tipo string, baixar
 func nextQueue(
 	fs *fundosDomainService,
 	value response.FundosDownloadCvmFilesQueueResponse,
-) {
+) *resterrors.RestErr {
 	data, _ := json.Marshal(value)
 	response := response.FundosQueueResponse{
 		Topic: env.GetTopicSincronizar(),
 		Queue: "update-all",
 		Data:  data,
 	}
-	fs.queue.Produce(response)
+	return fs.queue.Produce(response)
 
 }
-func getFiles(tipo string) []response.FundosDownloadCvmFilesQueueResponse {
+func getFiles(
+	tipo string,
+) (
+	[]response.FundosDownloadCvmFilesQueueResponse,
+	*resterrors.RestErr,
+) {
 	files := []response.FundosDownloadCvmFilesQueueResponse{}
 
 	switch tipo {
@@ -90,9 +103,11 @@ func getFiles(tipo string) []response.FundosDownloadCvmFilesQueueResponse {
 	case "perfil-mensal":
 		files = getFilesName(env.GetConfigCvmArquivosPerfilMensal())
 
+	default:
+		return nil, resterrors.NewInternalServerError("Tipo não encontrado")
 	}
 
-	return files
+	return files, nil
 }
 
 func getFilesName(arquivos env.ArquivosCVM) []response.FundosDownloadCvmFilesQueueResponse {
@@ -129,7 +144,6 @@ func getArquivosSufixo(arquivo env.ArquivosCVM) []string {
 		dataInicioConvertida = dataInicioConvertida.AddDate(arquivo.Ano, arquivo.Mes, arquivo.Dia)
 	}
 	return append(sufixos, dataInicioConvertida.Format(arquivo.Formato))
-
 }
 
 func getArquivosCadastro(env []string) []response.FundosDownloadCvmFilesQueueResponse {
