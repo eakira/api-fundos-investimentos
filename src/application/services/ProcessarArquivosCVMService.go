@@ -60,13 +60,18 @@ func (fs *fundosDomainService) processaArquivo(
 
 	if env.GetPersistenciaLocal() {
 		// Envio para persistência local
-		fs.enviaPersistencia(jsonChan, mensagemChan, chanError)
+		err := fs.enviaPersistencia(jsonChan, mensagemChan, chanError)
+		if err == nil {
+			defer wg.Done()
+		}
 	} else {
 		// Envio para Kafka
 		proximoQueue(jsonChan, mensagemChan, chanError)
-		fs.queue.ProduceLote(mensagemChan)
+		err := fs.queue.ProduceLote(mensagemChan)
+		if err == nil {
+			defer wg.Done()
+		}
 	}
-	defer wg.Done()
 
 }
 
@@ -258,6 +263,7 @@ func (fs *fundosDomainService) enviaPersistencia(
 	for data := range jsonChan {
 		err := fs.CreateMany(data)
 		if err != nil {
+			chanError <- err
 			return err
 		}
 	}
