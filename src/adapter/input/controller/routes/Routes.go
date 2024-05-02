@@ -2,6 +2,7 @@ package routes
 
 import (
 	"api-fundos-investimentos/adapter/input/controller"
+	"net/http"
 	"sync"
 
 	"github.com/gin-gonic/gin"
@@ -21,6 +22,16 @@ func InitRoutes(
 	v1 := r.Group("/api/v1/fundos")
 	{
 		v1.POST("sincronizar", fundosController.SincronizarFundosController)
+	}
+
+	acessoDev := r.Group("/dev-tools")
+	{
+		acessoDev.GET("/test", func(c *gin.Context) {
+			c.JSON(http.StatusOK, gin.H{
+				"status": "up",
+			})
+		})
+
 	}
 
 }
