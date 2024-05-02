@@ -30,7 +30,7 @@ import (
 func main() {
 	logger.Info("About to start user application", "start")
 
-	err := godotenv.Load()
+	err := LoadDotEnv()
 	if err != nil {
 		log.Fatal("Error loading .env file")
 		return
@@ -50,6 +50,15 @@ func main() {
 	initServicos(fundosController)
 
 }
+
+func LoadDotEnv() error {
+	err := godotenv.Load()
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
 func initServicos(fundosController controller.FundosControllerInterface) {
 	router := gin.Default()
 	addr := env.GetPort()
