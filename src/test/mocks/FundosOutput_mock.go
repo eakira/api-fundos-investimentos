@@ -10,6 +10,7 @@
 package mocks
 
 import (
+	entity "api-fundos-investimentos/adapter/output/model/entity"
 	response "api-fundos-investimentos/adapter/output/model/response"
 	domain "api-fundos-investimentos/application/domain"
 	resterrors "api-fundos-investimentos/configuration/resterrors"
@@ -494,6 +495,20 @@ func NewMockFundosQueuePort(ctrl *gomock.Controller) *MockFundosQueuePort {
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockFundosQueuePort) EXPECT() *MockFundosQueuePortMockRecorder {
 	return m.recorder
+}
+
+// CreateTopic mocks base method.
+func (m *MockFundosQueuePort) CreateTopic(arg0 entity.TopicEntity) *resterrors.RestErr {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "CreateTopic", arg0)
+	ret0, _ := ret[0].(*resterrors.RestErr)
+	return ret0
+}
+
+// CreateTopic indicates an expected call of CreateTopic.
+func (mr *MockFundosQueuePortMockRecorder) CreateTopic(arg0 any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateTopic", reflect.TypeOf((*MockFundosQueuePort)(nil).CreateTopic), arg0)
 }
 
 // Produce mocks base method.
