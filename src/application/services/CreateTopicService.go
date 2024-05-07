@@ -27,6 +27,6 @@ func (fs *fundosDomainService) CreateTopicService(
 	}
 
 	logger.Info("Finish CreateTopicService", "sincronizarFundos")
-	return nil, nil
+	return &topicDomain, nil
 
 }
