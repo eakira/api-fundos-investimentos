@@ -4,7 +4,6 @@ import (
 	"api-fundos-investimentos/application/domain"
 	"api-fundos-investimentos/configuration/env"
 	"api-fundos-investimentos/configuration/logger"
-	"log"
 )
 
 func (fc *fundosControllerInterface) CreateTopicController() {
@@ -24,8 +23,7 @@ func (fc *fundosControllerInterface) CreateTopicController() {
 			Qtd:   qtd,
 		})
 		if erro != nil {
-			log.Fatalf("Erro ao salvar o tópico, error=%s \n", erro.Error())
-			return
+			logger.Error("Erro ao salvar o tópico", nil, "sincronizarFundos")
 		}
 	}
 
