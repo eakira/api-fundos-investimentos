@@ -390,6 +390,21 @@ func (mr *MockFundosDomainServiceMockRecorder) CreatePerfilMensalService(arg0 an
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreatePerfilMensalService", reflect.TypeOf((*MockFundosDomainService)(nil).CreatePerfilMensalService), arg0)
 }
 
+// CreateTopicService mocks base method.
+func (m *MockFundosDomainService) CreateTopicService(arg0 domain.TopicDomain) (*domain.TopicDomain, *resterrors.RestErr) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "CreateTopicService", arg0)
+	ret0, _ := ret[0].(*domain.TopicDomain)
+	ret1, _ := ret[1].(*resterrors.RestErr)
+	return ret0, ret1
+}
+
+// CreateTopicService indicates an expected call of CreateTopicService.
+func (mr *MockFundosDomainServiceMockRecorder) CreateTopicService(arg0 any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateTopicService", reflect.TypeOf((*MockFundosDomainService)(nil).CreateTopicService), arg0)
+}
+
 // DownloadArquivosCVMService mocks base method.
 func (m *MockFundosDomainService) DownloadArquivosCVMService(arg0 domain.ArquivosDomain) *resterrors.RestErr {
 	m.ctrl.T.Helper()
