@@ -13,6 +13,9 @@ func (fc *fundosControllerInterface) ProcessarArquivosCVMController(request requ
 
 	arquivoDomain := &domain.ArquivosDomain{}
 	copier.Copy(arquivoDomain, request)
-	fc.service.ProcessarArquivosCVMService(*arquivoDomain)
+
+	if err := fc.service.ProcessarArquivosCVMService(*arquivoDomain); err != nil {
+		logger.Error("Error calling CreateExtratoService", err, "sincronizarFundos")
+	}
 
 }
