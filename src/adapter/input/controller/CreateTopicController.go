@@ -1,43 +1,34 @@
 package controller
 
 import (
+	"api-fundos-investimentos/application/domain"
 	"api-fundos-investimentos/configuration/env"
 	"api-fundos-investimentos/configuration/logger"
-	"fmt"
 	"log"
-
-	"github.com/IBM/sarama"
 )
 
 func (fc *fundosControllerInterface) CreateTopicController() {
 	logger.Info("Init CreateTopicController", "sincronizarFundos")
 
-	brokerAddrs := []string{env.GetKafkaHost()}
-	config := sarama.NewConfig()
+	qtd := env.GetNumParticoes()
 
-	admin, err := sarama.NewClusterAdmin(brokerAddrs, config)
-	if err != nil {
-		log.Fatal("Error while creating cluster admin: ", err.Error())
+	var topics = []string{
+		env.GetTopicSincronizar(),
+		env.GetTopicProcessarArquivos(),
+		env.GetTopicPersistenciaDados(),
 	}
-	defer admin.Close()
 
-	admin.CreateTopic(env.GetTopicSincronizar(), &sarama.TopicDetail{
-		NumPartitions:     env.GetNumParticoes(),
-		ReplicationFactor: 1,
-	}, false)
+	for _, topic := range topics {
+		_, erro := fc.service.CreateTopicService(domain.TopicDomain{
+			Topic: topic,
+			Qtd:   qtd,
+		})
+		if erro != nil {
+			log.Fatalf("Erro ao salvar o tópico, error=%s \n", erro.Error())
+			return
+		}
+	}
 
-	admin.CreateTopic(env.GetTopicProcessarArquivos(), &sarama.TopicDetail{
-		NumPartitions:     env.GetNumParticoes(),
-		ReplicationFactor: 1,
-	}, false)
-
-	admin.CreateTopic(env.GetTopicPersistenciaDados(), &sarama.TopicDetail{
-		NumPartitions:     env.GetNumParticoes(),
-		ReplicationFactor: 1,
-	}, false)
-
-	teste, _ := admin.ListTopics()
-	fmt.Println(teste)
 	logger.Info("Finish CreateTopicController", "sincronizarFundos")
 
 }

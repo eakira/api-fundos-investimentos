@@ -35,4 +35,7 @@ type FundosDomainService interface {
 	CreateLaminaCarteiraService([]domain.LaminaCarteiraDomain) *resterrors.RestErr
 	CreateLaminaRentabilidadeAnoService([]domain.LaminaRentabilidadeAnoDomain) *resterrors.RestErr
 	CreateLaminaRentabilidadeMesService([]domain.LaminaRentabilidadeMesDomain) *resterrors.RestErr
+
+	//Configuration
+	CreateTopicService(domain.TopicDomain) (*domain.TopicDomain, *resterrors.RestErr)
 }
