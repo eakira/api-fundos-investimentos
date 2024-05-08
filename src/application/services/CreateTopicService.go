@@ -23,7 +23,7 @@ func (fs *fundosDomainService) CreateTopicService(
 	err := fs.queue.CreateTopic(entity)
 	if err != nil {
 		logger.Error("Error calling CreateTopic", err, "sincronizarFundos")
-		return nil, err
+		return &topicDomain, err
 	}
 
 	logger.Info("Finish CreateTopicService", "sincronizarFundos")
